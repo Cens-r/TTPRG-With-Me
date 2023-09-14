@@ -1,4 +1,4 @@
-# TTPRG-With-Me
+# TTRPG-With-Me
 Android App developed by my group for our Mobile App Development class.
 Developed during the Fall 2023 semester.
 
