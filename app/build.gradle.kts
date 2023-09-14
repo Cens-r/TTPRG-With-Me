@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
