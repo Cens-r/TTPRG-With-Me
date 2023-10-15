@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/characterSelect"
+        android:title="@string/character_select"
+        android:icon="@drawable/ic_character_select"/>
+
+    <item android:id="@+id/characterStats"
+        android:title="@string/character_stats"
+        android:icon="@drawable/ic_character_stats"/>
+
+    <item android:id="@+id/quickActions"
+        android:title="@string/quick_actions"
+        android:icon="@drawable/ic_quick_actions"/>
+</menu>

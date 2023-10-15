@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/characterSelect">
+
+    <fragment
+        android:id="@+id/characterSelect"
+        android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.CharacterSelect"
+        android:label="fragment_character_select"
+        tools:layout="@layout/fragment_character_select" />
+    <fragment
+        android:id="@+id/characterStats"
+        android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.CharacterStats"
+        android:label="fragment_character_stats"
+        tools:layout="@layout/fragment_character_stats" />
+    <fragment
+        android:id="@+id/quickActions"
+        android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.QuickActions"
+        android:label="fragment_quick_actions"
+        tools:layout="@layout/fragment_quick_actions" />
+</navigation>

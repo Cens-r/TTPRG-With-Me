@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TTRPG_With_Me</string>
+
+    <string name="character_select">Character Select</string>
+    <string name="character_stats">Character Stats</string>
+    <string name="quick_actions">Quick Actions</string>
 </resources>
