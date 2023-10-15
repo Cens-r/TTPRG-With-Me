@@ -20,4 +20,14 @@
         android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.QuickActions"
         android:label="fragment_quick_actions"
         tools:layout="@layout/fragment_quick_actions" />
+    <fragment
+        android:id="@+id/classStats"
+        android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.ClassStats"
+        android:label="fragment_class_stats"
+        tools:layout="@layout/fragment_class_stats" />
+    <fragment
+        android:id="@+id/backpack"
+        android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.Backpack"
+        android:label="fragment_backpack"
+        tools:layout="@layout/fragment_backpack" />
 </navigation>

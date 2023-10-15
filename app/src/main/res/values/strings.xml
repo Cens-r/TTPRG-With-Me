@@ -4,4 +4,8 @@
     <string name="character_select">Character Select</string>
     <string name="character_stats">Character Stats</string>
     <string name="quick_actions">Quick Actions</string>
+    <string name="class_stats">Class Stats</string>
+    <string name="backpack">Backpack</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
