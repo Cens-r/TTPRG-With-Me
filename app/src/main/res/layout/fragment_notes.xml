@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
     tools:context=".Notes">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:background="?attr/actionModeSplitBackground"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/notes"
+            android:textColor="?attr/actionMenuTextColor"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20sp" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="Enter Notes Here"
+        android:inputType="text|textMultiLine" />
+
+</LinearLayout>

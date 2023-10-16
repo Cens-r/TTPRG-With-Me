@@ -9,4 +9,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="character_select_description">This should be a description of the page and what you\'re supposed do on it!</string>
+    <string name="notes">Notes</string>
 </resources>
