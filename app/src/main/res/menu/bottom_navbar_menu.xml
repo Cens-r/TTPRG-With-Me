@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/characterSelect"
+    <item android:id="@+id/nav_characterSelect"
         android:title="@string/character_select"
         android:icon="@drawable/ic_character_select"/>
 
-    <item android:id="@+id/characterStats"
+    <item android:id="@+id/nav_characterStats"
         android:title="@string/character_stats"
         android:icon="@drawable/ic_character_stats"/>
 
-    <item android:id="@+id/quickActions"
+    <item android:id="@+id/nav_quickActions"
         android:title="@string/quick_actions"
         android:icon="@drawable/ic_quick_actions"/>
 
-    <item android:id="@+id/classStats"
+    <item android:id="@+id/nav_classStats"
         android:title="@string/class_stats"
         android:icon="@drawable/ic_class_stats"/>
 
-    <item android:id="@+id/backpack"
+    <item android:id="@+id/nav_backpack"
         android:title="@string/backpack"
         android:icon="@drawable/ic_backpack"/>
 </menu>
