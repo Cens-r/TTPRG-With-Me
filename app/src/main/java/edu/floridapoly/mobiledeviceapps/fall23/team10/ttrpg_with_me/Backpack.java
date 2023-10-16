@@ -44,10 +44,12 @@ public class Backpack extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Button button1 = (Button) getView().findViewById(R.id.button);
-        Button button2 = (Button) getView().findViewById(R.id.button2);
-        Button button3 = (Button) getView().findViewById(R.id.button3);
-        Button button4 = (Button) getView().findViewById(R.id.button4);
+        View rootView = inflater.inflate(R.layout.fragment_backpack, container, false);
+
+        Button button1 = (Button) rootView.findViewById(R.id.button);
+        Button button2 = (Button) rootView.findViewById(R.id.button2);
+        Button button3 = (Button) rootView.findViewById(R.id.button3);
+        Button button4 = (Button) rootView.findViewById(R.id.button4);
 
         Button[] buttonArray = {button1, button2, button3, button4};
         for (int i = 0; i < buttonArray.length; i++) {
@@ -60,6 +62,6 @@ public class Backpack extends Fragment {
         }
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_backpack, container, false);
+        return rootView;
     }
 }

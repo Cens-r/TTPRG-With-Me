@@ -38,10 +38,12 @@ public class QuickActions extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ImageButton action1 = (ImageButton) getView().findViewById(R.id.general_gotoButton);
-        ImageButton action2 = (ImageButton) getView().findViewById(R.id.character_gotoButton);
-        ImageButton action3 = (ImageButton) getView().findViewById(R.id.class_gotoButton);
-        ImageButton action4 = (ImageButton) getView().findViewById(R.id.backpack_gotoButton);
+        View rootView = inflater.inflate(R.layout.fragment_quick_actions, container, false);
+
+        ImageButton action1 = (ImageButton) rootView.findViewById(R.id.general_gotoButton);
+        ImageButton action2 = (ImageButton) rootView.findViewById(R.id.character_gotoButton);
+        ImageButton action3 = (ImageButton) rootView.findViewById(R.id.class_gotoButton);
+        ImageButton action4 = (ImageButton) rootView.findViewById(R.id.backpack_gotoButton);
 
         ImageButton[] actionArray = {action1, action2, action3, action4};
         for (int i = 0; i < actionArray.length; i++) {
@@ -53,6 +55,6 @@ public class QuickActions extends Fragment {
             });
         }
 
-        return inflater.inflate(R.layout.fragment_quick_actions, container, false);
+        return rootView;
     }
 }

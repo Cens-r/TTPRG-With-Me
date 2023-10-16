@@ -41,14 +41,16 @@ public class CharacterSelect extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ImageButton importButton = (ImageButton) getView().findViewById(R.id.importButton);
-        ImageButton addButton = (ImageButton) getView().findViewById(R.id.addButton);
+        View rootView = inflater.inflate(R.layout.fragment_character_select, container, false);
 
-        ImageButton deleteChar1 = (ImageButton) getView().findViewById(R.id.deleteCharacter1);
-        TextView characterName1 = (TextView) getView().findViewById(R.id.characterName1);
+        ImageButton importButton = (ImageButton) rootView.findViewById(R.id.importButton);
+        ImageButton addButton = (ImageButton) rootView.findViewById(R.id.addButton);
 
-        ImageButton deleteChar2 = (ImageButton) getView().findViewById(R.id.deleteCharacter2);
-        TextView characterName2 = (TextView) getView().findViewById(R.id.characterName2);
+        ImageButton deleteChar1 = (ImageButton) rootView.findViewById(R.id.deleteCharacter1);
+        TextView characterName1 = (TextView) rootView.findViewById(R.id.characterName1);
+
+        ImageButton deleteChar2 = (ImageButton) rootView.findViewById(R.id.deleteCharacter2);
+        TextView characterName2 = (TextView) rootView.findViewById(R.id.characterName2);
 
         importButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +81,6 @@ public class CharacterSelect extends Fragment {
         });
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_character_select, container, false);
+        return rootView;
     }
 }
