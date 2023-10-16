@@ -2,64 +2,59 @@ package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.icu.util.Freezable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView characterName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         BottomNavigationView bottomNav = findViewById(R.id.BottomNavBar);
         bottomNav.setVisibility(View.INVISIBLE);
-        bottomNav.setOnItemSelectedListener(navListener);
+        bottomNav.setOnItemSelectedListener(item -> {
+            Fragment fragment = null;
+            if(item.getItemId() == R.id.nav_backpack) {
+                fragment = new Backpack();
+            } else if (item.getItemId() == R.id.nav_notes) {
+                fragment = new Notes();
+            } else if (item.getItemId() == R.id.nav_characterStats) {
+                fragment = new CharacterStats();
+            } else if (item.getItemId() == R.id.nav_quickActions) {
+                fragment = new QuickActions();
+            } else if (item.getItemId() == R.id.nav_classStats) {
+                fragment = new ClassStats();
+            }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.MainHost, new CharacterSelect()).commit();
+            if (fragment != null) {
+                replaceFragment(fragment);
+                return true;
+            }
+            return false;
+        });
 
-
-
+        replaceFragment(new CharacterSelect());
     }
-    public final NavigationBarView.OnItemSelectedListener navListener = item -> {
 
-        Fragment selected = null;
-        if(item.getItemId() == R.id.nav_backpack)
-        {
-            selected = new Backpack();
-            //getSupportFragmentManager().beginTransaction().replace(R.id.MainHost, new Backpack()).commit();
-        }
-        else if (item.getItemId() == R.id.nav_notes) {
-            selected = new Notes();
-        }
-        else if (item.getItemId() == R.id.nav_characterStats) {
-        selected = new CharacterStats();
-        }
-        else if (item.getItemId() == R.id.nav_quickActions) {
-        selected = new QuickActions();
-        }
-        else if (item.getItemId() == R.id.nav_classStats) {
-            selected = new ClassStats();
-        }
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.MainHost, fragment);
+        fragmentTransaction.commit();
+    }
 
-        if(selected != null)
-        {
-            getSupportFragmentManager().beginTransaction().replace(R.id.MainHost, selected).commit();
-        }
-        return true;
-    };
-
-    public void onClick()
-    {
+    /* Unused function?? Not sure what this was for:
+    public void onClick() {
         setContentView(R.layout.activity_main);
     }
+     */
 }

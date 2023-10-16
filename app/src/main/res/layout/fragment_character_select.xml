@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:background="#FF0000"
-        android:backgroundTint="?attr/actionModeSplitBackground">
+        android:background="#487D87">
 
         <TextView
             android:id="@+id/pageName"
@@ -23,7 +22,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="@string/character_select"
-            android:textColor="?attr/actionMenuTextColor"
+            android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +45,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/importButton"
             app:layout_constraintStart_toEndOf="@+id/pageName"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
         <ImageButton
             android:id="@+id/importButton"
@@ -61,7 +61,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/addButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -85,27 +86,31 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/exampleCharacterLayout"
+                android:id="@+id/CharacterLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/colorBackground">
+                android:layout_marginTop="2sp"
+                android:layout_marginBottom="2sp"
+                android:background="?android:attr/colorBackground"
+                android:backgroundTint="#C5C5C5">
 
                 <TextView
-                    android:id="@+id/characterName"
+                    android:id="@+id/characterName1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
                     android:gravity="center"
-                    android:text="Example Character"
+                    android:text=" Character 1"
+                    android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/deleteCharacter1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
@@ -114,8 +119,48 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/characterName"
+                    app:layout_constraintStart_toEndOf="@+id/characterName1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/cardview_dark_background" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CharacterLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2sp"
+                android:layout_marginBottom="2sp"
+                android:background="?android:attr/colorBackground"
+                android:backgroundTint="#C5C5C5">
+
+                <TextView
+                    android:id="@+id/characterName2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center"
+                    android:text=" Character 2"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/deleteCharacter2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:src="@drawable/ic_delete_character"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/characterName2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/cardview_dark_background" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
