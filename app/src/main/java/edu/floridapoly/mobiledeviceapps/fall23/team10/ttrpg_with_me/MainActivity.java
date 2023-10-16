@@ -22,11 +22,28 @@ public class MainActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNav = findViewById(R.id.BottomNavBar);
+<<<<<<< Updated upstream
         //bottomNav.setVisibility();
         bottomNav.setOnItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.MainHost, new CharacterSelect()).commit();
 
+=======
+        bottomNav.setVisibility(View.VISIBLE);
+        bottomNav.setOnItemSelectedListener(item -> {
+            Fragment fragment = null;
+            if(item.getItemId() == R.id.nav_backpack) {
+                fragment = new Backpack();
+            } else if (item.getItemId() == R.id.nav_notes) {
+                fragment = new Notes();
+            } else if (item.getItemId() == R.id.nav_characterStats) {
+                fragment = new CharacterStats();
+            } else if (item.getItemId() == R.id.nav_quickActions) {
+                fragment = new QuickActions();
+            } else if (item.getItemId() == R.id.nav_classStats) {
+                fragment = new ClassStats();
+            }
+>>>>>>> Stashed changes
 
 
     }
