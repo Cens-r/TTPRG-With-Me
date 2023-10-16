@@ -68,8 +68,6 @@ public class CharacterSelect extends Fragment {
 
         }
 
-        TextView text =  (TextView) getView().findViewById(R.id.textView);
-
 
     }
 
