@@ -20,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.BottomNavBar);
-        bottomNav.setVisibility(View.INVISIBLE);
+        
+        //bottomNav.setVisibility(View.INVISIBLE);
+        bottomNav.setVisibility(View.VISIBLE);
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
             if(item.getItemId() == R.id.nav_backpack) {
