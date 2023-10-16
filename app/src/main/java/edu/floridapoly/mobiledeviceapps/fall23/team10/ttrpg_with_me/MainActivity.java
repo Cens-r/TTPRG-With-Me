@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNav = findViewById(R.id.BottomNavBar);
-        bottomNav.setVisibility(View.INVISIBLE);
+        //bottomNav.setVisibility();
         bottomNav.setOnItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.MainHost, new CharacterSelect()).commit();
