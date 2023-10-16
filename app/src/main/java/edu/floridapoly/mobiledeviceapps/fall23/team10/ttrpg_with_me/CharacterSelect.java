@@ -11,6 +11,7 @@ import android.view.View;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -39,19 +40,6 @@ public class CharacterSelect extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        /*
-        TextView characterName = (TextView) getView().findViewById(R.id.characterName);
-        characterName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentActivity fragmentActivity = getActivity();
-                FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.MainHost, new CharacterStats());
-                fragmentTransaction.commit();
-            }
-        });
-         */
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_character_select, container, false);

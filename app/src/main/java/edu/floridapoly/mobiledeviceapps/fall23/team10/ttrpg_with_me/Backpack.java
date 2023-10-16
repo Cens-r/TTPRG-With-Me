@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,16 +16,6 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class Backpack extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public Backpack() {
         // Required empty public constructor
     }
@@ -40,8 +32,6 @@ public class Backpack extends Fragment {
     public static Backpack newInstance(String param1, String param2) {
         Backpack fragment = new Backpack();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,15 +39,26 @@ public class Backpack extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Button button1 = (Button) getView().findViewById(R.id.button);
+        Button button2 = (Button) getView().findViewById(R.id.button2);
+        Button button3 = (Button) getView().findViewById(R.id.button3);
+        Button button4 = (Button) getView().findViewById(R.id.button4);
+
+        Button[] buttonArray = {button1, button2, button3, button4};
+        for (int i = 0; i < buttonArray.length; i++) {
+            buttonArray[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "Will open up more info about the item!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_backpack, container, false);
     }
