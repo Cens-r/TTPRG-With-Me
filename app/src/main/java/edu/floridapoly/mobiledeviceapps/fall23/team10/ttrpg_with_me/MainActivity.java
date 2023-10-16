@@ -8,7 +8,9 @@ import com.google.android.material.navigation.NavigationBarView;
 import android.icu.util.Freezable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,10 +20,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         BottomNavigationView bottomNav = findViewById(R.id.BottomNavBar);
+        bottomNav.setVisibility(View.INVISIBLE);
         bottomNav.setOnItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.MainHost, new CharacterSelect()).commit();
+
+
 
     }
     public final NavigationBarView.OnItemSelectedListener navListener = item -> {
@@ -32,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             selected = new Backpack();
             //getSupportFragmentManager().beginTransaction().replace(R.id.MainHost, new Backpack()).commit();
         }
-        else if (item.getItemId() == R.id.nav_characterSelect) {
-            selected = new CharacterSelect();
+        else if (item.getItemId() == R.id.nav_notes) {
+            selected = new Notes();
         }
         else if (item.getItemId() == R.id.nav_characterStats) {
         selected = new CharacterStats();
@@ -52,4 +58,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 
+    public void onClick()
+    {
+        setContentView(R.layout.activity_main);
+    }
 }
