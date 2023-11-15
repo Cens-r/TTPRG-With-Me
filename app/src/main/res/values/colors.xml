@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Apps Themed Colors -->
+
+    <!-- Custom Code: https://www.realtimecolors.com
+
+    <color name="dark_text">${textD.hex}</color>
+    <color name="dark_background">${bgD.hex}</color>
+    <color name="dark_primary">${primaryD.hex}</color>
+    <color name="dark_secondary">${secondaryD.hex}</color>
+    <color name="dark_accent">${accentD.hex}</color>
+
+    <color name="light_text">${textL.hex}</color>
+    <color name="light_background">${bgL.hex}</color>
+    <color name="light_primary">${primaryL.hex}</color>
+    <color name="light_secondary">${secondaryL.hex}</color>
+    <color name="light_accent">${accentL.hex}</color>
+
+    -->
+
+    <color name="dark_text">#f7f8f7</color>
+    <color name="dark_background">#070807</color>
+    <color name="dark_primary">#88968b</color>
+    <color name="dark_secondary">#1f2320</color>
+    <color name="dark_accent">#808e83</color>
+
+    <color name="light_text">#070807</color>
+    <color name="light_background">#f7f8f7</color>
+    <color name="light_primary">#69776c</color>
+    <color name="light_secondary">#dce0dd</color>
+    <color name="light_accent">#717f74</color>
+
+    <!-- Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

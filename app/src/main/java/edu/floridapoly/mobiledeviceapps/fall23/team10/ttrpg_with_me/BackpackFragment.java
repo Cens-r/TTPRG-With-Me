@@ -12,11 +12,11 @@ import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Backpack#newInstance} factory method to
+ * Use the {@link BackpackFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Backpack extends Fragment {
-    public Backpack() {
+public class BackpackFragment extends Fragment {
+    public BackpackFragment() {
         // Required empty public constructor
     }
 
@@ -29,8 +29,8 @@ public class Backpack extends Fragment {
      * @return A new instance of fragment Backpack.
      */
     // TODO: Rename and change types and number of parameters
-    public static Backpack newInstance(String param1, String param2) {
-        Backpack fragment = new Backpack();
+    public static BackpackFragment newInstance(String param1, String param2) {
+        BackpackFragment fragment = new BackpackFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

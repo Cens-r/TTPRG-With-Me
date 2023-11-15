@@ -26,15 +26,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
             if(item.getItemId() == R.id.nav_backpack) {
-                fragment = new Backpack();
+                fragment = new BackpackFragment();
             } else if (item.getItemId() == R.id.nav_notes) {
-                fragment = new Notes();
+                fragment = new NotesFragment();
             } else if (item.getItemId() == R.id.nav_characterStats) {
-                fragment = new CharacterStats();
-            } else if (item.getItemId() == R.id.nav_quickActions) {
-                fragment = new QuickActions();
+                fragment = new CharacterStatsFragment();
             } else if (item.getItemId() == R.id.nav_classStats) {
-                fragment = new ClassStats();
+                fragment = new ClassStatsFragment();
             }
 
             if (fragment != null) {
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        replaceFragment(new CharacterSelect());
+        replaceFragment(new CharacterSelectFragment());
     }
 
     private void replaceFragment(Fragment fragment) {
