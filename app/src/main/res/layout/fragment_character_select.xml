@@ -25,7 +25,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/dark_accent" />
+            app:tint="@color/dark_accent"
+            android:background="@null" />
 
         <TextView
             android:id="@+id/charselect_text_pagetitle"

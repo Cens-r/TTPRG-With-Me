@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/dark_background"
     android:orientation="vertical"
     android:weightSum="1"
     tools:context=".ClassStatsFragment">
@@ -11,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#487D87">
+        android:background="@color/dark_secondary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -82,5 +83,6 @@
         android:layout_marginTop="15sp"
         android:layout_marginBottom="15sp"
         android:gravity="center"
-        android:text="@string/character_select_description" />
+        android:text="@string/character_select_description"
+        android:textColor="@color/dark_text" />
 </LinearLayout>

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +56,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
         TextView char_name;
         TextView char_desc;
 
-        Button delete_button;
+        ImageButton delete_button;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

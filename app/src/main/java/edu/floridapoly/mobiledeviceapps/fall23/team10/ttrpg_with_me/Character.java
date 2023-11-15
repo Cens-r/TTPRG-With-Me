@@ -13,7 +13,13 @@ public class Character {
     ClassArchetype class_arc;
     List<Note> notes;
 
+    public Character(String name, String race, ClassArchetype class_arc) {
+        this.name = name;
+        this.race = race;
+        this.class_arc = class_arc;
+    }
 
+    // Getter Methods
     public String getName() {
         return name;
     }
@@ -26,4 +32,9 @@ public class Character {
     }
     public ClassArchetype getClassArc() { return class_arc; }
     public List<Note> getNotes() { return notes; }
+
+    // Setter Methods
+    public void setImageUrl(String url) {
+        image_url = url;
+    }
 }
