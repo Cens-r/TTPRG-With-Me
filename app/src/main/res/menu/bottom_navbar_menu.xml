@@ -10,15 +10,15 @@
         android:title="@string/class_stats"
         android:icon="@drawable/ic_class_stats"/>
 
-    <item android:id="@+id/nav_quickActions"
-        android:title="@string/quick_actions"
-        android:icon="@drawable/ic_quick_actions"/>
+    <item android:id="@+id/nav_characterSelect"
+        android:title="@string/character_select"
+        android:icon="@drawable/ic_character_select"/>
 
     <item android:id="@+id/nav_backpack"
         android:title="@string/backpack"
         android:icon="@drawable/ic_backpack"/>
 
     <item android:id="@+id/nav_notes"
-        android:title="Notes"
+        android:title="@string/notes"
         android:icon="@drawable/baseline_notes_24"/>
 </menu>

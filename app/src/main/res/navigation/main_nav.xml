@@ -3,17 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/characterSelect">
-
-    <fragment
-        android:id="@+id/characterSelect"
-        android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.CharacterSelectFragment"
-        android:label="fragment_character_select"
-        tools:layout="@layout/fragment_character_select" >
-        <action
-            android:id="@+id/action_characterSelect_to_characterStats"
-            app:destination="@id/characterStats" />
-    </fragment>
+    app:startDestination="@id/characterStats">
 
     <fragment
         android:id="@+id/characterStats"
@@ -24,6 +14,7 @@
             android:id="@+id/action_characterStats_to_classStats"
             app:destination="@id/classStats" />
     </fragment>
+
     <fragment
         android:id="@+id/classStats"
         android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.ClassStatsFragment"
@@ -53,9 +44,11 @@
             android:id="@+id/action_notes_to_characterStats"
             app:destination="@id/characterStats" />
     </fragment>
+
     <activity
-        android:id="@+id/mainActivity"
+        android:id="@+id/characterSelect"
         android:name="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.MainActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/activity_main">
+    </activity>
 </navigation>

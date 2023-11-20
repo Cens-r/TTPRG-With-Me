@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_secondary">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/createcharacter_constraint_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Create Character"
+            android:textColor="@color/dark_text"
+            android:textColorHint="@color/dark_text"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/createcharacter_linear_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/createcharacter_constraint_header"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/createcharacter_text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Name"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/createcharacter_edittext_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ems="10"
+                android:hint="Character Name"
+                android:inputType="text"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/createcharacter_text_race"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Race"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/createcharacter_edittext_race"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ems="10"
+                android:hint="Character Race"
+                android:inputType="text"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/createcharacter_text_class"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Class"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/createcharacter_edittext_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ems="10"
+                android:hint="Class Name"
+                android:inputType="text"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/createcharacter_linear_body"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/createcharacter_button_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_rect_button"
+            android:backgroundTint="@color/dark_primary"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="Create"
+            android:textColor="@color/dark_text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/createcharacter_button_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_rect_button"
+            android:backgroundTint="#C86C74"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="Close"
+            android:textColor="@color/dark_text" />
+    </LinearLayout>
+
+</RelativeLayout>
