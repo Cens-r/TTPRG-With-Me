@@ -60,7 +60,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
         });
 
         holder.delete_button.setOnClickListener(view -> {
-            Toast.makeText(view.getContext(), "Deletes character!", Toast.LENGTH_SHORT).show();
+            characterList.remove(character);
+            notifyDataSetChanged();
+            Toast.makeText(context, "TODO: Delete given character on backend!", Toast.LENGTH_SHORT).show();
         });
     }
 

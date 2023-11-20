@@ -76,13 +76,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15sp"
-        android:layout_marginBottom="15sp"
-        android:gravity="center"
-        android:text="@string/character_select_description"
-        android:textColor="@color/dark_text" />
 </LinearLayout>

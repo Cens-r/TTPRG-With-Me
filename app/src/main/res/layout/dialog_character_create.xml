@@ -51,7 +51,7 @@
                 android:text="Name"
                 android:textColor="@color/dark_text"
                 android:textColorHint="@color/dark_text"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/createcharacter_edittext_name"
@@ -62,7 +62,7 @@
                 android:hint="Character Name"
                 android:inputType="text"
                 android:textColor="@color/dark_text"
-                android:textColorHint="@color/dark_text" />
+                android:textColorHint="#9C9C9C" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,7 +81,7 @@
                 android:text="Race"
                 android:textColor="@color/dark_text"
                 android:textColorHint="@color/dark_text"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/createcharacter_edittext_race"
@@ -92,7 +92,7 @@
                 android:hint="Character Race"
                 android:inputType="text"
                 android:textColor="@color/dark_text"
-                android:textColorHint="@color/dark_text" />
+                android:textColorHint="#9C9C9C" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,7 +115,7 @@
                 android:text="Class"
                 android:textColor="@color/dark_text"
                 android:textColorHint="@color/dark_text"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/createcharacter_edittext_class"
@@ -126,7 +126,7 @@
                 android:hint="Class Name"
                 android:inputType="text"
                 android:textColor="@color/dark_text"
-                android:textColorHint="@color/dark_text" />
+                android:textColorHint="#9C9C9C" />
         </LinearLayout>
     </LinearLayout>
 
