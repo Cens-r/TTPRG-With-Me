@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notes_recycler_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_background"
     android:orientation="vertical"
-    android:weightSum="1"
     tools:context=".NotesFragment">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notes_recycler_body"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_height="match_parent"
+        android:layout_below="@id/notes_constraint_header"
+        tools:listitem="@layout/display_container" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/notes_constraint_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
         android:background="@color/dark_secondary"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="10dp"
+            android:background="@null"
+            android:src="@drawable/ic_note_create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/notes"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20sp" />
-
-    <EditText
-        android:id="@+id/editTextText"
-        style="@style/Widget.AppCompat.EditText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.9"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="Enter Notes Here"
-        android:inputType="text|textMultiLine"
-        android:textColor="@color/dark_text"
-        android:textColorHint="@color/dark_text" />
-
-</LinearLayout>
+            android:text="Notes"
+            android:textColor="@color/dark_text"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
