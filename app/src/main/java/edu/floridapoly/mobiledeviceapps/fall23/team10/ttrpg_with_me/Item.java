@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Item extends ClassManager {
-    private final static String API_KEY = "AIzaSyA2AfbophhKrlurY37HBkyt6PllGGlXAgw";
+    private final static String API_KEY = "AIzaSyDrgbXYfYoGvKc1ud9Marn0p0qpbwsvPXA";
     private final static String URL_STR = "https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key=" + API_KEY;
 
     // Format Variables: Item Type, Level, Race, Class
@@ -96,7 +96,6 @@ public class Item extends ClassManager {
         URL url = new URL(URL_STR);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
-        connection.setRequestProperty("Authorization", "Bearer " + API_KEY);
         connection.setRequestProperty("Content-Type", "application/json");
         return connection;
     }
