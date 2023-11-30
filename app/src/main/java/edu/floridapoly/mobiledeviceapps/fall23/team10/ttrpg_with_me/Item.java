@@ -4,12 +4,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,7 +28,7 @@ public class Item extends ClassManager {
             + "Do not provide any extra info, only the name and description.";
 
     // Format Variables: Model Name, Prompt
-    private final static String REQUEST_PROMPT = "{ \"prompt\": { \"text\": \"%s\"} }";
+    private final static String REQUEST_PROMPT = "{ \"prompt\": { \"text\": \"%s\" } }";
 
 
     String name;
@@ -56,12 +61,16 @@ public class Item extends ClassManager {
                 connection = GetConnection();
 
                 String formattedPrompt = String.format(ITEM_PROMPT, type, 5, "human", "bard");
-                String requestBody = String.format(REQUEST_PROMPT, formattedPrompt);
-                Log.d("Response", requestBody);
-                connection.setDoOutput(true);
 
-                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(requestBody);
+                JSONObject requestJson = new JSONObject();
+                JSONObject promptJson = new JSONObject();
+                promptJson.put("text", formattedPrompt);
+                requestJson.put("prompt", promptJson);
+
+                DataOutputStream writer = new DataOutputStream(connection.getOutputStream());
+                String requestStr = requestJson.toString();
+                byte[] input = requestStr.getBytes(StandardCharsets.UTF_8);
+                writer.write(input, 0, input.length);
                 writer.flush();
                 writer.close();
 
@@ -83,6 +92,8 @@ public class Item extends ClassManager {
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
 
             handler.post(() -> {
@@ -97,6 +108,7 @@ public class Item extends ClassManager {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
         return connection;
     }
 }
