@@ -93,6 +93,16 @@ public class Item extends ClassManager {
 
                     //JSONObject responseJson = new JSONObject(response.toString());
                     //responseText = responseJson.getString("content");
+                } else {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                    String output;
+                    StringBuffer response = new StringBuffer();
+                    while ((output = br.readLine()) != null) {
+                        response.append(output);
+                    }
+                    br.close();
+
+                    Log.d("Response", response.toString());
                 }
             } catch (IOException | JSONException e) {
                 throw new RuntimeException(e);
