@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -21,13 +24,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Item extends ClassManager {
-    private final static String API_KEY = "AIzaSyDrgbXYfYoGvKc1ud9Marn0p0qpbwsvPXA";
+    private final static String API_KEY = "AIzaSyDUohOwTPg5-OpYdRQupOXEFXh_l9WvYlc";
     private final static String URL_STR = "https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key=" + API_KEY;
 
     // Format Variables: Item Type, Level, Race, Class
     private final static String ITEM_PROMPT =
-            "Create and explain a DnD %s for a level %d %s %s using the format <Name> <Description> "
-            + "Do not provide any extra info, only the name and description.";
+            "Create and explain a DnD %s for a level %d %s %s using the JSON format.\n" +
+            "It should only have a name and description key.";
 
     // Format Variables: Model Name, Prompt
     private final static String REQUEST_PROMPT = "{ \"prompt\": { \"text\": \"%s\" } }";
@@ -79,30 +82,13 @@ public class Item extends ClassManager {
                 connection.connect();
 
                 int responseCode = connection.getResponseCode();
-                Log.d("Response", Integer.toString(responseCode));
+                Log.d("WebResponse", "Response Code: " + Integer.toString(responseCode));
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    String output;
-                    StringBuffer response = new StringBuffer();
-                    while ((output = br.readLine()) != null) {
-                        response.append(output);
-                    }
-                    br.close();
+                    JSONObject responseJson = GetOutputJson(connection.getInputStream());
 
-                    Log.d("Response", response.toString());
-
-                    //JSONObject responseJson = new JSONObject(response.toString());
-                    //responseText = responseJson.getString("content");
                 } else {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-                    String output;
-                    StringBuffer response = new StringBuffer();
-                    while ((output = br.readLine()) != null) {
-                        response.append(output);
-                    }
-                    br.close();
-
-                    Log.d("Response", response.toString());
+                    JSONObject errorJson = GetOutputJson(connection.getErrorStream());
+                    Log.d("WebResponse", "Web Response Error: " + errorJson.toString());
                 }
             } catch (IOException | JSONException e) {
                 throw new RuntimeException(e);
@@ -122,5 +108,15 @@ public class Item extends ClassManager {
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
         return connection;
+    }
+    private static JSONObject GetOutputJson(InputStream inStream) throws IOException, JSONException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
+        String output;
+        StringBuffer response = new StringBuffer();
+        while ((output = br.readLine()) != null) {
+            response.append(output);
+        }
+        br.close();
+        return new JSONObject(response.toString());
     }
 }
