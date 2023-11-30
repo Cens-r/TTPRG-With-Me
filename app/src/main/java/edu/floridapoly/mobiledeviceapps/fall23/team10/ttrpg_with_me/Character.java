@@ -2,7 +2,7 @@ package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import java.util.List;
 
-public class Character {
+public class Character extends ClassManager {
 
     String name;
     String race;
@@ -17,6 +17,7 @@ public class Character {
         this.name = name;
         this.race = race;
         this.class_arc = class_arc;
+        trackObject(this);
     }
 
     // Getter Methods
