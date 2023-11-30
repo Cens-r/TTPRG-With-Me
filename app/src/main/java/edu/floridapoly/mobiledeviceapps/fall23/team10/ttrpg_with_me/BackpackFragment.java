@@ -1,25 +1,29 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
-import android.content.ClipData;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class BackpackFragment extends Fragment {
+    static Executor executor = Executors.newSingleThreadExecutor();
+    static Handler handler = new Handler(Looper.getMainLooper());
+
     String[] nameList = {"Weapons", "Spells", "Armor", "Items", "Extras"};
     List<ItemContainer> itemContainers;
 
@@ -61,10 +65,17 @@ public class BackpackFragment extends Fragment {
 
             headerText.setText(name);
             generateButton.setOnClickListener(view -> {
-                String itemName, itemDescription;
-                // TODO: Make AI request and get itemName and itemDescription
-                View item = this.createItem("Test", "Test description here...");
-                itemList.add(item);
+                executor.execute(() -> {
+                    Item item = Item.Generate(name, null);
+                    handler.post(() -> {
+                        if (item != null) {
+                            View itemView = this.createItem(item.name, item.description);
+                            itemList.add(itemView);
+                        } else {
+                            Toast.makeText(this.container.getContext(), "Couldn't create item!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
             });
             arrowButton.setOnClickListener(view -> {
                 ViewGroup layout = container.findViewById(R.id.item_linear_body);
@@ -81,6 +92,12 @@ public class BackpackFragment extends Fragment {
             ViewGroup layout = container.findViewById(R.id.item_linear_body);
             LayoutInflater inflater = LayoutInflater.from(layout.getContext());
             View view = inflater.inflate(R.layout.display_container, layout, false);
+
+            TextView hText = view.findViewById(R.id.display_text_header);
+            hText.setText(name);
+            TextView bText = view.findViewById(R.id.display_text_body);
+            bText.setText(description);
+
             if (!isExpanded) {
                 view.setVisibility(View.GONE);
             }

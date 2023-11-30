@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Item.Generate("spell", null);
-
         characterList = new ArrayList<>();
         recyclerView = findViewById(R.id.charselect_recycler_body);
         recyclerView.setHasFixedSize(true);
