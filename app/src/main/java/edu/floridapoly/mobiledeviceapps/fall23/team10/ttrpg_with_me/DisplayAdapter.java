@@ -57,7 +57,7 @@ public class DisplayAdapter extends RecyclerView.Adapter <DisplayAdapter.MyViewH
             super(itemView);
             headerView = itemView.findViewById(R.id.display_text_header);
             bodyView = itemView.findViewById(R.id.display_text_body);
-            favoriteButton = itemView.findViewById(R.id.display_image_favorite);
+            favoriteButton = itemView.findViewById(R.id.display_button_favorite);
         }
     }
 }

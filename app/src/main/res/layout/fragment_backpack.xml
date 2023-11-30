@@ -68,7 +68,7 @@
         android:paddingBottom="10dp">
 
         <ImageButton
-            android:id="@+id/backpack_image_create"
+            android:id="@+id/backpack_button_create"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginEnd="10dp"

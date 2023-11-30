@@ -1,6 +1,10 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.database.Observable;
 import android.util.Log;
+import android.view.View;
+
+import androidx.databinding.ObservableField;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,22 +30,27 @@ public class Item extends ClassManager {
             "It should only have a name and description key.";
 
 
-    String name;
-    String description;
-    String type;
-    boolean favorited;
+    ObservableField<String> name;
+    ObservableField<String> description;
+    ObservableField<String> type;
+    ObservableField<Boolean> favorited;
 
     public Item(String name, String description) {
-        this.name = name;
-        this.description = description;
+        // Initialized Values:
+        this.name.set(name);
+        this.description.set(description);
+        // Default Values:
+        this.type.set("Extra");
+        this.favorited.set(false);
+
         trackObject(this);
     }
     public Item type(String type) {
-        this.type = type;
+        this.type.set(type);
         return this;
     }
     public Item favorited(boolean favorited) {
-        this.favorited = favorited;
+        this.favorited.set(favorited);
         return this;
     }
 
@@ -77,7 +86,8 @@ public class Item extends ClassManager {
                 }
 
                 JSONObject itemJson = new JSONObject(outputStr);
-                item = new Item(itemJson.getString("name"), itemJson.getString("description"));
+                item = new Item(itemJson.getString("name"), itemJson.getString("description"))
+                        .type(type);
             } else {
                 JSONObject errorJson = GetOutputJson(connection.getErrorStream());
                 Log.d("WebResponse", "Web Response Error: " + errorJson);
