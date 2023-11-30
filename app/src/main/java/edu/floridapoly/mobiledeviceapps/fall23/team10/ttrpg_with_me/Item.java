@@ -8,9 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -67,12 +69,14 @@ public class Item extends ClassManager {
                 promptJson.put("text", formattedPrompt);
                 requestJson.put("prompt", promptJson);
 
-                DataOutputStream writer = new DataOutputStream(connection.getOutputStream());
+                OutputStream outStream = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream, StandardCharsets.UTF_8));
                 String requestStr = requestJson.toString();
-                byte[] input = requestStr.getBytes(StandardCharsets.UTF_8);
-                writer.write(input, 0, input.length);
+                writer.write(requestStr);
                 writer.flush();
                 writer.close();
+                outStream.close();
+                connection.connect();
 
                 int responseCode = connection.getResponseCode();
                 Log.d("Response", Integer.toString(responseCode));
@@ -90,9 +94,7 @@ public class Item extends ClassManager {
                     //JSONObject responseJson = new JSONObject(response.toString());
                     //responseText = responseJson.getString("content");
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 throw new RuntimeException(e);
             }
 
