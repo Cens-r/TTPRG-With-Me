@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Item t = new Item("Test", "This is a test item!");
+        Log.d("Item", t.toJson());
 
         characterList = new ArrayList<>();
         recyclerView = findViewById(R.id.charselect_recycler_body);

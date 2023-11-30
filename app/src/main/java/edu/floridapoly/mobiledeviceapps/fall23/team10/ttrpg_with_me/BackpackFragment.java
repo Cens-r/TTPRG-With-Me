@@ -72,6 +72,7 @@ public class BackpackFragment extends Fragment {
                     View element = layout.getChildAt(index);
                     element.setVisibility((isExpanded) ? View.GONE : View.VISIBLE);
                 }
+                arrowButton.setImageResource((isExpanded) ? R.drawable.ic_collapse_arrow : R.drawable.ic_expand_arrow);
                 isExpanded = !isExpanded;
             });
         }
