@@ -4,32 +4,26 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Item extends ClassManager {
-    private final static String API_KEY = "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";
-    private final static String AI_MODEL = "gpt-3.5-turbo";
-    private final static String URL_STR = "https://api.openai.com/v1/chat/completions";
+    private final static String API_KEY = "AIzaSyA2AfbophhKrlurY37HBkyt6PllGGlXAgw";
+    private final static String URL_STR = "https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key=" + API_KEY;
 
     // Format Variables: Item Type, Level, Race, Class
     private final static String ITEM_PROMPT =
-            "Create and explain a DnD %s for a level %d %s %s using the format <Name> <Description>\n"
+            "Create and explain a DnD %s for a level %d %s %s using the format <Name> <Description> "
             + "Do not provide any extra info, only the name and description.";
 
     // Format Variables: Model Name, Prompt
-    private final static String REQUEST_PROMPT = "{\"model\": \"%s\", \"messages\": [{\"role\": \"user\", \"content\": \"%s\"}]}";
+    private final static String REQUEST_PROMPT = "{ \"prompt\": { \"text\": \"%s\"} }";
 
 
     String name;
@@ -56,13 +50,13 @@ public class Item extends ClassManager {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            HttpURLConnection connection = null;
+            HttpURLConnection connection;
             String itemName, itemDescription;
             try {
                 connection = GetConnection();
 
                 String formattedPrompt = String.format(ITEM_PROMPT, type, 5, "human", "bard");
-                String requestBody = String.format(REQUEST_PROMPT, AI_MODEL, formattedPrompt);
+                String requestBody = String.format(REQUEST_PROMPT, formattedPrompt);
                 Log.d("Response", requestBody);
                 connection.setDoOutput(true);
 
