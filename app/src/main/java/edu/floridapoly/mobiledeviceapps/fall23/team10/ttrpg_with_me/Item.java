@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Item extends ClassManager {
-    private final static String API_KEY = "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";
+    private final static String API_KEY = "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";
     private final static String AI_MODEL = "gpt-3.5-turbo";
     private final static String URL_STR = "https://api.openai.com/v1/chat/completions";
 
@@ -29,8 +29,7 @@ public class Item extends ClassManager {
             + "Do not provide any extra info, only the name and description.";
 
     // Format Variables: Model Name, Prompt
-    private final static String REQUEST_PROMPT = "{\"model\": \"%s\", "
-            + "\"messages\": [{\"role\": \"user\", \"content\": \"%s\"}]}";
+    private final static String REQUEST_PROMPT = "{\"model\": \"%s\", \"messages\": [{\"role\": \"user\", \"content\": \"%s\"}]}";
 
 
     String name;
@@ -64,6 +63,7 @@ public class Item extends ClassManager {
 
                 String formattedPrompt = String.format(ITEM_PROMPT, type, 5, "human", "bard");
                 String requestBody = String.format(REQUEST_PROMPT, AI_MODEL, formattedPrompt);
+                Log.d("Response", requestBody);
                 connection.setDoOutput(true);
 
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -72,6 +72,7 @@ public class Item extends ClassManager {
                 writer.close();
 
                 int responseCode = connection.getResponseCode();
+                Log.d("Response", Integer.toString(responseCode));
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String output;

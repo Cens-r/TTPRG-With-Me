@@ -37,13 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            Item.Generate("spell", null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        Item.Generate("spell", null);
 
         characterList = new ArrayList<>();
         recyclerView = findViewById(R.id.charselect_recycler_body);
