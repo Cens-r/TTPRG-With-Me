@@ -12,37 +12,75 @@
     <ScrollView
         android:id="@+id/backpack_scroll_body"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/backpack_constraint_header">
 
         <LinearLayout
             android:id="@+id/backpack_linear_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/backpack_container_weapons"
+                layout="@layout/item_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <include
+                android:id="@+id/backpack_container_spells"
+                layout="@layout/item_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <include
+                android:id="@+id/backpack_container_armor"
+                layout="@layout/item_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <include
+                android:id="@+id/backpack_container_items"
+                layout="@layout/item_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <include
+                android:id="@+id/backpack_container_extra"
+                layout="@layout/item_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+        </LinearLayout>
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/backpack_constraint_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/dark_secondary"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
         <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:id="@+id/backpack_image_create"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="10dp"
             android:background="@null"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_create"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/backpack_text_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Backpack"
@@ -53,4 +91,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>
