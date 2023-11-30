@@ -32,10 +32,10 @@ public class BackpackFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_backpack, container, false);
-
+        itemContainers = new ArrayList<>();
         ViewGroup linearLayout = rootView.findViewById(R.id.backpack_linear_container);
         for (int index = 0; index < linearLayout.getChildCount(); index++) {
-            ItemContainer item = new ItemContainer(linearLayout, nameList[index]);
+            ItemContainer item = new ItemContainer(linearLayout.getChildAt(index), nameList[index]);
             itemContainers.add(item);
         }
         return rootView;
@@ -52,6 +52,7 @@ public class BackpackFragment extends Fragment {
 
         public ItemContainer(View container, String name) {
             isExpanded = false;
+            itemList = new ArrayList<>();
 
             this.container = container;
             headerText = container.findViewById(R.id.item_text_header);
