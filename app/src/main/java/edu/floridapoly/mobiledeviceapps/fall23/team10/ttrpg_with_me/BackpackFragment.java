@@ -127,6 +127,11 @@ public class BackpackFragment extends Fragment {
             DisplayContainerBinding itemBinding = DisplayContainerBinding.bind(view);
             itemBinding.setHeader(itemObject.name);
             itemBinding.setBody(itemObject.description);
+            itemBinding.setFavorited(itemObject.favorited);
+
+            itemBinding.displayButtonFavorite.setOnClickListener(v -> {
+                itemObject.favorited(!itemObject.favorited.get());
+            });
 
             if (!isExpanded) {
                 view.setVisibility(View.GONE);

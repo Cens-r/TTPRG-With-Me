@@ -9,6 +9,9 @@
         <variable
             name="body"
             type="androidx.databinding.ObservableField&lt;String&gt;" />
+        <variable
+            name="favorited"
+            type="androidx.databinding.ObservableField&lt;Boolean&gt;" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -65,7 +68,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_star_outline" />
+                    android:src="@{favorited ? @drawable/ic_star_fill : @drawable/ic_star_outline, default=@drawable/ic_star_outline}" />
     
             </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
