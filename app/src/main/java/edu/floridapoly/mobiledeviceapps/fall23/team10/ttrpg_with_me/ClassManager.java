@@ -75,7 +75,6 @@ public class ClassManager {
 
     private static class ObservableFieldTypeAdapter implements TypeAdapterFactory {
         @Override
-        @SuppressWarnings("unchecked")
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
             if (type.getRawType() != ObservableField.class) { return null; }
             Type param = ((ParameterizedType) type.getType()).getActualTypeArguments()[0];

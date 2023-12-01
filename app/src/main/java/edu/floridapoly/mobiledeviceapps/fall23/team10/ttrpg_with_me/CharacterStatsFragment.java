@@ -112,6 +112,7 @@ public class CharacterStatsFragment extends Fragment {
                 UpdateSaveThrow(element, name, isChecked.get());
                 saveBool.set(isChecked.get());
             });
+            statIndex++;
         }
 
         setupSkillSelects(view.findViewById(R.id.skill_linear_container));
