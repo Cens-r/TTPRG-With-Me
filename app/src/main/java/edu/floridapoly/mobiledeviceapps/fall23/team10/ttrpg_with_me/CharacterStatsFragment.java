@@ -123,7 +123,6 @@ public class CharacterStatsFragment extends Fragment {
         ObservableField<Integer> pBonus = character.pBonus;
         ObservableField<Integer> stat = character.stats.get(throwName);
         ObservableField<Integer> savethrow = character.savethrow.get(throwName);
-        ObservableField<Boolean> saveBool = character.saveBools.get(throwName);
 
         int incr = hasProf ? pBonus.get() : 0;
         int value = stat.get() + incr;

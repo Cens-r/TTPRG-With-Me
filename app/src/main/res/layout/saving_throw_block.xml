@@ -1,69 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/savethrow_card_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/dark_secondary"
+    app:cardCornerRadius="10dp">
 
-    <data>
-        <variable
-            name="name"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
-        <variable
-            name="value"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
-        <variable
-            name="button"
-            type="androidx.databinding.ObservableField&lt;Boolean&gt;" />
-    </data>
+    <LinearLayout
+        android:id="@+id/savethrow_linear_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/savethrow_card_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="@color/dark_secondary"
-        app:cardCornerRadius="10dp">
+        <RadioButton
+            android:id="@+id/savethrow_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"/>
 
-        <LinearLayout
-            android:id="@+id/savethrow_linear_container"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/savethrow_text_name"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="THROW NAME"
+            android:textColor="@color/dark_text"
+            android:textSize="13sp" />
 
-            <RadioButton
-                android:id="@+id/savethrow_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:layout_weight="1"
-                android:layout_marginRight="5dp"/>
-
-            <TextView
-                android:id="@+id/savethrow_text_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@{name, default=`THROW NAME`}"
-                android:textColor="@color/dark_text"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/savethrow_text_value"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@{value, default=`VALUE`}"
-                android:textColor="@color/dark_text"
-                android:textSize="15sp"
-                android:clickable="true" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</layout>
+        <TextView
+            android:id="@+id/savethrow_text_value"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="VALUE"
+            android:textColor="@color/dark_text"
+            android:textSize="15sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
