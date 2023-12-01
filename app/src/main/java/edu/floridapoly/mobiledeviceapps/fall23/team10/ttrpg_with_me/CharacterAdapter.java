@@ -55,9 +55,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
         // When card is clicked on send relevant information to the next activity
         holder.card.setOnClickListener(view -> {
             Intent intent = new Intent(context, NavigationActivity.class);
-            intent.putExtra("CharacterName", name);
-            intent.putExtra("CharacterDesc", desc);
-            intent.putExtra("CharacterImage", url);
+            intent.putExtra("CharacterId", character.id);
             context.startActivity(intent);
         });
 
