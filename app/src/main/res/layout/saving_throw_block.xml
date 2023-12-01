@@ -9,6 +9,9 @@
         <variable
             name="value"
             type="androidx.databinding.ObservableField&lt;String&gt;" />
+        <variable
+            name="button"
+            type="androidx.databinding.ObservableField&lt;Boolean&gt;" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,10 +31,19 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <RadioButton
+                android:id="@+id/savethrow_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"/>
+
             <TextView
                 android:id="@+id/savethrow_text_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
@@ -43,7 +55,7 @@
             <TextView
                 android:id="@+id/savethrow_text_value"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"

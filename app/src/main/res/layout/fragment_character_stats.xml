@@ -435,6 +435,17 @@
         android:layout_height="wrap_content"
         android:background="@color/dark_secondary">
 
+        <include
+            layout="@layout/stat_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/charstats_text_name"
             android:layout_width="wrap_content"
