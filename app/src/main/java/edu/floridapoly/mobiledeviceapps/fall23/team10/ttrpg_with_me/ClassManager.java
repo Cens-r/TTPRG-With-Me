@@ -60,16 +60,18 @@ public class ClassManager {
 
     // Converts an object to Json String
     public String toJson() {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
-        Gson gson = builder.create();
+        //GsonBuilder builder = new GsonBuilder();
+        //builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
+        //Gson gson = builder.create();
+        Gson gson = new Gson();
         return gson.toJson(this);
     }
 
     public static <T> T fromJson(String json, Class<T> c) {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
-        Gson gson = builder.create();
+        //GsonBuilder builder = new GsonBuilder();
+        //builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
+        //Gson gson = builder.create();
+        Gson gson = new Gson();
         return gson.fromJson(json, c);
     }
 
