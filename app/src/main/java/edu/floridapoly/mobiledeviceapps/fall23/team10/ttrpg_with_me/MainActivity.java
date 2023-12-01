@@ -89,7 +89,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "TODO: Connect to backend saving!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else {
-                Toast.makeText(this, "One of the three required inputs is empty!", Toast.LENGTH_SHORT).show();
+                ClassArchetype classArc = new ClassArchetype("Bard");
+
+                Character newCharacter = new Character("DEBUG", "Human", classArc);
+                newCharacter.setImageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaHmgseRqO6CI14XWSh5swCN19tzNhtgptvg&usqp=CAU");
+                characterList.add(newCharacter);
+                recyclerAdapter.notifyDataSetChanged();
+                dialog.dismiss();
+                //Toast.makeText(this, "One of the three required inputs is empty!", Toast.LENGTH_SHORT).show();
             }
         });
 

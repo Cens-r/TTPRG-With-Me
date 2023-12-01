@@ -2,10 +2,13 @@ package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.FragmentBackpackBinding;
 
 public class BackpackFragment extends Fragment {
     static Executor executor = Executors.newSingleThreadExecutor();
@@ -45,10 +50,13 @@ public class BackpackFragment extends Fragment {
         ImageButton createButton = rootView.findViewById(R.id.backpack_button_create);
         createButton.setOnClickListener(v -> {
             Hashtable<String, ClassManager> items = Item.getObjects(Item.class);
-            items.forEach((key, value) -> {
-                Item item = (Item) value;
-                item.favorited(!item.favorited.get());
-            });
+            if (items != null) {
+                items.forEach((key, value) -> {
+                    Item item = (Item) value;
+                    item.favorited(Boolean.FALSE.equals(item.favorited.get()));
+                    Log.d("Backpack", item.toJson());
+                });
+            }
         });
 
         return rootView;
@@ -102,17 +110,7 @@ public class BackpackFragment extends Fragment {
             LayoutInflater inflater = LayoutInflater.from(layout.getContext());
             View view = inflater.inflate(R.layout.display_container, layout, false);
 
-            TextView hText = view.findViewById(R.id.display_text_header);
-            hText.setText(itemObject.name.get());
-            TextView bText = view.findViewById(R.id.display_text_body);
-            bText.setText(itemObject.description.get());
 
-            ImageButton favButton = view.findViewById(R.id.display_button_favorite);
-            favButton.setOnClickListener(v -> {
-                int imageId = (Boolean.TRUE.equals(itemObject.favorited.get())) ? R.drawable.ic_star_outline : R.drawable.ic_star_fill;
-                favButton.setImageResource(imageId);
-                itemObject.favorited(Boolean.FALSE.equals(itemObject.favorited.get()));
-            });
 
             if (!isExpanded) {
                 view.setVisibility(View.GONE);

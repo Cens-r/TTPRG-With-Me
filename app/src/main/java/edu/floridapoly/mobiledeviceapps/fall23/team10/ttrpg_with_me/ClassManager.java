@@ -1,7 +1,18 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
-import com.google.gson.Gson;
+import androidx.databinding.ObservableField;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Hashtable;
 import java.util.UUID;
 
@@ -42,7 +53,29 @@ public class ClassManager {
 
     // Converts an object to Json String
     public String toJson() {
-        Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
+        Gson gson = builder.create();
         return gson.toJson(this);
+    }
+
+    private static class ObservableFieldTypeAdapter implements TypeAdapterFactory {
+        @Override
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+            if (type.getRawType() != ObservableField.class) { return null; }
+            Type param = ((ParameterizedType) type.getType()).getActualTypeArguments()[0];
+            return (TypeAdapter<T>) new TypeAdapter<ObservableField<?>>() {
+
+                @Override
+                public void write(JsonWriter out, ObservableField<?> value) throws IOException {
+                    gson.toJson(value.get(), param, out);
+                }
+
+                @Override
+                public ObservableField<?> read(JsonReader in) {
+                    return new ObservableField<>(gson.fromJson(in, param));
+                }
+            };
+        }
     }
 }

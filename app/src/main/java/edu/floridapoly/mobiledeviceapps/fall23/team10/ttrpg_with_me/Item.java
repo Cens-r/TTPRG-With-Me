@@ -37,11 +37,11 @@ public class Item extends ClassManager {
 
     public Item(String name, String description) {
         // Initialized Values:
-        this.name.set(name);
-        this.description.set(description);
+        this.name = new ObservableField<>(name);
+        this.description = new ObservableField<>(description);
         // Default Values:
-        this.type.set("Extra");
-        this.favorited.set(false);
+        this.type = new ObservableField<>("Extra");
+        this.favorited = new ObservableField<>(false);
 
         trackObject(this);
     }
