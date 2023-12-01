@@ -55,14 +55,12 @@ public class Character extends ClassManager {
     JSONObject cclass;
 
 
-    DisplayObject [] Abilities;
-
-    public Item [] Weapons;
-    public Item [] Spells;
-    public Item [] Armor;
-    public Item [] Items;
-    public Item [] Extras;
-    public Item [] Notes;
+    public List<Item> Abilities;
+    public List<Item> Notes;
+    public Hashtable<String, List<Item>> Backpack = new Hashtable<String, List<Item>>() {{
+        put("Weapons", new ArrayList<>()); put("Spells", new ArrayList<>()); put("Armor", new ArrayList<>());
+        put("Items", new ArrayList<>()); put("Extras", new ArrayList<>());
+    }};
 
     int currentHp;
     int totalHp;

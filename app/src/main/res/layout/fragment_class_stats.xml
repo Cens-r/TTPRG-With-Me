@@ -24,6 +24,18 @@
         android:background="@color/dark_secondary"
         android:padding="10dp">
 
+        <ImageButton
+            android:id="@+id/classstats_button_create"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/classstats_text_class"
             android:layout_width="wrap_content"
@@ -73,7 +85,7 @@
             android:text="Level Up"
             android:textColor="@color/light_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

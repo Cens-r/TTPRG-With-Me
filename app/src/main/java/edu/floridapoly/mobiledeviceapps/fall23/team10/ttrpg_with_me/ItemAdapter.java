@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class DisplayAdapter extends RecyclerView.Adapter <DisplayAdapter.MyViewHolder> {
-    List<DisplayObject> displayList;
+public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder> {
+    List<Item> itemList;
     Context context;
 
-    public DisplayAdapter(List<DisplayObject> displayList, Context context) {
-        this.displayList = displayList;
+    public ItemAdapter(List<Item> itemList, Context context) {
+        this.itemList = itemList;
         this.context = context;
     }
 
@@ -31,22 +31,22 @@ public class DisplayAdapter extends RecyclerView.Adapter <DisplayAdapter.MyViewH
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DisplayObject display = displayList.get(position);
-        String header = display.getHeader();
-        String body = display.getBody();
+        Item item = itemList.get(position);
+        String header = item.name.get();
+        String body = item.description.get();
 
         holder.headerView.setText(header);
         holder.bodyView.setText(body);
 
         holder.favoriteButton.setOnClickListener(view -> {
-            int imageId = (display.favorited) ? R.drawable.ic_star_outline : R.drawable.ic_star_fill;
+            int imageId = (Boolean.TRUE.equals(item.favorited.get())) ? R.drawable.ic_star_outline : R.drawable.ic_star_fill;
             holder.favoriteButton.setImageResource(imageId);
-            display.setFavorited(!display.favorited);
+            item.favorited(Boolean.FALSE.equals(item.favorited.get()));
         });
     }
 
     @Override
-    public int getItemCount() { return displayList.size(); }
+    public int getItemCount() { return itemList.size(); }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView headerView;

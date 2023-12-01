@@ -1,5 +1,6 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassStatsFragment extends Fragment {
-    List<DisplayObject> abilityList;
+    Character character;
+    List<Item> abilityList;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recyclerAdapter;
@@ -24,21 +26,30 @@ public class ClassStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getActivity().getIntent();
+        int characterId = intent.getIntExtra("CharacterId", -1);
+        if (characterId < 0) {
+            getActivity().finish();
+        }
+        character = (Character) Character.getObject(Character.class, characterId - 1);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_class_stats, container, false);
-        abilityList = new ArrayList<>();
-        abilityList.add(new DisplayObject("Header Test", "This is a display body, this is pretty cool!", false));
+        if (character.Abilities != null) {
+            abilityList = character.Abilities;
+        } else {
+            abilityList = new ArrayList<>();
+        }
 
         recyclerView = rootView.findViewById(R.id.classstats_recycler_body);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerAdapter = new DisplayAdapter(abilityList, getContext());
+        recyclerAdapter = new ItemAdapter(abilityList, getContext());
         recyclerView.setAdapter(recyclerAdapter);
         return rootView;
     }

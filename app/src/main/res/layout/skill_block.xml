@@ -2,24 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="mod"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
-        <variable
-            name="name"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
-        <variable
-            name="value"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
-        <variable
-            name="prof1"
-            type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
-        <variable
-            name="prof2"
-            type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
-    </data>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/skillblock_card_container"
         android:layout_width="match_parent"
@@ -39,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:checked="@{prof1}"
+                android:checked="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +33,7 @@
                 android:layout_marginStart="10dp"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:checked="@{prof2}"
+                android:checked="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/skillblock_radio_select1"
                 app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:text="@{mod, default=`MOD`}"
+                android:text="MOD"
                 android:textColor="@color/dark_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/skillblock_radio_select2"
@@ -74,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@{name, default=`SKILL NAME`}"
+                android:text="SKILL NAME"
                 android:textColor="@color/dark_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/skillblock_text_value"
@@ -88,7 +70,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="@{value, default=`VALUE`}"
+                android:text="VALUE"
                 android:textColor="@color/dark_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,16 +1,14 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
-import android.database.Observable;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -36,10 +34,17 @@ public class BackpackFragment extends Fragment {
     List<ItemContainer> itemContainers;
 
     FragmentBackpackBinding binding;
+    static Character character;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getActivity().getIntent();
+        int characterId = intent.getIntExtra("CharacterId", -1);
+        if (characterId < 0) {
+            getActivity().finish();
+        }
+        character = (Character) Character.getObject(Character.class, characterId - 1);
     }
 
     @Override
@@ -55,7 +60,7 @@ public class BackpackFragment extends Fragment {
             itemContainers.add(item);
         }
 
-        ImageButton createButton = rootView.findViewById(R.id.backpack_button_create);
+        ImageButton createButton = rootView.findViewById(R.id.item_button_create);
         createButton.setOnClickListener(v -> {
             List<ClassManager> items = Item.getObjects(Item.class);
             if (items != null) {
@@ -88,6 +93,11 @@ public class BackpackFragment extends Fragment {
         public ItemContainer(View container, String name) {
             isExpanded = true;
             itemList = new ArrayList<>();
+
+            for (Item item : Objects.requireNonNull(character.Backpack.get(name))) {
+                View itemView = createItem(item);
+                itemList.add(itemView);
+            }
 
             this.container = container;
             headerText = container.findViewById(R.id.item_text_header);
