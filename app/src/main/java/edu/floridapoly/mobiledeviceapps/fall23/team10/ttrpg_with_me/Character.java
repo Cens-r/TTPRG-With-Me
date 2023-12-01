@@ -48,7 +48,7 @@ public class Character extends ClassManager {
 
     int hp;
     int hitDice;
-    int pBonus = 2;
+    ObservableField<Integer> pBonus = new ObservableField<Integer>(2);
     int exp;
     int level;
 
@@ -71,6 +71,17 @@ public class Character extends ClassManager {
         put("STR", new ObservableField<>(10)); put("CON", new ObservableField<>(10)); put("DEX", new ObservableField<>(10));
         put("INT", new ObservableField<>(10)); put("WIS", new ObservableField<>(10)); put("CHA", new ObservableField<>(10));
     }};
+
+    Hashtable<String, ObservableField<Integer>> savethrow = new Hashtable<String, ObservableField<Integer>>() {{
+        put("STR", new ObservableField<>(10)); put("CON", new ObservableField<>(10)); put("DEX", new ObservableField<>(10));
+        put("INT", new ObservableField<>(10)); put("WIS", new ObservableField<>(10)); put("CHA", new ObservableField<>(10));
+    }};
+
+    Hashtable<String, ObservableField<Boolean>> saveBools = new Hashtable<String, ObservableField<Boolean>>() {{
+        put("STR", new ObservableField<>(false)); put("CON", new ObservableField<>(false)); put("DEX", new ObservableField<>(false));
+        put("INT", new ObservableField<>(false)); put("WIS", new ObservableField<>(false)); put("CHA", new ObservableField<>(false));
+    }};
+
     Hashtable<String, Integer> skills = new Hashtable<String, Integer>() {{
         put("Athletics", 0); put("Acrobatics", 0); put("Sleight of Hand", 0);
         put("Stealth", 0); put("Arcana", 0); put("History", 0);
@@ -84,7 +95,7 @@ public class Character extends ClassManager {
         level += 1;
         int [] p = {5, 9, 13, 17,};
         for (int i: p) {
-            if(p[i] == level) { pBonus+=1; }
+            if (p[i] == level) { pBonus.set(pBonus.get() + 1); }
         }
     }
 }

@@ -199,6 +199,7 @@
                     android:baselineAligned="false">
 
                     <include
+                        android:id="@+id/save_str"
                         layout="@layout/saving_throw_block"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -208,6 +209,7 @@
                         android:layout_weight="1" />
 
                     <include
+                        android:id="@+id/save_int"
                         layout="@layout/saving_throw_block"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -226,6 +228,7 @@
                     android:baselineAligned="false">
 
                     <include
+                        android:id="@+id/save_dex"
                         layout="@layout/saving_throw_block"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -236,6 +239,7 @@
                         android:layout_weight="1" />
 
                     <include
+                        android:id="@+id/save_wis"
                         layout="@layout/saving_throw_block"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -255,6 +259,7 @@
                     android:baselineAligned="false">
 
                     <include
+                        android:id="@+id/save_con"
                         layout="@layout/saving_throw_block"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -264,6 +269,7 @@
                         android:layout_weight="1" />
 
                     <include
+                        android:id="@+id/save_cha"
                         layout="@layout/saving_throw_block"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -386,6 +392,7 @@
                     app:layout_constraintVertical_bias="1.0">
 
                     <include
+                        android:id="@+id/value_initiative"
                         layout="@layout/stat_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -393,6 +400,7 @@
                         android:layout_marginRight="5dp" />
 
                     <include
+                        android:id="@+id/value_speed"
                         layout="@layout/stat_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -411,6 +419,7 @@
                     app:layout_constraintVertical_bias="1.0">
 
                     <include
+                        android:id="@+id/value_prof_bonus"
                         layout="@layout/stat_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -418,6 +427,7 @@
                         android:layout_marginRight="5dp" />
 
                     <include
+                        android:id="@+id/value_armor_class"
                         layout="@layout/stat_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -436,6 +446,7 @@
         android:background="@color/dark_secondary">
 
         <include
+            android:id="@+id/value_max_hp"
             layout="@layout/stat_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -472,6 +483,7 @@
             app:layout_constraintTop_toBottomOf="@+id/charstats_text_name" />
 
         <include
+            android:id="@+id/value_current_hp"
             layout="@layout/stat_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

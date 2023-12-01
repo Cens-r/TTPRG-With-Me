@@ -62,7 +62,8 @@
                 android:gravity="center"
                 android:text="@{value, default=`VALUE`}"
                 android:textColor="@color/dark_text"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:clickable="true" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

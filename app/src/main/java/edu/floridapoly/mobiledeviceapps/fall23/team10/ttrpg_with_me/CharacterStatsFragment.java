@@ -31,7 +31,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.FragmentCharacterStatsBinding;
-import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.StatBlockBinding;
 
 public class CharacterStatsFragment extends Fragment {
     static final List<String> statNameArr = Arrays.asList("STR", "CON", "DEX", "INT", "WIS", "CHA");
@@ -40,6 +39,7 @@ public class CharacterStatsFragment extends Fragment {
     FragmentCharacterStatsBinding binding;
 
     List<View> StatBlocks;
+    List<View> SaveThows;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +70,8 @@ public class CharacterStatsFragment extends Fragment {
                 .into(icon_view);
 
         StatBlocks = new ArrayList<>();
-        setupStatBlocks(view.findViewById(R.id.statblocks_linear_1));
-        setupStatBlocks(view.findViewById(R.id.statblocks_linear_2));
+        setupStatElements(StatBlocks, view.findViewById(R.id.statblocks_linear_1));
+        setupStatElements(StatBlocks, view.findViewById(R.id.statblocks_linear_2));
 
         int statIndex = 0;
         for (View block : StatBlocks) {
@@ -90,22 +90,52 @@ public class CharacterStatsFragment extends Fragment {
             statIndex++;
         }
 
-        setupStatBlocks(view.findViewById(R.id.savethrows_linear_1));
-        setupStatBlocks(view.findViewById(R.id.savethrows_linear_2));
-        setupStatBlocks(view.findViewById(R.id.savethrows_linear_3));
+        SaveThows = new ArrayList<>();
+        setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_1));
+        setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_2));
+        setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_3));
+
+        statIndex = 0;
+        for (View element: SaveThows) {
+            String name = statNameArr.get(statIndex);
+            ((TextView) element.findViewById(R.id.savethrow_text_name)).setText(name);
+
+            ObservableField<Boolean> saveBool = character.saveBools.get(name);
+            UpdateSaveThrow(element, name, saveBool.get());
+
+            RadioButton radiobutton = element.findViewById(R.id.savethrow_radio_button);
+
+            AtomicBoolean isChecked = new AtomicBoolean(false);
+            radiobutton.setOnClickListener(v -> {
+                isChecked.set(!isChecked.get());
+                radiobutton.setChecked(isChecked.get());
+                UpdateSaveThrow(element, name, isChecked.get());
+                saveBool.set(isChecked.get());
+            });
+        }
 
         setupSkillSelects(view.findViewById(R.id.skill_linear_container));
 
         return view;
     }
 
-    private void promptValueChange(View element, String valueName) {
-        Dialog dialog = new Dialog(requireContext());
-        dialog.setContentView(R.layout.dialog_value_change);
-        Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+    private void UpdateSaveThrow(View element, String throwName, Boolean hasProf) {
+        ObservableField<Integer> pBonus = character.pBonus;
+        ObservableField<Integer> stat = character.stats.get(throwName);
+        ObservableField<Integer> savethrow = character.savethrow.get(throwName);
+        ObservableField<Boolean> saveBool = character.saveBools.get(throwName);
 
-        TextView nameText = dialog.findViewById(R.id.valuedialog_text_name);
-        nameText.setText(valueName);
+        int incr = hasProf ? pBonus.get() : 0;
+        int value = stat.get() + incr;
+        savethrow.set(value);
+
+        TextView valueText = element.findViewById(R.id.savethrow_text_value);
+        valueText.setText(String.valueOf(value));
+    }
+
+    private void promptValueChange(View element, String valueName) {
+        Dialog dialog = CreateDialog();
+
         EditText valueInput = dialog.findViewById(R.id.valuedialog_edittext_value);
         AppCompatButton saveButton = dialog.findViewById(R.id.valuedialog_button_save);
 
@@ -127,12 +157,19 @@ public class CharacterStatsFragment extends Fragment {
         dialog.show();
     }
 
-    private void setupStatBlocks(LinearLayout row) {
+    private Dialog CreateDialog() {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.dialog_value_change);
+        Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        return dialog;
+    }
+
+    private void setupStatElements(List<View> list, LinearLayout row) {
         final int elementCount = row.getChildCount();
         for (int i = 0; i < elementCount; i++) {
             View element = row.getChildAt(i);
             if (element instanceof CardView) {
-                StatBlocks.add(element);
+                list.add(element);
             }
         }
     }
