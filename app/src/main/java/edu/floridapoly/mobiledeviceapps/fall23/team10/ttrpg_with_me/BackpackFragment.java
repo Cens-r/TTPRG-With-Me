@@ -39,12 +39,6 @@ public class BackpackFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getActivity().getIntent();
-        int characterId = intent.getIntExtra("CharacterId", -1);
-        if (characterId < 0) {
-            getActivity().finish();
-        }
-        character = (Character) Character.getObject(Character.class, characterId - 1);
     }
 
     @Override
@@ -52,6 +46,13 @@ public class BackpackFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentBackpackBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
+
+        Intent intent = getActivity().getIntent();
+        int characterId = intent.getIntExtra("CharacterId", -1);
+        if (characterId < 0) {
+            getActivity().finish();
+        }
+        character = (Character) Character.getObject(Character.class, characterId - 1);
 
         itemContainers = new ArrayList<>();
         ViewGroup linearLayout = rootView.findViewById(R.id.backpack_linear_container);

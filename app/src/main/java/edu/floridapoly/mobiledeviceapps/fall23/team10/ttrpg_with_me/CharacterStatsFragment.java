@@ -41,12 +41,6 @@ public class CharacterStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getActivity().getIntent();
-        int characterId = intent.getIntExtra("CharacterId", -1);
-        if (characterId < 0) {
-            getActivity().finish();
-        }
-        character = (Character) Character.getObject(Character.class, characterId - 1);
     }
 
     @Override
@@ -54,6 +48,13 @@ public class CharacterStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCharacterStatsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        Intent intent = getActivity().getIntent();
+        int characterId = intent.getIntExtra("CharacterId", -1);
+        if (characterId < 0) {
+            getActivity().finish();
+        }
+        character = (Character) Character.getObject(Character.class, characterId - 1);
 
         TextView name_view = view.findViewById(R.id.charstats_text_name);
         name_view.setText(character.name);

@@ -25,18 +25,20 @@ public class NotesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getActivity().getIntent();
-        int characterId = intent.getIntExtra("CharacterId", -1);
-        if (characterId < 0) {
-            getActivity().finish();
-        }
-        character = (Character) Character.getObject(Character.class, characterId - 1);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_notes, container, false);
+
+        Intent intent = getActivity().getIntent();
+        int characterId = intent.getIntExtra("CharacterId", -1);
+        if (characterId < 0) {
+            getActivity().finish();
+        }
+        character = (Character) Character.getObject(Character.class, characterId - 1);
+
         if (character.Notes != null) {
             noteList = character.Abilities;
         } else {
