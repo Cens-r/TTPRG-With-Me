@@ -21,6 +21,7 @@ import java.util.List;
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyViewHolder> {
     List<Character> characterList;
     Context context;
+    DatabaseManager db;
 
     public CharacterAdapter(List<Character> characterList, Context context) {
         this.characterList = characterList;
@@ -32,6 +33,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
     public CharacterAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.character_list_item, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
+        db = new DatabaseManager(context);
         return holder;
     }
 
@@ -60,9 +62,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
         });
 
         holder.delete_button.setOnClickListener(view -> {
+            db.delete(character.id + 1, "CHARACTERS");
             characterList.remove(character);
             notifyDataSetChanged();
-            Toast.makeText(context, "TODO: Delete given character on backend!", Toast.LENGTH_SHORT).show();
         });
     }
 

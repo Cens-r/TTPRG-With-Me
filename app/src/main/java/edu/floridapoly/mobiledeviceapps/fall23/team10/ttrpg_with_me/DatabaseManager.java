@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseManager extends SQLiteOpenHelper {
-
     SQLiteDatabase db = getWritableDatabase();
     static final String table = " (pk INTEGER PRIMARY KEY AUTOINCREMENT, JSON TEXT);";
     public DatabaseManager(Context context) {
@@ -16,7 +15,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE CHARACTERS " + table);
+        db.execSQL("CREATE TABLE CHARACTERS" + table);
         db.execSQL("CREATE TABLE CLASSES" + table);
     }
 

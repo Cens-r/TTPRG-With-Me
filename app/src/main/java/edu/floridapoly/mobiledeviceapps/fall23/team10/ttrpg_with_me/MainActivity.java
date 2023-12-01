@@ -13,6 +13,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,6 +27,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityLauncher;
     List<Character> characterList;
+    List<ClassArchetype> classList;
 
     DatabaseManager db;
 
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         db = new DatabaseManager(this);
 
         characterList = new ArrayList<>();
+        classList = new ArrayList<>();
         recyclerView = findViewById(R.id.charselect_recycler_body);
         recyclerView.setHasFixedSize(true);
 
@@ -52,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
                 Character character = ClassManager.fromJson(json, Character.class);
                 characterList.add(character);
             } while(characterCursor.moveToNext());
+        }
+
+        Cursor classCursor = db.fetchAll("CLASSES");
+        if (classCursor.moveToFirst()) {
+            do {
+                int index = classCursor.getColumnIndex("JSON");
+                String json = classCursor.getString(index);
+
+                ClassArchetype classArc = ClassManager.fromJson(json, ClassArchetype.class);
+                classList.add(classArc);
+            } while(classCursor.moveToNext());
         }
 
         layoutManager = new LinearLayoutManager(this);
@@ -83,7 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
         EditText nameInput = dialog.findViewById(R.id.createcharacter_edittext_name);
         EditText raceInput = dialog.findViewById(R.id.createcharacter_edittext_race);
-        EditText classInput = dialog.findViewById(R.id.createcharacter_edittext_class);
+        AutoCompleteTextView classInput = dialog.findViewById(R.id.createcharacter_edittext_class);
+
+        ArrayAdapter<ClassArchetype> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, classList);
+        classInput.setAdapter(adapter);
 
         AppCompatButton createButton = dialog.findViewById(R.id.createcharacter_button_create);
         createButton.setOnClickListener(view -> {
@@ -100,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 recyclerAdapter.notifyDataSetChanged();
 
                 db.addLine("CHARACTERS", newCharacter.toJson());
+                db.addLine("CLASSES", classArc.toJson());
                 dialog.dismiss();
             } else {
                 ClassArchetype classArc = new ClassArchetype("Bard");
