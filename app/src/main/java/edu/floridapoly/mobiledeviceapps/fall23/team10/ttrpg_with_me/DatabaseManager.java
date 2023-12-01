@@ -52,7 +52,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     {
         Cursor c = db.rawQuery("SELECT * FROM " + Type, null);
         return c;
-
     }
 
     public void delete(long pk, String Type)

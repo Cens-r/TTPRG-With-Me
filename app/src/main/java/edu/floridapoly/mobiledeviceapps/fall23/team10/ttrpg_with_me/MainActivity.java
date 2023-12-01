@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityLauncher;
     List<Character> characterList;
 
+    DatabaseManager db;
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recyclerAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -34,9 +37,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = new DatabaseManager(this);
+
         characterList = new ArrayList<>();
         recyclerView = findViewById(R.id.charselect_recycler_body);
         recyclerView.setHasFixedSize(true);
+
+        Cursor characterCursor = db.fetchAll("CHARACTERS");
+        if (characterCursor.moveToFirst()) {
+            do {
+                int index = characterCursor.getColumnIndex("JSON");
+                String json = characterCursor.getString(index);
+
+                Character character = ClassManager.fromJson(json, Character.class);
+                characterList.add(character);
+            } while(characterCursor.moveToNext());
+        }
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -83,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 characterList.add(newCharacter);
                 recyclerAdapter.notifyDataSetChanged();
 
-                Toast.makeText(this, "TODO: Connect to backend saving!", Toast.LENGTH_SHORT).show();
+                db.addLine("CHARACTERS", newCharacter.toJson());
                 dialog.dismiss();
             } else {
                 ClassArchetype classArc = new ClassArchetype("Bard");
@@ -93,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 characterList.add(newCharacter);
                 recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
-                //Toast.makeText(this, "One of the three required inputs is empty!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "One of the three required inputs is empty!", Toast.LENGTH_SHORT).show();
             }
         });
 

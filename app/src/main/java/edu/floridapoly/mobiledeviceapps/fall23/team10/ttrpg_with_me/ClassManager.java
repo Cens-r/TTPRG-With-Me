@@ -66,6 +66,13 @@ public class ClassManager {
         return gson.toJson(this);
     }
 
+    public static <T> T fromJson(String json, Class<T> c) {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
+        Gson gson = builder.create();
+        return gson.fromJson(json, c);
+    }
+
     private static class ObservableFieldTypeAdapter implements TypeAdapterFactory {
         @Override
         @SuppressWarnings("unchecked")
