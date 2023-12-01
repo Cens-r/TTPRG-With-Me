@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Character character = ClassManager.fromJson(json, Character.class);
                 characterList.add(character);
+                Character.trackObject(character);
             } while(characterCursor.moveToNext());
         }
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ClassArchetype classArc = ClassManager.fromJson(json, ClassArchetype.class);
                 classList.add(classArc);
+                ClassArchetype.trackObject(classArc);
             } while(classCursor.moveToNext());
         }
 

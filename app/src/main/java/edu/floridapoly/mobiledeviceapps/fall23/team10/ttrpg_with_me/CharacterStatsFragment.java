@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,8 @@ public class CharacterStatsFragment extends Fragment {
         if (characterId < 0) {
             getActivity().finish();
         }
-        character = (Character) Character.getObject(Character.class, characterId - 1);
+        Log.d("Character", "Intent: " + characterId);
+        character = (Character) Character.getObject(Character.class, characterId);
 
         TextView name_view = view.findViewById(R.id.charstats_text_name);
         name_view.setText(character.name);
@@ -141,6 +143,9 @@ public class CharacterStatsFragment extends Fragment {
             statText.setText(String.valueOf(value));
             bonusText.setText(String.valueOf((value - 10) / 2));
             character.stats.put(valueName, value);
+
+
+
             dialog.dismiss();
         });
 

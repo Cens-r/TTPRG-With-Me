@@ -20,19 +20,18 @@ import java.util.List;
 
 public class ClassManager {
     private static final Hashtable<String, List<ClassManager>> classObjects = new Hashtable<>();
-    private static int nextIndex = 0;
+    private static int currentIndex = 0;
 
     @Expose(serialize = false, deserialize = false)
     public int id;
 
     // Constructor
     public ClassManager() {
-        id = nextIndex;
-        nextIndex++;
+        id = -1;
     }
 
     // Starts tracking the given object
-    protected static void trackObject(ClassManager object) {
+    public static void trackObject(ClassManager object) {
         String className = object.getClass().getSimpleName();
         List<ClassManager> objectList;
         if (classObjects.containsKey(className)) {
@@ -43,6 +42,18 @@ public class ClassManager {
         }
         assert objectList != null;
         objectList.add(object);
+        object.id = currentIndex;
+        currentIndex++;
+    }
+    public static void untrackObject(ClassManager object) {
+        String className = object.getClass().getSimpleName();
+        if (object.id == -1) { return; }
+        if (!classObjects.containsKey(className)) { return; }
+        List<ClassManager> objectList = classObjects.get(className);
+        for (int i = object.id + 1; i < objectList.size(); i++) {
+            objectList.get(i).id = i - 1;
+        }
+        objectList.remove(object.id);
     }
 
     // Gets a hashtable of all the objects for a class

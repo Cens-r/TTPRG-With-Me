@@ -2,6 +2,7 @@ package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull CharacterAdapter.MyViewHolder holder, int position) {
         Character character = characterList.get(position);
-        String name = character.getName();
-        String desc = character.getDescription();
         String url = character.getImageURL();
 
         holder.char_name.setText(character.getName());
@@ -56,12 +55,14 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
         holder.card.setOnClickListener(view -> {
             Intent intent = new Intent(context, NavigationActivity.class);
             intent.putExtra("CharacterId", character.id);
+            Log.d("Character", "Character ID: " + character.id);
             context.startActivity(intent);
         });
 
         holder.delete_button.setOnClickListener(view -> {
             db.delete(character.id + 1, "CHARACTERS");
             characterList.remove(character);
+            Character.untrackObject(character);
             notifyDataSetChanged();
         });
     }
