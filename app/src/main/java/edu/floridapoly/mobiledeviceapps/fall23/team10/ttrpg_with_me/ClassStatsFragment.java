@@ -46,7 +46,7 @@ public class ClassStatsFragment extends Fragment {
         if (characterId < 0) {
             getActivity().finish();
         }
-        character = (Character) Character.getObject(Character.class, characterId - 1);
+        character = (Character) Character.getObject(Character.class, characterId);
 
         if (character.Abilities != null) {
             abilityList = character.Abilities;
@@ -79,7 +79,9 @@ public class ClassStatsFragment extends Fragment {
                 abilityList.add(item);
                 character.Abilities.add(item);
                 db.update(character.id, "CHARACTERS", character.toJson());
+                dialog.dismiss();
             });
+            dialog.show();
         });
         return rootView;
     }

@@ -48,26 +48,26 @@
                 android:layout_height="match_parent"
 
                 android:layout_marginRight="10dp"
+                android:layout_weight="0.7"
                 android:gravity="left|center"
                 android:text="Name"
                 android:textColor="@color/dark_text"
                 android:textColorHint="@color/dark_text"
-                android:textSize="20sp"
-                android:layout_weight="0.8"/>
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/createcharacter_edittext_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.3"
                 android:background="@color/white"
-                android:textColor="@color/black"
                 android:hint="Enter Character Name"
+                android:inputType="text"
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:inputType="text"
-                android:textColorHint="#9C9C9C"
-                android:layout_weight="0.2"/>
+                android:textColor="@color/black"
+                android:textColorHint="#9C9C9C" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,26 +82,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
+                android:layout_weight="0.7"
                 android:gravity="left|center"
                 android:text="Race"
                 android:textColor="@color/dark_text"
                 android:textColorHint="@color/dark_text"
-                android:textSize="20sp"
-                android:layout_weight="0.8" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/createcharacter_edittext_race"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.3"
                 android:background="@color/white"
-                android:textColor="@color/black"
                 android:hint="Enter Character Race"
+                android:inputType="text"
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:inputType="text"
-                android:textColorHint="#9C9C9C"
-                android:layout_weight="0.2"/>
+                android:textColor="@color/black"
+                android:textColorHint="#9C9C9C" />
         </LinearLayout>
 
         <LinearLayout
@@ -121,26 +121,26 @@
                 android:layout_height="match_parent"
 
                 android:layout_marginRight="10dp"
+                android:layout_weight="0.7"
                 android:gravity="left|center"
                 android:text="Class"
                 android:textColor="@color/dark_text"
                 android:textColorHint="@color/dark_text"
-                android:textSize="20sp"
-                android:layout_weight="0.8"/>
+                android:textSize="20sp" />
 
             <AutoCompleteTextView
                 android:id="@+id/createcharacter_edittext_class"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.3"
                 android:background="@color/white"
-                android:textColor="@color/black"
                 android:hint="Enter Class Name"
+                android:inputType="textAutoComplete"
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:textColorHint="#9C9C9C"
-                android:inputType="textAutoComplete"
-                android:layout_weight="0.2" />
+                android:textColor="@color/black"
+                android:textColorHint="#9C9C9C" />
         </LinearLayout>
     </LinearLayout>
 

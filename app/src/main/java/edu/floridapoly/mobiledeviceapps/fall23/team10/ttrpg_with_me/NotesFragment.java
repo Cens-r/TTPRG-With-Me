@@ -43,7 +43,7 @@ public class NotesFragment extends Fragment {
         if (characterId < 0) {
             getActivity().finish();
         }
-        character = (Character) Character.getObject(Character.class, characterId - 1);
+        character = (Character) Character.getObject(Character.class, characterId);
 
         if (character.Notes != null) {
             noteList = character.Abilities;
@@ -62,7 +62,7 @@ public class NotesFragment extends Fragment {
         DatabaseManager db = new DatabaseManager(getContext());
         ImageButton createButton = rootView.findViewById(R.id.notes_button_create);
         createButton.setOnClickListener(v -> {
-            Dialog dialog = new Dialog(getContext());
+            Dialog dialog = new Dialog(v.getContext());
             dialog.setContentView(R.layout.dialog_create_item);
             Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
@@ -75,7 +75,9 @@ public class NotesFragment extends Fragment {
                 noteList.add(item);
                 character.Notes.add(item);
                 db.update(character.id, "CHARACTERS", character.toJson());
+                dialog.dismiss();
             });
+            dialog.show();
         });
 
         return rootView;

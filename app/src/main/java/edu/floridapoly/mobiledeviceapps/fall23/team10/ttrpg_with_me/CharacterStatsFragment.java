@@ -128,7 +128,7 @@ public class CharacterStatsFragment extends Fragment {
         int stat = character.stats.get(throwName);
 
         int incr = hasProf ? pBonus : 0;
-        int value = stat + incr;
+        int value = ((stat - 10) / 2) + incr;
         character.savethrow.put(throwName, value);
 
         TextView valueText = element.findViewById(R.id.savethrow_text_value);

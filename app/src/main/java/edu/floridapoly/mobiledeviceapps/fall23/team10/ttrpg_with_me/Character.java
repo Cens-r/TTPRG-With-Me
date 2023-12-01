@@ -24,6 +24,12 @@ public class Character extends ClassManager {
         this.race = race;
         this.class_arc = class_arc;
 
+        this.Notes = new ArrayList<>();
+        this.Abilities = new ArrayList<>();
+        this.Backpack = new Hashtable<String, List<Item>>() {{
+            put("Weapons", new ArrayList<>()); put("Spells", new ArrayList<>()); put("Armor", new ArrayList<>());
+            put("Items", new ArrayList<>()); put("Extras", new ArrayList<>());
+        }};
         trackObject(this);
     }
 
@@ -57,10 +63,7 @@ public class Character extends ClassManager {
 
     public List<Item> Abilities;
     public List<Item> Notes;
-    public Hashtable<String, List<Item>> Backpack = new Hashtable<String, List<Item>>() {{
-        put("Weapons", new ArrayList<>()); put("Spells", new ArrayList<>()); put("Armor", new ArrayList<>());
-        put("Items", new ArrayList<>()); put("Extras", new ArrayList<>());
-    }};
+    public Hashtable<String, List<Item>> Backpack;
 
     int currentHp;
     int totalHp;

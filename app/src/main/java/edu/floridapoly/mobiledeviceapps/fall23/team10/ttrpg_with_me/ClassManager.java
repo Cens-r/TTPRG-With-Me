@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ClassManager {
     private static final Hashtable<String, List<ClassManager>> classObjects = new Hashtable<>();
-    private static int currentIndex = 0;
+    private static final Hashtable<String, Integer> currentIndexes = new Hashtable<>();
 
     @Expose(serialize = false, deserialize = false)
     public int id;
@@ -39,11 +39,12 @@ public class ClassManager {
         } else {
             objectList = new ArrayList<>();
             classObjects.put(className, objectList);
+            currentIndexes.put(className, 0);
         }
         assert objectList != null;
         objectList.add(object);
-        object.id = currentIndex;
-        currentIndex++;
+        object.id = currentIndexes.get(className);
+        currentIndexes.put(className, object.id + 1);
     }
     public static void untrackObject(ClassManager object) {
         String className = object.getClass().getSimpleName();

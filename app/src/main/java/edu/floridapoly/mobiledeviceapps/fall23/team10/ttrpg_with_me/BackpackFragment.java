@@ -44,6 +44,12 @@ public class BackpackFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getActivity().getIntent();
+        int characterId = intent.getIntExtra("CharacterId", -1);
+        if (characterId < 0) {
+            getActivity().finish();
+        }
+        character = (Character) Character.getObject(Character.class, characterId);
     }
 
     @Override
@@ -51,13 +57,6 @@ public class BackpackFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentBackpackBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
-
-        Intent intent = getActivity().getIntent();
-        int characterId = intent.getIntExtra("CharacterId", -1);
-        if (characterId < 0) {
-            getActivity().finish();
-        }
-        character = (Character) Character.getObject(Character.class, characterId - 1);
 
         db = new DatabaseManager(container.getContext());
 
@@ -115,7 +114,7 @@ public class BackpackFragment extends Fragment {
             headerText.setText(name);
             generateButton.setOnClickListener(view -> {
                 executor.execute(() -> {
-                    Item item = Item.Generate(name, null);
+                    Item item = Item.Generate(name, character);
                     handler.post(() -> {
                         if (item != null) {
                             View itemView = this.createItem(item);
@@ -151,7 +150,9 @@ public class BackpackFragment extends Fragment {
                     Item item = new Item(header.getText().toString(), body.getText().toString());
                     character.Backpack.get(name).add(item);
                     db.update(character.id, "CHARACTERS", character.toJson());
+                    dialog.dismiss();
                 });
+                dialog.show();
             });
         }
 
