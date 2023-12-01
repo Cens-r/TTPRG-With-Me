@@ -75,6 +75,7 @@ public class ClassManager {
         return gson.fromJson(json, c);
     }
 
+    /*
     private static class ObservableFieldTypeAdapter implements TypeAdapterFactory {
         @Override
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
@@ -94,4 +95,5 @@ public class ClassManager {
             };
         }
     }
+    */
 }

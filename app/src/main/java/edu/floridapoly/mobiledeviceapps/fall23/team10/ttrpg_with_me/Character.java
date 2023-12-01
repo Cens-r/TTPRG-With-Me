@@ -48,9 +48,9 @@ public class Character extends ClassManager {
 
     int hp;
     int hitDice;
-    ObservableField<Integer> pBonus = new ObservableField<Integer>(2);
+    int pBonus = 2;
     int exp;
-    int level;
+    int level = 1;
 
     JSONObject cclass;
 
@@ -65,19 +65,19 @@ public class Character extends ClassManager {
     int currentHp;
     int totalHp;
 
-    Hashtable<String, ObservableField<Integer>> stats = new Hashtable<String, ObservableField<Integer>>() {{
-        put("STR", new ObservableField<>(10)); put("CON", new ObservableField<>(10)); put("DEX", new ObservableField<>(10));
-        put("INT", new ObservableField<>(10)); put("WIS", new ObservableField<>(10)); put("CHA", new ObservableField<>(10));
+    Hashtable<String, Integer> stats = new Hashtable<String, Integer>() {{
+        put("STR", 10); put("CON", 10); put("DEX", 10);
+        put("INT", 10); put("WIS", 10); put("CHA", 10);
     }};
 
-    Hashtable<String, ObservableField<Integer>> savethrow = new Hashtable<String, ObservableField<Integer>>() {{
-        put("STR", new ObservableField<>(10)); put("CON", new ObservableField<>(10)); put("DEX", new ObservableField<>(10));
-        put("INT", new ObservableField<>(10)); put("WIS", new ObservableField<>(10)); put("CHA", new ObservableField<>(10));
+    Hashtable<String, Integer> savethrow = new Hashtable<String, Integer>() {{
+        put("STR", 10); put("CON", 10); put("DEX", 10);
+        put("INT", 10); put("WIS", 10); put("CHA", 10);
     }};
 
-    Hashtable<String, ObservableField<Boolean>> saveBools = new Hashtable<String, ObservableField<Boolean>>() {{
-        put("STR", new ObservableField<>(false)); put("CON", new ObservableField<>(false)); put("DEX", new ObservableField<>(false));
-        put("INT", new ObservableField<>(false)); put("WIS", new ObservableField<>(false)); put("CHA", new ObservableField<>(false));
+    Hashtable<String, Boolean> saveBools = new Hashtable<String, Boolean>() {{
+        put("STR", false); put("CON", false); put("DEX", false);
+        put("INT", false); put("WIS", false); put("CHA", false);
     }};
 
     Hashtable<String, Integer> skills = new Hashtable<String, Integer>() {{
@@ -93,7 +93,7 @@ public class Character extends ClassManager {
         level += 1;
         int [] p = {5, 9, 13, 17,};
         for (int i: p) {
-            if (p[i] == level) { pBonus.set(pBonus.get() + 1); }
+            if (p[i] == level) { pBonus++; }
         }
     }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
-import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,8 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,9 +77,7 @@ public class CharacterStatsFragment extends Fragment {
             TextView statText = block.findViewById(R.id.statblock_text_stat);
             TextView bonusText = block.findViewById(R.id.statblock_text_bonus);
 
-            ObservableField<Integer> stat = character.stats.get(name);
-
-            int value = stat.get();
+            int value = character.stats.get(name);
             statText.setText(String.valueOf(value));
             bonusText.setText(String.valueOf((value - 10) / 2));
 
@@ -100,8 +95,8 @@ public class CharacterStatsFragment extends Fragment {
             String name = statNameArr.get(statIndex);
             ((TextView) element.findViewById(R.id.savethrow_text_name)).setText(name);
 
-            ObservableField<Boolean> saveBool = character.saveBools.get(name);
-            UpdateSaveThrow(element, name, saveBool.get());
+            Boolean saveBool = character.saveBools.get(name);
+            UpdateSaveThrow(element, name, saveBool);
 
             RadioButton radiobutton = element.findViewById(R.id.savethrow_radio_button);
 
@@ -110,7 +105,7 @@ public class CharacterStatsFragment extends Fragment {
                 isChecked.set(!isChecked.get());
                 radiobutton.setChecked(isChecked.get());
                 UpdateSaveThrow(element, name, isChecked.get());
-                saveBool.set(isChecked.get());
+                character.saveBools.put(name, isChecked.get());
             });
             statIndex++;
         }
@@ -121,13 +116,12 @@ public class CharacterStatsFragment extends Fragment {
     }
 
     private void UpdateSaveThrow(View element, String throwName, Boolean hasProf) {
-        ObservableField<Integer> pBonus = character.pBonus;
-        ObservableField<Integer> stat = character.stats.get(throwName);
-        ObservableField<Integer> savethrow = character.savethrow.get(throwName);
+        int pBonus = character.pBonus;
+        int stat = character.stats.get(throwName);
 
-        int incr = hasProf ? pBonus.get() : 0;
-        int value = stat.get() + incr;
-        savethrow.set(value);
+        int incr = hasProf ? pBonus : 0;
+        int value = stat + incr;
+        character.savethrow.put(throwName, value);
 
         TextView valueText = element.findViewById(R.id.savethrow_text_value);
         valueText.setText(String.valueOf(value));
@@ -138,19 +132,14 @@ public class CharacterStatsFragment extends Fragment {
 
         EditText valueInput = dialog.findViewById(R.id.valuedialog_edittext_value);
         AppCompatButton saveButton = dialog.findViewById(R.id.valuedialog_button_save);
-
         TextView statText = element.findViewById(R.id.statblock_text_stat);
         TextView bonusText = element.findViewById(R.id.statblock_text_bonus);
 
-        ObservableField<Integer> stat = character.stats.get(valueName);
         saveButton.setOnClickListener(v -> {
             int value = Integer.valueOf(valueInput.getText().toString());
-            assert stat != null;
-
             statText.setText(String.valueOf(value));
             bonusText.setText(String.valueOf((value - 10) / 2));
-            stat.set(value);
-
+            character.stats.put(valueName, value);
             dialog.dismiss();
         });
 
