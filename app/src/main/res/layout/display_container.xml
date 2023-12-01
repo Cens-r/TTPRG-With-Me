@@ -1,63 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/display_card_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="5dp"
-    app:cardBackgroundColor="@color/dark_secondary"
-    app:cardCornerRadius="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="header"
+            type="androidx.databinding.ObservableField&lt;String&gt;" />
+        <variable
+            name="body"
+            type="androidx.databinding.ObservableField&lt;String&gt;" />
+    </data>
 
-    <RelativeLayout
-        android:id="@+id/display_relative_container"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/display_card_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:id="@+id/display_text_body"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="@color/dark_secondary"
+        app:cardCornerRadius="10dp">
+    
+        <RelativeLayout
+            android:id="@+id/display_relative_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/display_constraint_header"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@{body}"
-            android:textColor="@color/dark_text"
-            android:textSize="15sp" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/display_constraint_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
-
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+    
             <TextView
-                android:id="@+id/display_text_header"
-                android:layout_width="wrap_content"
+                android:id="@+id/display_text_body"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{header}"
+                android:layout_below="@id/display_constraint_header"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{body}"
                 android:textColor="@color/dark_text"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/display_button_favorite"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_star_outline" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </RelativeLayout>
-
-</androidx.cardview.widget.CardView>
+                android:textSize="15sp" />
+    
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/display_constraint_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+    
+                <TextView
+                    android:id="@+id/display_text_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{header}"
+                    android:textColor="@color/dark_text"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+    
+                <ImageButton
+                    android:id="@+id/display_button_favorite"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_star_outline" />
+    
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+    
+    </androidx.cardview.widget.CardView>
+</layout>

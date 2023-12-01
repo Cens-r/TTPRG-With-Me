@@ -1,9 +1,12 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.database.Observable;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.DisplayContainerBinding;
 import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.FragmentBackpackBinding;
 
 public class BackpackFragment extends Fragment {
@@ -31,6 +35,8 @@ public class BackpackFragment extends Fragment {
     String[] nameList = {"Weapons", "Spells", "Armor", "Items", "Extras"};
     List<ItemContainer> itemContainers;
 
+    FragmentBackpackBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +45,9 @@ public class BackpackFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_backpack, container, false);
+        binding = FragmentBackpackBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
+
         itemContainers = new ArrayList<>();
         ViewGroup linearLayout = rootView.findViewById(R.id.backpack_linear_container);
         for (int index = 0; index < linearLayout.getChildCount(); index++) {
@@ -60,6 +68,12 @@ public class BackpackFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private static class ItemViewModel extends ViewModel {
+        ObservableField<String> header;
+        ObservableField<String> body;
+        ObservableField<Boolean> favorite;
     }
 
     public static class ItemContainer {
@@ -110,7 +124,9 @@ public class BackpackFragment extends Fragment {
             LayoutInflater inflater = LayoutInflater.from(layout.getContext());
             View view = inflater.inflate(R.layout.display_container, layout, false);
 
-
+            DisplayContainerBinding itemBinding = DisplayContainerBinding.bind(view);
+            itemBinding.setHeader(itemObject.name);
+            itemBinding.setBody(itemObject.description);
 
             if (!isExpanded) {
                 view.setVisibility(View.GONE);

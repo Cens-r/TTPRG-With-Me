@@ -17,7 +17,7 @@ import java.util.Hashtable;
 import java.util.UUID;
 
 public class ClassManager {
-    private static Hashtable<String, Hashtable<String, ClassManager>> classObjects = new Hashtable<>();
+    private static final Hashtable<String, Hashtable<String, ClassManager>> classObjects = new Hashtable<>();
     public UUID uuid;
 
     // Constructor
@@ -35,17 +35,18 @@ public class ClassManager {
             objectList = new Hashtable<>();
             classObjects.put(className, objectList);
         }
+        assert objectList != null;
         objectList.put(object.uuid.toString(), object);
     }
 
     // Gets a hashtable of all the objects for a class
-    public static Hashtable<String, ClassManager> getObjects(Class classRef) {
+    public static Hashtable<String, ClassManager> getObjects(Class<?> classRef) {
         String className = classRef.getSimpleName();
         return classObjects.get(className);
     }
 
     // Gets an object given its class and uuid
-    public static ClassManager getObject(Class classRef, String uuid) {
+    public static ClassManager getObject(Class<?> classRef, String uuid) {
         Hashtable<String, ClassManager> objectList = getObjects(classRef);
         if (objectList == null) { return null; }
         return objectList.get(uuid);
@@ -61,6 +62,7 @@ public class ClassManager {
 
     private static class ObservableFieldTypeAdapter implements TypeAdapterFactory {
         @Override
+        @SuppressWarnings("unchecked")
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
             if (type.getRawType() != ObservableField.class) { return null; }
             Type param = ((ParameterizedType) type.getType()).getActualTypeArguments()[0];
