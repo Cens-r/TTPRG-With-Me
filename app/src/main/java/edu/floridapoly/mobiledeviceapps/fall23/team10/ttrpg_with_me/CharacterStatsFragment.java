@@ -77,6 +77,14 @@ public class CharacterStatsFragment extends Fragment {
         for (View block : StatBlocks) {
             String name = statNameArr.get(statIndex);
             ((TextView) block.findViewById(R.id.statblock_text_name)).setText(name);
+            TextView statText = block.findViewById(R.id.statblock_text_stat);
+            TextView bonusText = block.findViewById(R.id.statblock_text_bonus);
+
+            ObservableField<Integer> stat = character.stats.get(name);
+
+            int value = stat.get();
+            statText.setText(String.valueOf(value));
+            bonusText.setText(String.valueOf((value - 10) / 2));
 
             block.setOnClickListener(v -> promptValueChange(block, name));
             statIndex++;
@@ -98,7 +106,7 @@ public class CharacterStatsFragment extends Fragment {
 
         TextView nameText = dialog.findViewById(R.id.valuedialog_text_name);
         nameText.setText(valueName);
-        EditText valueInput = dialog.findViewById(R.id.valuedialog_text_name);
+        EditText valueInput = dialog.findViewById(R.id.valuedialog_edittext_value);
         AppCompatButton saveButton = dialog.findViewById(R.id.valuedialog_button_save);
 
         TextView statText = element.findViewById(R.id.statblock_text_stat);
@@ -112,6 +120,8 @@ public class CharacterStatsFragment extends Fragment {
             statText.setText(String.valueOf(value));
             bonusText.setText(String.valueOf((value - 10) / 2));
             stat.set(value);
+
+            dialog.dismiss();
         });
 
         dialog.show();
