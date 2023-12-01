@@ -1,8 +1,10 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
@@ -13,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +39,7 @@ public class BackpackFragment extends Fragment {
 
     FragmentBackpackBinding binding;
     static Character character;
+    static DatabaseManager db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,8 @@ public class BackpackFragment extends Fragment {
             getActivity().finish();
         }
         character = (Character) Character.getObject(Character.class, characterId - 1);
+
+        db = new DatabaseManager(container.getContext());
 
         itemContainers = new ArrayList<>();
         ViewGroup linearLayout = rootView.findViewById(R.id.backpack_linear_container);
@@ -113,6 +120,7 @@ public class BackpackFragment extends Fragment {
                         if (item != null) {
                             View itemView = this.createItem(item);
                             itemList.add(itemView);
+                            db.update(character.id, "CHARACTERS", character.toJson());
                         } else {
                             Toast.makeText(this.container.getContext(), "Couldn't create item!", Toast.LENGTH_SHORT).show();
                         }
@@ -127,6 +135,23 @@ public class BackpackFragment extends Fragment {
                 }
                 arrowButton.setImageResource((isExpanded) ? R.drawable.ic_collapse_arrow : R.drawable.ic_expand_arrow);
                 isExpanded = !isExpanded;
+            });
+
+            ImageButton createButton = container.findViewById(R.id.item_button_create);
+            createButton.setOnClickListener(v -> {
+                Dialog dialog = new Dialog(container.getContext());
+                dialog.setContentView(R.layout.dialog_create_item);
+                Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+                AppCompatButton saveButton = dialog.findViewById(R.id.createdialog_button_save);
+                saveButton.setOnClickListener(view -> {
+                    EditText header = dialog.findViewById(R.id.createdialog_editText_header);
+                    EditText body = dialog.findViewById(R.id.createdialog_edittext_body);
+
+                    Item item = new Item(header.getText().toString(), body.getText().toString());
+                    character.Backpack.get(name).add(item);
+                    db.update(character.id, "CHARACTERS", character.toJson());
+                });
             });
         }
 

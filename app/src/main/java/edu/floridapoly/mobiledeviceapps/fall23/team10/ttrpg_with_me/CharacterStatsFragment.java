@@ -33,6 +33,8 @@ import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.
 public class CharacterStatsFragment extends Fragment {
     static final List<String> statNameArr = Arrays.asList("STR", "CON", "DEX", "INT", "WIS", "CHA");
 
+    DatabaseManager db;
+
     Character character;
     FragmentCharacterStatsBinding binding;
 
@@ -49,6 +51,8 @@ public class CharacterStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCharacterStatsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        db = new DatabaseManager(getContext());
 
         Intent intent = getActivity().getIntent();
         int characterId = intent.getIntExtra("CharacterId", -1);
@@ -109,6 +113,7 @@ public class CharacterStatsFragment extends Fragment {
                 radiobutton.setChecked(isChecked.get());
                 UpdateSaveThrow(element, name, isChecked.get());
                 character.saveBools.put(name, isChecked.get());
+                db.update(character.id, "CHARACTERS", character.toJson());
             });
             statIndex++;
         }
@@ -144,8 +149,7 @@ public class CharacterStatsFragment extends Fragment {
             bonusText.setText(String.valueOf((value - 10) / 2));
             character.stats.put(valueName, value);
 
-
-
+            db.update(character.id, "CHARACTERS", character.toJson());
             dialog.dismiss();
         });
 

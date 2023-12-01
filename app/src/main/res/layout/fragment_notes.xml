@@ -27,7 +27,7 @@
         android:paddingBottom="10dp">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/notes_button_create"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginEnd="10dp"

@@ -1,8 +1,10 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,9 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NotesFragment extends Fragment {
     Character character;
@@ -52,6 +58,26 @@ public class NotesFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerAdapter = new ItemAdapter(noteList, getContext());
         recyclerView.setAdapter(recyclerAdapter);
+
+        DatabaseManager db = new DatabaseManager(getContext());
+        ImageButton createButton = rootView.findViewById(R.id.notes_button_create);
+        createButton.setOnClickListener(v -> {
+            Dialog dialog = new Dialog(getContext());
+            dialog.setContentView(R.layout.dialog_create_item);
+            Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+            AppCompatButton saveButton = dialog.findViewById(R.id.createdialog_button_save);
+            saveButton.setOnClickListener(view -> {
+                EditText header = dialog.findViewById(R.id.createdialog_editText_header);
+                EditText body = dialog.findViewById(R.id.createdialog_edittext_body);
+
+                Item item = new Item(header.getText().toString(), body.getText().toString());
+                noteList.add(item);
+                character.Notes.add(item);
+                db.update(character.id, "CHARACTERS", character.toJson());
+            });
+        });
+
         return rootView;
     }
 }
