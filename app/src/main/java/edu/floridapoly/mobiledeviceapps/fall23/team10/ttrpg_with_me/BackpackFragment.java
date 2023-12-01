@@ -130,7 +130,7 @@ public class BackpackFragment extends Fragment {
             itemBinding.setFavorited(itemObject.favorited);
 
             itemBinding.displayButtonFavorite.setOnClickListener(v -> {
-                itemObject.favorited(!itemObject.favorited.get());
+                itemObject.favorited(Boolean.FALSE.equals(itemObject.favorited.get()));
             });
 
             if (!isExpanded) {

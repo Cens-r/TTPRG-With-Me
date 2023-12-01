@@ -2,18 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="name"
-            type="String" />
-        <variable
-            name="bonus"
-            type="androidx.databinding.ObservableField&lt;Integer&gt;" />
-        <variable
-            name="stat"
-            type="androidx.databinding.ObservableField&lt;Integer&gt;" />
-    </data>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/statblock_card_container"
         android:layout_width="wrap_content"
@@ -40,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@{name, default=`STAT NAME`}"
+                android:text="STAT NAME"
                 android:textColor="@color/dark_text"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="10dp"
-                android:text="@{stat, default=`STAT`}"
+                android:text="STAT"
                 android:textColor="@color/dark_text"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@{(stat - 10)/2, default=`BONUS`}"
+                android:text="BONUS"
                 android:textColor="@color/dark_text"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="@+id/statblock_text_name"
