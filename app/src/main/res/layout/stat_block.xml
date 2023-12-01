@@ -1,65 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/statblock_card_container"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/dark_secondary"
-    app:cardCornerRadius="10dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:clickable="true"
-    android:focusable="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/statblock_constraint_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
+    <data>
+        <variable
+            name="name"
+            type="androidx.databinding.ObservableField&lt;String&gt;" />
+        <variable
+            name="bonus"
+            type="androidx.databinding.ObservableField&lt;Integer&gt;" />
+        <variable
+            name="stat"
+            type="androidx.databinding.ObservableField&lt;Integer&gt;" />
+    </data>
 
-        <TextView
-            android:id="@+id/statblock_text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="STAT NAME"
-            android:textColor="@color/dark_text"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/statblock_card_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/dark_secondary"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true">
 
-        <TextView
-            android:id="@+id/statblock_text_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="10dp"
-            android:text="STAT"
-            android:textColor="@color/dark_text"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/statblock_text_bonus"
-            app:layout_constraintStart_toStartOf="@+id/statblock_text_bonus"
-            app:layout_constraintTop_toBottomOf="@+id/statblock_text_bonus" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/statblock_constraint_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
 
-        <TextView
-            android:id="@+id/statblock_text_bonus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="BONUS"
-            android:textColor="@color/dark_text"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="@+id/statblock_text_name"
-            app:layout_constraintStart_toStartOf="@+id/statblock_text_name"
-            app:layout_constraintTop_toBottomOf="@+id/statblock_text_name" />
+            <TextView
+                android:id="@+id/statblock_text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{name, default=`STAT NAME`}"
+                android:textColor="@color/dark_text"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/statblock_text_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{stat, default=`STAT`}"
+                android:textColor="@color/dark_text"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/statblock_text_bonus"
+                app:layout_constraintStart_toStartOf="@+id/statblock_text_bonus"
+                app:layout_constraintTop_toBottomOf="@+id/statblock_text_bonus" />
+
+            <TextView
+                android:id="@+id/statblock_text_bonus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@{bonus, default=`BONUS`}"
+                android:textColor="@color/dark_text"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="@+id/statblock_text_name"
+                app:layout_constraintStart_toStartOf="@+id/statblock_text_name"
+                app:layout_constraintTop_toBottomOf="@+id/statblock_text_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

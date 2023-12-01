@@ -1,8 +1,6 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
-import android.database.Observable;
 import android.util.Log;
-import android.view.View;
 
 import androidx.databinding.ObservableField;
 

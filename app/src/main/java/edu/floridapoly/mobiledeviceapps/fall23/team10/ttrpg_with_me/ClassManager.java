@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
+import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -13,43 +14,48 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.UUID;
+import java.util.List;
 
 public class ClassManager {
-    private static final Hashtable<String, Hashtable<String, ClassManager>> classObjects = new Hashtable<>();
-    public UUID uuid;
+    private static final Hashtable<String, List<ClassManager>> classObjects = new Hashtable<>();
+    private static int nextIndex = 0;
+
+    @Expose(serialize = false, deserialize = false)
+    public int id;
 
     // Constructor
     public ClassManager() {
-        uuid = UUID.randomUUID();
+        id = nextIndex;
+        nextIndex++;
     }
 
     // Starts tracking the given object
     protected static void trackObject(ClassManager object) {
         String className = object.getClass().getSimpleName();
-        Hashtable<String, ClassManager> objectList;
+        List<ClassManager> objectList;
         if (classObjects.containsKey(className)) {
             objectList = classObjects.get(className);
         } else {
-            objectList = new Hashtable<>();
+            objectList = new ArrayList<>();
             classObjects.put(className, objectList);
         }
         assert objectList != null;
-        objectList.put(object.uuid.toString(), object);
+        objectList.add(object);
     }
 
     // Gets a hashtable of all the objects for a class
-    public static Hashtable<String, ClassManager> getObjects(Class<?> classRef) {
+    public static List<ClassManager> getObjects(Class<?> classRef) {
         String className = classRef.getSimpleName();
         return classObjects.get(className);
     }
 
     // Gets an object given its class and uuid
-    public static ClassManager getObject(Class<?> classRef, String uuid) {
-        Hashtable<String, ClassManager> objectList = getObjects(classRef);
+    public static ClassManager getObject(Class<?> classRef, int id) {
+        List<ClassManager> objectList = getObjects(classRef);
         if (objectList == null) { return null; }
-        return objectList.get(uuid);
+        return objectList.get(id);
     }
 
     // Converts an object to Json String

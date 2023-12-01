@@ -57,13 +57,13 @@ public class BackpackFragment extends Fragment {
 
         ImageButton createButton = rootView.findViewById(R.id.backpack_button_create);
         createButton.setOnClickListener(v -> {
-            Hashtable<String, ClassManager> items = Item.getObjects(Item.class);
+            List<ClassManager> items = Item.getObjects(Item.class);
             if (items != null) {
-                items.forEach((key, value) -> {
-                    Item item = (Item) value;
+                for (ClassManager managerItem : items) {
+                    Item item = (Item) managerItem;
                     item.favorited(Boolean.FALSE.equals(item.favorited.get()));
                     Log.d("Backpack", item.toJson());
-                });
+                }
             }
         });
 

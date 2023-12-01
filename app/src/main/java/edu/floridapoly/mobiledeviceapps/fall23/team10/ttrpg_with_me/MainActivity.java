@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,11 +17,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityLauncher;
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private void showDialog() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_character_create);
-        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
         EditText nameInput = dialog.findViewById(R.id.createcharacter_edittext_name);
         EditText raceInput = dialog.findViewById(R.id.createcharacter_edittext_race);

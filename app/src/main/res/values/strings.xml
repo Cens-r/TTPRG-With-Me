@@ -10,4 +10,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="character_select_description">This should be a description of the page and what you\'re supposed do on it!</string>
     <string name="notes">Notes</string>
+
+    <string name="placeholder_body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Neque laoreet suspendisse interdum consectetur libero id.</string>
 </resources>

@@ -76,7 +76,7 @@ public class CharacterStatsFragment extends Fragment {
         for (int i = 0; i < elementCount; i++) {
             View element = container.getChildAt(i);
             if (element instanceof CardView) {
-                RadioButton radio = element.findViewById(R.id.skillblock_radio_select);
+                RadioButton radio = element.findViewById(R.id.skillblock_radio_select2);
                 AtomicBoolean isChecked = new AtomicBoolean(false);
                 radio.setOnClickListener(view -> {
                     isChecked.set(!isChecked.get());

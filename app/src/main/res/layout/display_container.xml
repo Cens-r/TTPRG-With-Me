@@ -38,7 +38,7 @@
                 android:layout_below="@id/display_constraint_header"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@{body, default=`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Neque laoreet suspendisse interdum consectetur libero id.`}"
+                android:text="@{body, default=@string/placeholder_body}"
                 android:textColor="@color/dark_text"
                 android:textSize="15sp" />
     
