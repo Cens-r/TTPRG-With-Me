@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/statvalue_frame_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <data>
-        <variable
-            name="name"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
-        <variable
-            name="value"
-            type="androidx.databinding.ObservableField&lt;Integer&gt;" />
-    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/statvalue_constraint_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/statvalue_frame_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/statvalue_text_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STAT"
+            android:textColor="@color/dark_text"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/statvalue_constraint_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/statvalue_text_stat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{value, default=`STAT`}"
-                android:textColor="@color/dark_text"
-                android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/statvalue_text_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{name, default=`STAT NAME`}"
-                android:textColor="@color/dark_text"
-                android:textSize="13sp"
-                app:layout_constraintEnd_toEndOf="@+id/statvalue_text_stat"
-                app:layout_constraintStart_toStartOf="@+id/statvalue_text_stat"
-                app:layout_constraintTop_toBottomOf="@+id/statvalue_text_stat" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
-</layout>
+        <TextView
+            android:id="@+id/statvalue_text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STAT NAME"
+            android:textColor="@color/dark_text"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/statvalue_text_stat"
+            app:layout_constraintStart_toStartOf="@+id/statvalue_text_stat"
+            app:layout_constraintTop_toBottomOf="@+id/statvalue_text_stat" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
