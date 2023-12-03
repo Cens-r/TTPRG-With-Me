@@ -20,7 +20,6 @@ public class Character extends ClassManager {
     // ClassArchetype object holds level
     // Future-proofing the app, allows for multi-class characters in future
     ClassArchetype class_arc;
-    List<Note> notes;
 
     public Character(String name, String race, ClassArchetype class_arc) {
         this.name = name;
@@ -48,7 +47,6 @@ public class Character extends ClassManager {
         return image_url;
     }
     public ClassArchetype getClassArc() { return class_arc; }
-    public List<Note> getNotes() { return notes; }
 
     // Setter Methods
     public void setImageUrl(String url) {
@@ -64,9 +62,9 @@ public class Character extends ClassManager {
     JSONObject cclass;
 
 
-    public List<Item> Abilities;
-    public List<Item> Notes;
-    public Hashtable<String, List<Item>> Backpack;
+    public transient List<Item> Abilities;
+    public transient List<Item> Notes;
+    public transient Hashtable<String, List<Item>> Backpack;
 
     int currentHp;
     int totalHp;

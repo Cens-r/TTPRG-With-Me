@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseManager extends SQLiteOpenHelper {
     SQLiteDatabase db = getWritableDatabase();
     static final String table = " (pk INTEGER PRIMARY KEY AUTOINCREMENT, JSON TEXT);";
+
     public DatabaseManager(Context context) {
         super(context, "Dnd", null, 1);
     }
@@ -17,10 +18,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE CHARACTERS" + table);
         db.execSQL("CREATE TABLE CLASSES" + table);
+        db.execSQL("CREATE TABLE ITEMS (pk INTEGER PRIMARY KEY AUTOINCREMENT, fk NOT NULL, JSON TEXT, TYPE TEXT)");
     }
 
-    public long addLine(String Type, String json)
-    {
+    public long addLine(String Type, String json) {
         ContentValues values = new ContentValues();
 
         values.put("JSON", json);
@@ -28,44 +29,52 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return key;
     }
 
-    public void update(long pk, String Type, String json)
-    {
+    public void update(long pk, String Type, String json) {
         ContentValues cv = new ContentValues();
         cv.put("JSON", json);
-        if(pk == -1) {
+        if (pk == -1) {
             db.insert(Type, null, cv);
         } else {
-            db.update(Type, cv, "pk = ?", new String[] { String.valueOf(pk) });
+            db.update(Type, cv, "pk = ?", new String[]{String.valueOf(pk)});
         }
     }
 
-    public String getJson(long pk, String Type)
-    {
+    public String getJson(long pk, String Type) {
         Cursor c = db.rawQuery("SELECT JSON FROM " + Type + " WHERE pk = " + pk, null);
         c.moveToFirst();
 
-        int i  = c.getColumnIndex("JSON");
+        int i = c.getColumnIndex("JSON");
         String json = c.getString(i);
         c.close();
         return json;
     }
 
-    public Cursor fetchAll(String Type)
-    {
+    public Cursor fetchAll(String Type) {
         Cursor c = db.rawQuery("SELECT * FROM " + Type, null);
         return c;
     }
 
-    public void delete(long pk, String Type)
-    {
-        db.delete(Type, "pk = ?", new String[] {String.valueOf(pk)});
+    public Cursor getItems(long fk, String Type) {
+        Cursor c = db.rawQuery("SELECT pk, JSON FROM ITEMS WHERE TYPE =? AND fk =? ", new String[]{Type, String.valueOf(fk)});
+        return c;
     }
 
-    public void deleteLine(long pk, String Type)
+    public long setItem(long fk, String json, String Type)
     {
-        db.execSQL("DELETE FROM " + Type + " WHERE pk = " + pk);
+        ContentValues values = new ContentValues();
+
+        values.put("JSON", json);
+        values.put("TYPE", Type);
+        values.put("fk", fk);
+        long key = db.insert("ITEMS", null, values);
+        return key;
+    }
+
+    public void delete(long pk, String Type) {
+        db.delete(Type, "pk = ?", new String[]{String.valueOf(pk)});
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    }
 }

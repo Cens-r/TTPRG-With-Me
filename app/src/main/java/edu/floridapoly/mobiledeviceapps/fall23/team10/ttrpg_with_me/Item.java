@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
+import com.google.gson.annotations.Expose;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class Item {
+public class Item extends ClassManager {
     private final static String API_KEY = "AIzaSyDUohOwTPg5-OpYdRQupOXEFXh_l9WvYlc";
     private final static String URL_STR = "https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key=" + API_KEY;
 

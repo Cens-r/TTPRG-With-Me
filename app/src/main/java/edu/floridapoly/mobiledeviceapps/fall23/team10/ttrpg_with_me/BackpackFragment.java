@@ -105,6 +105,7 @@ public class BackpackFragment extends Fragment {
                     Item item = Item.Generate(name, character);
                     handler.post(() -> {
                         if (item != null) {
+                            db.setItem(character.pk, item.toJson(), name);
                             View itemView = this.createItem(item);
                             itemList.add(itemView);
                             db.update(character.id, "CHARACTERS", character.toJson());

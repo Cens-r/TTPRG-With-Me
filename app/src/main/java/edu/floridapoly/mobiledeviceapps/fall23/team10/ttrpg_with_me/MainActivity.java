@@ -59,6 +59,42 @@ public class MainActivity extends AppCompatActivity {
                 character.pk = pk;
                 Character.trackObject(character);
                 characterList.add(character);
+
+                character.Backpack.forEach((key, value) -> {
+                    Cursor itemCursor = db.getItems(pk, key);
+                    if (itemCursor.moveToFirst()) {
+                        do {
+                            int itemJsonIndex = itemCursor.getColumnIndex("JSON");
+                            String itemJson = itemCursor.getString(itemJsonIndex);
+
+                            Item item = ClassManager.fromJson(itemJson, Item.class);
+                            character.Backpack.get(key).add(item);
+                        } while(itemCursor.moveToNext());
+                    }
+                });
+
+                Cursor noteCursor = db.getItems(pk, "Notes");
+                if (noteCursor.moveToFirst()) {
+                    do {
+                        int itemJsonIndex = noteCursor.getColumnIndex("JSON");
+                        String itemJson = noteCursor.getString(itemJsonIndex);
+
+                        Item item = ClassManager.fromJson(itemJson, Item.class);
+                        character.Notes.add(item);
+                    } while(noteCursor.moveToNext());
+                }
+
+                Cursor abilityCursor = db.getItems(pk, "Abilities");
+                if (abilityCursor.moveToFirst()) {
+                    do {
+                        int itemJsonIndex = abilityCursor.getColumnIndex("JSON");
+                        String itemJson = abilityCursor.getString(itemJsonIndex);
+
+                        Item item = ClassManager.fromJson(itemJson, Item.class);
+                        character.Abilities.add(item);
+                    } while(abilityCursor.moveToNext());
+                }
+
             } while(characterCursor.moveToNext());
         }
 

@@ -66,7 +66,7 @@ public class NotesFragment extends Fragment {
 
                 Item item = new Item(header.getText().toString(), body.getText().toString());
                 character.Notes.add(item);
-                db.update(character.id, "CHARACTERS", character.toJson());
+                db.setItem(character.pk, item.toJson(), "Notes");
                 recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             });
