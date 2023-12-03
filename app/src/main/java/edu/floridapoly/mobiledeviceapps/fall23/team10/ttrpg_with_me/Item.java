@@ -1,5 +1,7 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import androidx.databinding.ObservableField;
@@ -19,15 +21,21 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
 
 public class Item extends ClassManager {
     private final static String API_KEY = "AIzaSyDUohOwTPg5-OpYdRQupOXEFXh_l9WvYlc";
     private final static String URL_STR = "https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key=" + API_KEY;
 
+    private final static Integer MEMORY_SIZE = 5;
+
     // Format Variables: Item Type, Level, Race, Class
     private final static String ITEM_PROMPT =
             "Create and explain a DnD %s item for a level %d %s %s using the JSON format.\n" +
-            "It should only have a name and description key.";
+            "It should only have a name and description key. Do not generate any of these item: %s";
 
     long pk;
     String name;
@@ -54,11 +62,22 @@ public class Item extends ClassManager {
 
     // This method yields so it needs to be wrapped in an AsyncTask or Executor
     public static Item Generate(String type, Character character) {
+        List<String> ItemMemory = new ArrayList<>();
+        List<Item> itemList = character.Backpack.get(type);
+        ListIterator itemIter = itemList.listIterator(itemList.size());
+        int count = 0;
+        while (itemIter.hasPrevious() && count < MEMORY_SIZE) {
+            Item item = (Item) itemIter.previous();
+            ItemMemory.add(item.name);
+        }
+        ItemMemory.toString();
+        String items = String.join(",", ItemMemory);
+
         HttpURLConnection connection;
         Item item = null;
         try {
             connection = GetConnection();
-            String formattedPrompt = String.format(ITEM_PROMPT, type, 5, character.race, character.classArc.name);
+            String formattedPrompt = String.format(ITEM_PROMPT, type, 5, character.race, character.classArc.name, items);
 
             JSONObject requestJson = new JSONObject();
             JSONObject promptJson = new JSONObject();
