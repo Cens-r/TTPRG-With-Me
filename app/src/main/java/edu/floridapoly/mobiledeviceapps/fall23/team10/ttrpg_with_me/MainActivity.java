@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Character character = ClassManager.fromJson(json, Character.class);
                 character.pk = pk;
+                Character.IntializeItems(character);
                 Character.trackObject(character);
                 characterList.add(character);
 

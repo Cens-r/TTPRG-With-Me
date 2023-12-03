@@ -26,13 +26,17 @@ public class Character extends ClassManager {
         this.race = race;
         this.class_arc = class_arc;
 
-        this.Notes = new ArrayList<>();
-        this.Abilities = new ArrayList<>();
-        this.Backpack = new Hashtable<String, List<Item>>() {{
+        IntializeItems(this);
+        trackObject(this);
+    }
+
+    public static void IntializeItems(Character object) {
+        object.Notes = new ArrayList<>();
+        object.Abilities = new ArrayList<>();
+        object.Backpack = new Hashtable<String, List<Item>>() {{
             put("Weapons", new ArrayList<>()); put("Spells", new ArrayList<>()); put("Armor", new ArrayList<>());
             put("Items", new ArrayList<>()); put("Extras", new ArrayList<>());
         }};
-        trackObject(this);
     }
 
     // Getter Methods
