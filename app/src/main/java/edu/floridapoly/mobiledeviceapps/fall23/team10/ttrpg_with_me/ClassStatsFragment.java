@@ -75,9 +75,9 @@ public class ClassStatsFragment extends Fragment {
                 EditText body = dialog.findViewById(R.id.createdialog_edittext_body);
 
                 Item item = new Item(header.getText().toString(), body.getText().toString());
-                character.Abilities.add(item);
-                item.pk = db.setItem(character.pk, item.toJson(), "Abilities");
                 item.type = "Abilities";
+                item.pk = db.setItem(character.pk, item.toJson(), "Abilities");
+                character.Abilities.add(item);
                 recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             });

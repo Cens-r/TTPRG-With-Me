@@ -69,9 +69,9 @@ public class NotesFragment extends Fragment {
                 EditText body = dialog.findViewById(R.id.createdialog_edittext_body);
 
                 Item item = new Item(header.getText().toString(), body.getText().toString());
-                character.Notes.add(item);
-                item.pk = db.setItem(character.pk, item.toJson(), "Notes");
                 item.type = "Notes";
+                item.pk = db.setItem(character.pk, item.toJson(), "Notes");
+                character.Notes.add(item);
                 recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             });
