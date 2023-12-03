@@ -17,12 +17,20 @@ public class ClassManager {
     // Constructor
     public ClassManager() {
         String className = getClass().getSimpleName();
+        Integer currentIndex = getIndex(className);
+        id = currentIndex;
+        setIndex(className, currentIndex + 1);
+    }
+
+    private static int getIndex(String className) {
         Integer currentIndex = 0;
         if (currentIndexes.containsKey(className)) {
             currentIndex = currentIndexes.get(className);
         }
-        currentIndex++;
-        currentIndexes.put(className, currentIndex);
+        return currentIndex;
+    }
+    private static void setIndex(String className, Integer newValue) {
+        currentIndexes.put(className, newValue);
     }
 
     // Starts tracking the given object
@@ -37,7 +45,8 @@ public class ClassManager {
         }
         assert objectList != null;
         objectList.add(object);
-        return objectList.size();
+        object.id = objectList.size() - 1;
+        return object.id;
     }
     public static void untrackObject(ClassManager object) {
         String className = object.getClass().getSimpleName();
