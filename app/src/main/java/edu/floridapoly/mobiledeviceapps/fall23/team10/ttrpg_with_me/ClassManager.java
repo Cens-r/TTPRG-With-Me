@@ -1,19 +1,9 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
-import androidx.databinding.ObservableField;
+import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.annotations.Expose;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -22,12 +12,17 @@ public class ClassManager {
     private static final Hashtable<String, List<ClassManager>> classObjects = new Hashtable<>();
     private static final Hashtable<String, Integer> currentIndexes = new Hashtable<>();
 
-    @Expose(serialize = false, deserialize = false)
     public int id;
 
     // Constructor
     public ClassManager() {
-        id = -1;
+        String className = getClass().getSimpleName();
+        Integer currentIndex = 0;
+        if (currentIndexes.containsKey(className)) {
+            currentIndex = currentIndexes.get(className);
+        }
+        currentIndex++;
+        currentIndexes.put(className, currentIndex);
     }
 
     // Starts tracking the given object
@@ -39,12 +34,9 @@ public class ClassManager {
         } else {
             objectList = new ArrayList<>();
             classObjects.put(className, objectList);
-            currentIndexes.put(className, 0);
         }
         assert objectList != null;
         objectList.add(object);
-        object.id = currentIndexes.get(className);
-        currentIndexes.put(className, object.id + 1);
     }
     public static void untrackObject(ClassManager object) {
         String className = object.getClass().getSimpleName();
@@ -72,40 +64,12 @@ public class ClassManager {
 
     // Converts an object to Json String
     public String toJson() {
-        //GsonBuilder builder = new GsonBuilder();
-        //builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
-        //Gson gson = builder.create();
         Gson gson = new Gson();
         return gson.toJson(this);
     }
 
     public static <T> T fromJson(String json, Class<T> c) {
-        //GsonBuilder builder = new GsonBuilder();
-        //builder.registerTypeAdapterFactory(new ObservableFieldTypeAdapter());
-        //Gson gson = builder.create();
         Gson gson = new Gson();
         return gson.fromJson(json, c);
     }
-
-    /*
-    private static class ObservableFieldTypeAdapter implements TypeAdapterFactory {
-        @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            if (type.getRawType() != ObservableField.class) { return null; }
-            Type param = ((ParameterizedType) type.getType()).getActualTypeArguments()[0];
-            return (TypeAdapter<T>) new TypeAdapter<ObservableField<?>>() {
-
-                @Override
-                public void write(JsonWriter out, ObservableField<?> value) throws IOException {
-                    gson.toJson(value.get(), param, out);
-                }
-
-                @Override
-                public ObservableField<?> read(JsonReader in) {
-                    return new ObservableField<>(gson.fromJson(in, param));
-                }
-            };
-        }
-    }
-    */
 }

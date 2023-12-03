@@ -50,24 +50,30 @@ public class MainActivity extends AppCompatActivity {
         Cursor characterCursor = db.fetchAll("CHARACTERS");
         if (characterCursor.moveToFirst()) {
             do {
-                int index = characterCursor.getColumnIndex("JSON");
-                String json = characterCursor.getString(index);
+                int jsonIndex = characterCursor.getColumnIndex("JSON");
+                String json = characterCursor.getString(jsonIndex);
+                int pkIndex = characterCursor.getColumnIndex("pk");
+                long pk = characterCursor.getLong(pkIndex);
 
                 Character character = ClassManager.fromJson(json, Character.class);
-                characterList.add(character);
+                character.pk = pk;
                 Character.trackObject(character);
+                characterList.add(character);
             } while(characterCursor.moveToNext());
         }
 
         Cursor classCursor = db.fetchAll("CLASSES");
         if (classCursor.moveToFirst()) {
             do {
-                int index = classCursor.getColumnIndex("JSON");
-                String json = classCursor.getString(index);
+                int jsonIndex = classCursor.getColumnIndex("JSON");
+                String json = classCursor.getString(jsonIndex);
+                int pkIndex = classCursor.getColumnIndex("pk");
+                long pk = classCursor.getLong(pkIndex);
 
                 ClassArchetype classArc = ClassManager.fromJson(json, ClassArchetype.class);
-                classList.add(classArc);
+                classArc.pk = pk;
                 ClassArchetype.trackObject(classArc);
+                classList.add(classArc);
             } while(classCursor.moveToNext());
         }
 
@@ -119,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 characterList.add(newCharacter);
                 recyclerAdapter.notifyDataSetChanged();
 
-                db.addLine("CHARACTERS", newCharacter.toJson());
-                db.addLine("CLASSES", classArc.toJson());
+                newCharacter.pk = db.addLine("CHARACTERS", newCharacter.toJson());
+                classArc.pk = db.addLine("CLASSES", classArc.toJson());
                 dialog.dismiss();
             } else {
                 ClassArchetype classArc = new ClassArchetype("Bard");

@@ -22,7 +22,6 @@ import java.util.Objects;
 
 public class NotesFragment extends Fragment {
     Character character;
-    List<Item> noteList;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recyclerAdapter;
@@ -45,18 +44,12 @@ public class NotesFragment extends Fragment {
         }
         character = (Character) Character.getObject(Character.class, characterId);
 
-        if (character.Notes != null) {
-            noteList = character.Abilities;
-        } else {
-            noteList = new ArrayList<>();
-        }
-
         recyclerView = rootView.findViewById(R.id.notes_recycler_body);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerAdapter = new ItemAdapter(noteList, getContext());
+        recyclerAdapter = new ItemAdapter(character.Notes, getContext());
         recyclerView.setAdapter(recyclerAdapter);
 
         DatabaseManager db = new DatabaseManager(getContext());
@@ -72,9 +65,9 @@ public class NotesFragment extends Fragment {
                 EditText body = dialog.findViewById(R.id.createdialog_edittext_body);
 
                 Item item = new Item(header.getText().toString(), body.getText().toString());
-                noteList.add(item);
                 character.Notes.add(item);
                 db.update(character.id, "CHARACTERS", character.toJson());
+                recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             });
             dialog.show();

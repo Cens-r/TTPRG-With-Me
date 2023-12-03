@@ -30,10 +30,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void update(long pk, String Type, String json)
     {
-        //db.execSQL("UPDATE TABLE " + Type + " SET JSON " + json + ",  WHERE pk = " + pk + " ");
         ContentValues cv = new ContentValues();
         cv.put("JSON", json);
-        db.update(Type, cv, "pk = ?", new String[] {String.valueOf(pk)});
+        if(pk == -1) {
+            db.insert(Type, null, cv);
+        } else {
+            db.update(Type, cv, "pk = ?", new String[] { String.valueOf(pk) });
+        }
     }
 
     public String getJson(long pk, String Type)

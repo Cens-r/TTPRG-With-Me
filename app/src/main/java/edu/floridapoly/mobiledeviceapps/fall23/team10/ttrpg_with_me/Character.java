@@ -1,5 +1,7 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.content.Context;
+
 import androidx.databinding.ObservableField;
 
 import org.json.JSONObject;
@@ -9,6 +11,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class Character extends ClassManager {
+    long pk = -1;
 
     String name;
     String race;
@@ -91,6 +94,14 @@ public class Character extends ClassManager {
         put("Perception", 0); put("Survival", 0); put("Deception", 0);
         put("Intimidation", 0); put("Performance", 0); put("Persuation", 0);
     }};
+
+    public void setHP(int HP, Context context)
+    {
+        hp = HP;
+        DatabaseManager db = new DatabaseManager(context);
+        db.update(id, "CHARACTERS", this.toJson().toString());
+        db.close();
+    }
 
     public void levelUp() {
         level += 1;

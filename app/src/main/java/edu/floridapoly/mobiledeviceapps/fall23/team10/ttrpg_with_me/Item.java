@@ -64,6 +64,7 @@ public class Item extends ClassManager {
             JSONObject promptJson = new JSONObject();
             promptJson.put("text", formattedPrompt);
             requestJson.put("prompt", promptJson);
+            requestJson.put("temperature", 1.0);
 
             WriteToConnection(connection, requestJson.toString());
 

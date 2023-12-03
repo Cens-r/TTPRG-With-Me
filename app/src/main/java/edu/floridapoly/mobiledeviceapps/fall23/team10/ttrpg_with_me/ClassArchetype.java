@@ -1,6 +1,8 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 public class ClassArchetype extends ClassManager {
+    long pk;
+
     String name;
     int level;
 
