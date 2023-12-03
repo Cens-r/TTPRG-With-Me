@@ -67,18 +67,6 @@ public class BackpackFragment extends Fragment {
             itemContainers.add(item);
         }
 
-        ImageButton createButton = rootView.findViewById(R.id.item_button_create);
-        createButton.setOnClickListener(v -> {
-            List<ClassManager> items = Item.getObjects(Item.class);
-            if (items != null) {
-                for (ClassManager managerItem : items) {
-                    Item item = (Item) managerItem;
-                    item.favorited(Boolean.FALSE.equals(item.favorited.get()));
-                    Log.d("Backpack", item.toJson());
-                }
-            }
-        });
-
         return rootView;
     }
 
@@ -167,7 +155,8 @@ public class BackpackFragment extends Fragment {
             itemBinding.setFavorited(itemObject.favorited);
 
             itemBinding.displayButtonFavorite.setOnClickListener(v -> {
-                itemObject.favorited(Boolean.FALSE.equals(itemObject.favorited.get()));
+                itemObject.favorited(Boolean.FALSE.equals(itemObject.favorited));
+                itemBinding.setFavorited(itemObject.favorited);
             });
 
             if (!isExpanded) {

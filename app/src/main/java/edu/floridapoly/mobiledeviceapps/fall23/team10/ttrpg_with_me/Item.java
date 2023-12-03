@@ -18,7 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class Item extends ClassManager {
+public class Item {
     private final static String API_KEY = "AIzaSyDUohOwTPg5-OpYdRQupOXEFXh_l9WvYlc";
     private final static String URL_STR = "https://generativelanguage.googleapis.com/v1beta3/models/text-bison-001:generateText?key=" + API_KEY;
 
@@ -28,27 +28,25 @@ public class Item extends ClassManager {
             "It should only have a name and description key.";
 
 
-    ObservableField<String> name;
-    ObservableField<String> description;
-    ObservableField<String> type;
-    ObservableField<Boolean> favorited;
+    String name;
+    String description;
+    String type;
+    Boolean favorited;
 
     public Item(String name, String description) {
         // Initialized Values:
-        this.name = new ObservableField<>(name);
-        this.description = new ObservableField<>(description);
+        this.name = name;
+        this.description = description;
         // Default Values:
-        this.type = new ObservableField<>("Extra");
-        this.favorited = new ObservableField<>(false);
-
-        trackObject(this);
+        this.type = "Extra";
+        this.favorited = false;
     }
     public Item type(String type) {
-        this.type.set(type);
+        this.type = type;
         return this;
     }
     public Item favorited(boolean favorited) {
-        this.favorited.set(favorited);
+        this.favorited = favorited;
         return this;
     }
 

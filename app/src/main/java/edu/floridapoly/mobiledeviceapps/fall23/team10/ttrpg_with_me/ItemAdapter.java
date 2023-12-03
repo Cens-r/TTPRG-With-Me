@@ -32,16 +32,16 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Item item = itemList.get(position);
-        String header = item.name.get();
-        String body = item.description.get();
+        String header = item.name;
+        String body = item.description;
 
         holder.headerView.setText(header);
         holder.bodyView.setText(body);
 
         holder.favoriteButton.setOnClickListener(view -> {
-            int imageId = (Boolean.TRUE.equals(item.favorited.get())) ? R.drawable.ic_star_outline : R.drawable.ic_star_fill;
+            int imageId = (Boolean.TRUE.equals(item.favorited)) ? R.drawable.ic_star_outline : R.drawable.ic_star_fill;
             holder.favoriteButton.setImageResource(imageId);
-            item.favorited(Boolean.FALSE.equals(item.favorited.get()));
+            item.favorited(Boolean.FALSE.equals(item.favorited));
         });
     }
 

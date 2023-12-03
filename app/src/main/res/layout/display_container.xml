@@ -5,13 +5,13 @@
     <data>
         <variable
             name="header"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
+            type="String" />
         <variable
             name="body"
-            type="androidx.databinding.ObservableField&lt;String&gt;" />
+            type="String" />
         <variable
             name="favorited"
-            type="androidx.databinding.ObservableField&lt;Boolean&gt;" />
+            type="Boolean" />
     </data>
 
     <androidx.cardview.widget.CardView

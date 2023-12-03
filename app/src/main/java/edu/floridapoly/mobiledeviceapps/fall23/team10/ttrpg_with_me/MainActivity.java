@@ -27,7 +27,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityLauncher;
     List<Character> characterList;
-    List<ClassArchetype> classList;
+    List<String> classList;
 
     DatabaseManager db;
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 ClassArchetype classArc = ClassManager.fromJson(json, ClassArchetype.class);
                 classArc.pk = pk;
                 ClassArchetype.trackObject(classArc);
-                classList.add(classArc);
+                classList.add(classArc.name);
             } while(classCursor.moveToNext());
         }
 
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         EditText raceInput = dialog.findViewById(R.id.createcharacter_edittext_race);
         AutoCompleteTextView classInput = dialog.findViewById(R.id.createcharacter_edittext_class);
 
-        ArrayAdapter<ClassArchetype> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, classList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, classList);
         classInput.setAdapter(adapter);
 
         AppCompatButton createButton = dialog.findViewById(R.id.createcharacter_button_create);
