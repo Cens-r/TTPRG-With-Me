@@ -78,52 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     character.classArc = classArc;
                 }
 
-                character.Backpack.forEach((key, value) -> {
-                    Cursor itemCursor = db.getItems(pk, key);
-                    if (itemCursor.moveToFirst()) {
-                        do {
-                            int itemJsonIndex = itemCursor.getColumnIndex("JSON");
-                            String itemJson = itemCursor.getString(itemJsonIndex);
-                            int ItemPKIndex = itemCursor.getColumnIndex("pk");
-                            long itemPK = itemCursor.getLong(ItemPKIndex);
-
-                            Item item = ClassManager.fromJson(itemJson, Item.class);
-                            item.pk = itemPK;
-                            character.Backpack.get(key).add(item);
-                        } while(itemCursor.moveToNext());
-                    }
-                    itemCursor.close();
-                });
-
-                Cursor noteCursor = db.getItems(pk, "Notes");
-                if (noteCursor.moveToFirst()) {
-                    do {
-                        int itemJsonIndex = noteCursor.getColumnIndex("JSON");
-                        String itemJson = noteCursor.getString(itemJsonIndex);
-                        int ItemPKIndex = noteCursor.getColumnIndex("pk");
-                        long itemPK = noteCursor.getLong(ItemPKIndex);
-
-                        Item item = ClassManager.fromJson(itemJson, Item.class);
-                        item.pk = itemPK;
-                        character.Notes.add(item);
-                    } while(noteCursor.moveToNext());
-                }
-                noteCursor.close();
-
-                Cursor abilityCursor = db.getItems(pk, "Abilities");
-                if (abilityCursor.moveToFirst()) {
-                    do {
-                        int itemJsonIndex = abilityCursor.getColumnIndex("JSON");
-                        String itemJson = abilityCursor.getString(itemJsonIndex);
-                        int ItemPKIndex = abilityCursor.getColumnIndex("pk");
-                        long itemPK = abilityCursor.getLong(ItemPKIndex);
-
-                        Item item = ClassManager.fromJson(itemJson, Item.class);
-                        item.pk = itemPK;
-                        character.Abilities.add(item);
-                    } while(abilityCursor.moveToNext());
-                }
-                abilityCursor.close();
+                UpdateItems(character);
             } while(characterCursor.moveToNext());
         }
         characterCursor.close();
@@ -175,7 +130,58 @@ public class MainActivity extends AppCompatActivity {
             characterList.add(character);
             classList.add(character.classArc.name);
             recyclerAdapter.notifyDataSetChanged();
+            UpdateItems(character);
         }
+    }
+
+    private void UpdateItems(Character character) {
+        long pk = character.pk;
+        character.Backpack.forEach((key, value) -> {
+            Cursor itemCursor = db.getItems(pk, key);
+            if (itemCursor.moveToFirst()) {
+                do {
+                    int itemJsonIndex = itemCursor.getColumnIndex("JSON");
+                    String itemJson = itemCursor.getString(itemJsonIndex);
+                    int ItemPKIndex = itemCursor.getColumnIndex("pk");
+                    long itemPK = itemCursor.getLong(ItemPKIndex);
+
+                    Item item = ClassManager.fromJson(itemJson, Item.class);
+                    item.pk = itemPK;
+                    character.Backpack.get(key).add(item);
+                } while(itemCursor.moveToNext());
+            }
+            itemCursor.close();
+        });
+
+        Cursor noteCursor = db.getItems(pk, "Notes");
+        if (noteCursor.moveToFirst()) {
+            do {
+                int itemJsonIndex = noteCursor.getColumnIndex("JSON");
+                String itemJson = noteCursor.getString(itemJsonIndex);
+                int ItemPKIndex = noteCursor.getColumnIndex("pk");
+                long itemPK = noteCursor.getLong(ItemPKIndex);
+
+                Item item = ClassManager.fromJson(itemJson, Item.class);
+                item.pk = itemPK;
+                character.Notes.add(item);
+            } while(noteCursor.moveToNext());
+        }
+        noteCursor.close();
+
+        Cursor abilityCursor = db.getItems(pk, "Abilities");
+        if (abilityCursor.moveToFirst()) {
+            do {
+                int itemJsonIndex = abilityCursor.getColumnIndex("JSON");
+                String itemJson = abilityCursor.getString(itemJsonIndex);
+                int ItemPKIndex = abilityCursor.getColumnIndex("pk");
+                long itemPK = abilityCursor.getLong(ItemPKIndex);
+
+                Item item = ClassManager.fromJson(itemJson, Item.class);
+                item.pk = itemPK;
+                character.Abilities.add(item);
+            } while(abilityCursor.moveToNext());
+        }
+        abilityCursor.close();
     }
 
     private void showDialog() {
