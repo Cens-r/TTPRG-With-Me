@@ -32,9 +32,9 @@ public class Item extends ClassManager {
 
     private final static Integer MEMORY_SIZE = 5;
 
-    // Format Variables: Item Type, Level, Race, Class
+    // Format Variables: Item Type, Level, Race, Class, Item Type, Item Memory
     private final static String ITEM_PROMPT =
-            "Create and explain a DnD %s item for a level %d %s %s using the JSON format.\n" +
+            "Create and explain a DnD %s for a level %d %s %s, the %s should not already exist, and may or may not be magical using the JSON format.\\n" +
             "It should only have a name and description key. Do not generate any of these item: %s";
 
     long pk;
@@ -77,7 +77,7 @@ public class Item extends ClassManager {
         Item item = null;
         try {
             connection = GetConnection();
-            String formattedPrompt = String.format(ITEM_PROMPT, type, 5, character.race, character.classArc.name, items);
+            String formattedPrompt = String.format(ITEM_PROMPT, type, 5, character.race, character.classArc.name, type, items);
 
             JSONObject requestJson = new JSONObject();
             JSONObject promptJson = new JSONObject();
