@@ -89,12 +89,13 @@ public class BackpackFragment extends Fragment {
             isExpanded = true;
             itemList = new ArrayList<>();
 
+            this.container = container;
+
             for (Item item : Objects.requireNonNull(character.Backpack.get(name))) {
                 View itemView = createItem(item);
                 itemList.add(itemView);
             }
 
-            this.container = container;
             headerText = container.findViewById(R.id.item_text_header);
             generateButton = container.findViewById(R.id.item_button_generate);
             arrowButton = container.findViewById(R.id.item_button_arrow);
