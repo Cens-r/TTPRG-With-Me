@@ -71,6 +71,7 @@ public class NotesFragment extends Fragment {
                 Item item = new Item(header.getText().toString(), body.getText().toString());
                 character.Notes.add(item);
                 item.pk = db.setItem(character.pk, item.toJson(), "Notes");
+                item.type = "Notes";
                 recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             });

@@ -40,7 +40,7 @@ public class Item extends ClassManager {
         this.name = name;
         this.description = description;
         // Default Values:
-        this.type = "Extra";
+        this.type = "Empty";
         this.favorited = false;
     }
     public Item type(String type) {
