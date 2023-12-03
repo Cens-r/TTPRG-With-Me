@@ -15,10 +15,12 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder> {
     List<Item> itemList;
     Context context;
+    DatabaseManager db;
 
     public ItemAdapter(List<Item> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
+        db = new DatabaseManager(context);
     }
 
     @NonNull
@@ -43,6 +45,10 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
             holder.favoriteButton.setImageResource(imageId);
             item.favorited(Boolean.FALSE.equals(item.favorited));
         });
+        holder.deleteButton.setOnClickListener(view -> {
+            itemList.remove(item);
+            db.delete(item.pk, "ITEMS");
+        });
     }
 
     @Override
@@ -52,12 +58,14 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
         TextView headerView;
         TextView bodyView;
         ImageButton favoriteButton;
+        ImageButton deleteButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             headerView = itemView.findViewById(R.id.display_text_header);
             bodyView = itemView.findViewById(R.id.display_text_body);
             favoriteButton = itemView.findViewById(R.id.display_button_favorite);
+            deleteButton = itemView.findViewById(R.id.display_button_delete);
         }
     }
 }

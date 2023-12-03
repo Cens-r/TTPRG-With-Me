@@ -22,6 +22,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -102,7 +104,7 @@ public class BackpackFragment extends Fragment {
                     Item item = Item.Generate(name, character);
                     handler.post(() -> {
                         if (item != null) {
-                            db.setItem(character.pk, item.toJson(), name);
+                            item.pk = db.setItem(character.pk, item.toJson(), name);
                             character.Backpack.get(name).add(item);
                             createItem(item);
                         } else {
@@ -136,7 +138,7 @@ public class BackpackFragment extends Fragment {
                     EditText body = dialog.findViewById(R.id.createdialog_edittext_body);
 
                     Item item = new Item(header.getText().toString(), body.getText().toString());
-                    db.setItem(character.pk, item.toJson(), name);
+                    item.pk = db.setItem(character.pk, item.toJson(), name);
                     character.Backpack.get(name).add(item);
                     createItem(item);
 
@@ -159,6 +161,10 @@ public class BackpackFragment extends Fragment {
             itemBinding.displayButtonFavorite.setOnClickListener(v -> {
                 itemObject.favorited(Boolean.FALSE.equals(itemObject.favorited));
                 itemBinding.setFavorited(itemObject.favorited);
+            });
+            itemBinding.displayButtonDelete.setOnClickListener(v -> {
+                ((ViewGroup) container).removeView(view);
+                db.delete(itemObject.pk, "ITEMS");
             });
 
             if (!isExpanded) {

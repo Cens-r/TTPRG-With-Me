@@ -74,7 +74,7 @@ public class ClassStatsFragment extends Fragment {
 
                 Item item = new Item(header.getText().toString(), body.getText().toString());
                 character.Abilities.add(item);
-                db.setItem(character.pk, item.toJson(), "Abilities");
+                item.pk = db.setItem(character.pk, item.toJson(), "Abilities");
                 recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             });

@@ -12,7 +12,7 @@ public class ClassManager {
     private static final Hashtable<String, List<ClassManager>> classObjects = new Hashtable<>();
     private static final Hashtable<String, Integer> currentIndexes = new Hashtable<>();
 
-    public int id;
+    public transient int id;
 
     // Constructor
     public ClassManager() {

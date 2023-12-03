@@ -29,7 +29,7 @@ public class Item extends ClassManager {
             "Create and explain a DnD %s item for a level %d %s %s using the JSON format.\n" +
             "It should only have a name and description key.";
 
-
+    long pk;
     String name;
     String description;
     String type;
