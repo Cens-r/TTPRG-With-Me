@@ -36,14 +36,17 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
         Item item = itemList.get(position);
         String header = item.name;
         String body = item.description;
+        boolean favorited = item.favorited;
 
         holder.headerView.setText(header);
         holder.bodyView.setText(body);
+        holder.favoriteButton.setImageResource(favorited ? R.drawable.ic_star_fill : R.drawable.ic_star_outline);
 
         holder.favoriteButton.setOnClickListener(view -> {
             int imageId = (Boolean.TRUE.equals(item.favorited)) ? R.drawable.ic_star_outline : R.drawable.ic_star_fill;
             holder.favoriteButton.setImageResource(imageId);
             item.favorited(Boolean.FALSE.equals(item.favorited));
+            db.update(item.pk, "ITEMS", item.toJson());
         });
         holder.deleteButton.setOnClickListener(view -> {
             itemList.remove(item);

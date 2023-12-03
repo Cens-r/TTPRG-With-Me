@@ -82,6 +82,7 @@ public class BackpackFragment extends Fragment {
     public static class ItemContainer {
         boolean isExpanded;
 
+        String name;
         View container;
         TextView headerText;
         ImageButton generateButton;
@@ -90,6 +91,7 @@ public class BackpackFragment extends Fragment {
         public ItemContainer(View container, String name) {
             isExpanded = true;
 
+            this.name = name;
             this.container = container;
 
             for (Item item : Objects.requireNonNull(character.Backpack.get(name))) { createItem(item); }
@@ -163,7 +165,8 @@ public class BackpackFragment extends Fragment {
                 itemBinding.setFavorited(itemObject.favorited);
             });
             itemBinding.displayButtonDelete.setOnClickListener(v -> {
-                ((ViewGroup) container).removeView(view);
+                ((ViewGroup) layout).removeView(view);
+                character.Backpack.get(name).remove(itemObject);
                 db.delete(itemObject.pk, "ITEMS");
             });
 
