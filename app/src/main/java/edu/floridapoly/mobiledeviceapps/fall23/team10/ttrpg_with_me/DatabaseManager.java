@@ -60,6 +60,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return c;
     }
 
+    public Cursor getAllItems(long fk)
+    {
+        return db.rawQuery("SELECT pk, JSON FROM ITEMS WHERE fk = " + fk, null);
+    }
+
     public long setItem(long fk, String json, String Type)
     {
         ContentValues values = new ContentValues();

@@ -17,12 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyViewHolder> {
     List<Character> characterList;
     Context context;
     DatabaseManager db;
+    FileReaderWriterHelper frw;
 
     public CharacterAdapter(List<Character> characterList, Context context) {
         this.characterList = characterList;
@@ -35,6 +39,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.character_list_item, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         db = new DatabaseManager(context);
+        frw = new FileReaderWriterHelper(context);
         return holder;
     }
 
@@ -59,6 +64,17 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
             context.startActivity(intent);
         });
 
+        holder.export_button.setOnClickListener(view -> {
+            JSONObject characterJson = null;
+            try {
+                characterJson = new JSONObject(character.toJson());
+                frw.exporter(characterJson);
+            } catch (JSONException e) {
+                Log.e("Character", "Export failed!");
+                e.printStackTrace();
+            }
+        });
+
         holder.delete_button.setOnClickListener(view -> {
             db.delete(character.id + 1, "CHARACTERS");
             characterList.remove(character);
@@ -79,6 +95,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
 
         CardView card;
         ImageButton delete_button;
+        ImageButton export_button;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +105,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
 
             card = itemView.findViewById(R.id.charselect_card_item);
             delete_button = itemView.findViewById(R.id.charselect_button_delete);
+            export_button = itemView.findViewById(R.id.charselect_button_export);
         }
     }
 }
