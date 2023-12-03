@@ -132,6 +132,7 @@ public class FileReaderWriterHelper {
             }
 
             Character character = Character.fromJson(characterJson.toString(), Character.class);
+            character.pk = pk;
             Character.IntializeItems(character);
             Character.trackObject(character);
             character.classArc = ClassArchetype.fromJson(classJson.toString(), ClassArchetype.class);
