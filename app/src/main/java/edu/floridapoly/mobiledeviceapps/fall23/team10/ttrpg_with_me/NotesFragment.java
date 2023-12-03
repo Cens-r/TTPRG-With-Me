@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -58,6 +59,9 @@ public class NotesFragment extends Fragment {
             Dialog dialog = new Dialog(v.getContext());
             dialog.setContentView(R.layout.dialog_create_item);
             Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+            Window window = dialog.getWindow();
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
             AppCompatButton saveButton = dialog.findViewById(R.id.createdialog_button_save);
             saveButton.setOnClickListener(view -> {

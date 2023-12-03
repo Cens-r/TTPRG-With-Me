@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -89,12 +90,13 @@ public class BackpackFragment extends Fragment {
             isExpanded = true;
             itemList = new ArrayList<>();
 
+            this.container = container;
+
             for (Item item : Objects.requireNonNull(character.Backpack.get(name))) {
                 View itemView = createItem(item);
                 itemList.add(itemView);
             }
 
-            this.container = container;
             headerText = container.findViewById(R.id.item_text_header);
             generateButton = container.findViewById(R.id.item_button_generate);
             arrowButton = container.findViewById(R.id.item_button_arrow);
@@ -130,6 +132,9 @@ public class BackpackFragment extends Fragment {
                 Dialog dialog = new Dialog(container.getContext());
                 dialog.setContentView(R.layout.dialog_create_item);
                 Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+                Window window = dialog.getWindow();
+                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
                 AppCompatButton saveButton = dialog.findViewById(R.id.createdialog_button_save);
                 saveButton.setOnClickListener(view -> {
