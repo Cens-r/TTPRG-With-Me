@@ -54,8 +54,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return c;
     }
 
-    public Cursor getItems(long fk, String Type) {
-        Cursor c = db.rawQuery("SELECT pk, JSON FROM ITEMS WHERE TYPE =? AND fk =? ", new String[]{Type, String.valueOf(fk)});
+    public Cursor getItems(long fk, String Type)
+    {
+        Cursor c = db.rawQuery("SELECT pk, JSON FROM ITEMS WHERE fk = " + fk +  " AND TYPE = '" + Type + "'", null );
         return c;
     }
 

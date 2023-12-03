@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -85,16 +86,19 @@ public class MainActivity extends AppCompatActivity {
                     } while(noteCursor.moveToNext());
                 }
 
+                Log.d("Character", "Primary Key: " + character.pk);
                 Cursor abilityCursor = db.getItems(pk, "Abilities");
                 if (abilityCursor.moveToFirst()) {
                     do {
                         int itemJsonIndex = abilityCursor.getColumnIndex("JSON");
                         String itemJson = abilityCursor.getString(itemJsonIndex);
+                        Log.d("Character", "ItemJson: "+itemJson);
 
                         Item item = ClassManager.fromJson(itemJson, Item.class);
                         character.Abilities.add(item);
                     } while(abilityCursor.moveToNext());
                 }
+                Log.d("Character", character.Abilities.toString());
 
             } while(characterCursor.moveToNext());
         }
