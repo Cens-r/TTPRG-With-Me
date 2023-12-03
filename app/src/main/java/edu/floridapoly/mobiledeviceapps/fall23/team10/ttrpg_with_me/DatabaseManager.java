@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseManager extends SQLiteOpenHelper {
     SQLiteDatabase db = getWritableDatabase();
@@ -17,7 +18,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE CHARACTERS" + table);
-        db.execSQL("CREATE TABLE CLASSES" + table);
+        db.execSQL("CREATE TABLE CLASSES (UUID TEXT PRIMARY KEY NOT NULL, JSON TEXT)");
         db.execSQL("CREATE TABLE ITEMS (pk INTEGER PRIMARY KEY AUTOINCREMENT, fk NOT NULL, JSON TEXT, TYPE TEXT)");
     }
 
@@ -49,15 +50,48 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return json;
     }
 
+    public Cursor fetch(String Type, Long pk) {
+        return db.rawQuery("SELECT JSON FROM " + Type + " WHERE pk = " + pk, null);
+    }
     public Cursor fetchAll(String Type) {
         Cursor c = db.rawQuery("SELECT * FROM " + Type, null);
         return c;
     }
 
+    public boolean classExists(String uuid) {
+        Cursor cursor = db.rawQuery("SELECT * FROM CLASSES WHERE UUID = '" + uuid + "'", null);
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        return exists;
+    }
+    public void addClass(String uuid, String json) {
+        if (classExists(uuid)) { return; }
+        ContentValues values = new ContentValues();
+        values.put("UUID", uuid);
+        values.put("JSON", json);
+        db.insert("CLASSES", null, values);
+    }
+    public void removeClass(String uuid) {
+        db.delete("CLASSES", "UUID = ?", new String[] {uuid});
+    }
+    public String retrieveClass(String uuid) {
+        Cursor cursor = db.rawQuery("SELECT JSON FROM CLASSES WHERE UUID = '" + uuid + "'", null);
+        if (cursor.moveToFirst()) {
+            int jsonIndex = cursor.getColumnIndex("JSON");
+            String json = cursor.getString(jsonIndex);
+            cursor.close();
+            Log.d("Database", json);
+            return json;
+        } else {
+            Log.d("Database", "No class found!");
+        }
+        return null;
+    }
+
+
     public Cursor getItems(long fk, String Type)
     {
-        Cursor c = db.rawQuery("SELECT pk, JSON FROM ITEMS WHERE fk = " + fk +  " AND TYPE = '" + Type + "'", null );
-        return c;
+        return db.rawQuery("SELECT pk, JSON FROM ITEMS WHERE fk = " + fk +  " AND TYPE = '" + Type + "'", null );
     }
 
     public Cursor getAllItems(long fk)

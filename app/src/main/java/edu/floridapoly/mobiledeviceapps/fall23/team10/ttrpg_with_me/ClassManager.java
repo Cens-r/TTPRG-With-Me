@@ -26,7 +26,7 @@ public class ClassManager {
     }
 
     // Starts tracking the given object
-    public static void trackObject(ClassManager object) {
+    public static int trackObject(ClassManager object) {
         String className = object.getClass().getSimpleName();
         List<ClassManager> objectList;
         if (classObjects.containsKey(className)) {
@@ -37,6 +37,7 @@ public class ClassManager {
         }
         assert objectList != null;
         objectList.add(object);
+        return objectList.size();
     }
     public static void untrackObject(ClassManager object) {
         String className = object.getClass().getSimpleName();

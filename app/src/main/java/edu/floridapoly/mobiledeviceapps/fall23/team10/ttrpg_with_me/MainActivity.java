@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> classList;
 
     DatabaseManager db;
+    FileReaderWriterHelper frw;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recyclerAdapter;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = new DatabaseManager(this);
+        frw = new FileReaderWriterHelper(this);
 
         characterList = new ArrayList<>();
         classList = new ArrayList<>();
@@ -62,6 +64,20 @@ public class MainActivity extends AppCompatActivity {
                 Character.trackObject(character);
                 characterList.add(character);
 
+                String uuid = character.class_uuid;
+                Log.d("Character", "Class UUID: " + uuid);
+                String classJson = db.retrieveClass(uuid);
+                if (classJson != null && !ClassArchetype.CheckClassExists(uuid)) {
+                    ClassArchetype classArc = ClassArchetype.fromJson(classJson, ClassArchetype.class);
+                    classArc.uuid(uuid);
+                    ClassArchetype.trackObject(classArc);
+                    character.classArc = classArc;
+                } else {
+                    int id = ClassArchetype.GetMapValue(uuid);
+                    ClassArchetype classArc = (ClassArchetype) ClassArchetype.getObject(ClassArchetype.class, id);
+                    character.classArc = classArc;
+                }
+
                 character.Backpack.forEach((key, value) -> {
                     Cursor itemCursor = db.getItems(pk, key);
                     if (itemCursor.moveToFirst()) {
@@ -76,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             character.Backpack.get(key).add(item);
                         } while(itemCursor.moveToNext());
                     }
+                    itemCursor.close();
                 });
 
                 Cursor noteCursor = db.getItems(pk, "Notes");
@@ -91,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
                         character.Notes.add(item);
                     } while(noteCursor.moveToNext());
                 }
+                noteCursor.close();
 
-                Log.d("Character", "Primary Key: " + character.pk);
                 Cursor abilityCursor = db.getItems(pk, "Abilities");
                 if (abilityCursor.moveToFirst()) {
                     do {
@@ -106,25 +123,28 @@ public class MainActivity extends AppCompatActivity {
                         character.Abilities.add(item);
                     } while(abilityCursor.moveToNext());
                 }
-                Log.d("Character", character.Abilities.toString());
-
+                abilityCursor.close();
             } while(characterCursor.moveToNext());
         }
+        characterCursor.close();
 
         Cursor classCursor = db.fetchAll("CLASSES");
         if (classCursor.moveToFirst()) {
             do {
+                int uuidIndex = classCursor.getColumnIndex("UUID");
+                String uuid = classCursor.getString(uuidIndex);
+                if (ClassArchetype.CheckClassExists(uuid)) { continue; }
+
                 int jsonIndex = classCursor.getColumnIndex("JSON");
                 String json = classCursor.getString(jsonIndex);
-                int pkIndex = classCursor.getColumnIndex("pk");
-                long pk = classCursor.getLong(pkIndex);
 
                 ClassArchetype classArc = ClassManager.fromJson(json, ClassArchetype.class);
-                classArc.pk = pk;
-                ClassArchetype.trackObject(classArc);
+                int id = ClassArchetype.trackObject(classArc);
+                ClassArchetype.AddMapValue(uuid, id);
                 classList.add(classArc.name);
             } while(classCursor.moveToNext());
         }
+        classCursor.close();
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -134,18 +154,28 @@ public class MainActivity extends AppCompatActivity {
         ImageButton import_button = findViewById(R.id.charselect_button_import);
         Button create_button = findViewById(R.id.charselect_button_create);
 
-        activityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result != null && result.getResultCode() == RESULT_OK) {
-                if (result.getData() != null) {
-                    Toast.makeText(this, "TODO: Retrieve info from file!", Toast.LENGTH_SHORT).show();
-                }
-            }
+        import_button.setOnClickListener(v -> {
+            frw.GetFile();
         });
-
-        import_button.setOnClickListener(this::openFile);
         create_button.setOnClickListener(view -> {
             showDialog();
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int exportCode = FileReaderWriterHelper.EXPORT_CHARACTER;
+        int importCode = FileReaderWriterHelper.IMPORT_CHARACTER;
+
+        if (requestCode >= exportCode && requestCode < exportCode + 1000) {
+            frw.exporter(requestCode, resultCode, data);
+        } else if (requestCode == importCode) {
+            Character character = frw.importer(resultCode, data);
+            characterList.add(character);
+            classList.add(character.classArc.name);
+            recyclerAdapter.notifyDataSetChanged();
+        }
     }
 
     private void showDialog() {
@@ -171,19 +201,17 @@ public class MainActivity extends AppCompatActivity {
 
                 Character newCharacter = new Character(name, race, classArc);
                 newCharacter.setImageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaHmgseRqO6CI14XWSh5swCN19tzNhtgptvg&usqp=CAU");
+                // SHOULD HAVE ADDED THIS BEFORE UPDATING CLASS STUFF
+                newCharacter.classArc = classArc;
+                newCharacter.class_uuid = classArc.uuid;
+
                 characterList.add(newCharacter);
                 recyclerAdapter.notifyDataSetChanged();
 
                 newCharacter.pk = db.addLine("CHARACTERS", newCharacter.toJson());
-                classArc.pk = db.addLine("CLASSES", classArc.toJson());
+                db.addClass(classArc.uuid, classArc.toJson());
                 dialog.dismiss();
             } else {
-                ClassArchetype classArc = new ClassArchetype("Bard");
-
-                Character newCharacter = new Character("DEBUG", "Human", classArc);
-                newCharacter.setImageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaHmgseRqO6CI14XWSh5swCN19tzNhtgptvg&usqp=CAU");
-                characterList.add(newCharacter);
-                recyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
                 Toast.makeText(this, "One of the three required inputs is empty!", Toast.LENGTH_SHORT).show();
             }
@@ -193,13 +221,5 @@ public class MainActivity extends AppCompatActivity {
         closeButton.setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();
-    }
-
-    private void openFile(View view) {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-
-        activityLauncher.launch(intent);
     }
 }

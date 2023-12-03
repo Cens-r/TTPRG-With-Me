@@ -2,6 +2,7 @@ package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,25 +61,26 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.MyVi
         holder.card.setOnClickListener(view -> {
             Intent intent = new Intent(context, NavigationActivity.class);
             intent.putExtra("CharacterId", character.id);
-            Log.d("Character", "Character ID: " + character.id);
             context.startActivity(intent);
         });
 
         holder.export_button.setOnClickListener(view -> {
-            JSONObject characterJson = null;
-            try {
-                characterJson = new JSONObject(character.toJson());
-                frw.exporter(characterJson);
-            } catch (JSONException e) {
-                Log.e("Character", "Export failed!");
-                e.printStackTrace();
-            }
+            frw.CreateFile(character);
         });
 
         holder.delete_button.setOnClickListener(view -> {
-            db.delete(character.id + 1, "CHARACTERS");
-            characterList.remove(character);
+            Cursor cursor = db.getAllItems(character.pk);
+            if (cursor.moveToFirst()) {
+                do {
+                    int pkIndex = cursor.getColumnIndex("pk");
+                    long pk = cursor.getLong(pkIndex);
+                    db.delete(pk, "ITEMS");
+                } while (cursor.moveToNext());
+            }
+
+            db.delete(character.pk, "CHARACTERS");
             Character.untrackObject(character);
+            characterList.remove(character);
             notifyDataSetChanged();
         });
     }

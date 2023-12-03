@@ -58,7 +58,7 @@ public class Item extends ClassManager {
         Item item = null;
         try {
             connection = GetConnection();
-            String formattedPrompt = String.format(ITEM_PROMPT, type, 5, character.race, character.class_arc.name);
+            String formattedPrompt = String.format(ITEM_PROMPT, type, 5, character.race, character.classArc.name);
 
             JSONObject requestJson = new JSONObject();
             JSONObject promptJson = new JSONObject();

@@ -19,12 +19,13 @@ public class Character extends ClassManager {
 
     // ClassArchetype object holds level
     // Future-proofing the app, allows for multi-class characters in future
-    ClassArchetype class_arc;
+    String class_uuid;
+    transient ClassArchetype classArc;
 
-    public Character(String name, String race, ClassArchetype class_arc) {
+    public Character(String name, String race, ClassArchetype classArc) {
         this.name = name;
         this.race = race;
-        this.class_arc = class_arc;
+        this.classArc = classArc;
 
         IntializeItems(this);
         trackObject(this);
@@ -45,12 +46,12 @@ public class Character extends ClassManager {
     }
     public String getDescription() {
         // Example:         Level 5 | Half-Orc | Bard
-        return String.format("Level %d | %s | %s", class_arc.getLevel(), race, class_arc.getName());
+        return String.format("Level %d | %s | %s", level, race, classArc.name);
     }
     public String getImageURL() {
         return image_url;
     }
-    public ClassArchetype getClassArc() { return class_arc; }
+    public ClassArchetype getClassArc() { return classArc; }
 
     // Setter Methods
     public void setImageUrl(String url) {
@@ -62,8 +63,6 @@ public class Character extends ClassManager {
     int pBonus = 2;
     int exp;
     int level = 1;
-
-    JSONObject cclass;
 
 
     public transient List<Item> Abilities;
