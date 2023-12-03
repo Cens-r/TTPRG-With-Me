@@ -72,6 +72,14 @@ public class Character extends ClassManager {
     int currentHp;
     int totalHp;
 
+    static final Hashtable<String, String> profMap = new Hashtable<String, String>(){{
+        put("Athletics", "STR");
+        put("Acrobatics", "DEX"); put("Sleight of Hand", "DEX"); put("Stealth", "DEX");
+        put("Arcana", "INT"); put("History", "INT"); put("Investigation", "INT"); put("Nature", "INT"); put("Religion", "INT");
+        put("Animal Handling", "WIS"); put("Insight", "WIS"); put("Medicine", "WIS");put("Perception", "WIS"); put("Survival", "WIS");
+        put("Deception", "CHA");put("Intimidation", "CHA"); put("Performance", "CHA"); put("Persuation", "CHA");
+    }};
+
     Hashtable<String, Integer> stats = new Hashtable<String, Integer>() {{
         put("STR", 10); put("CON", 10); put("DEX", 10);
         put("INT", 10); put("WIS", 10); put("CHA", 10);
@@ -96,19 +104,25 @@ public class Character extends ClassManager {
         put("Intimidation", 0); put("Performance", 0); put("Persuation", 0);
     }};
 
-    public void setHP(int HP, Context context)
+    public static void save(Context context, Character character)
     {
-        hp = HP;
         DatabaseManager db = new DatabaseManager(context);
-        db.update(id, "CHARACTERS", this.toJson().toString());
+        db.update(character.pk, "CHARACTERS", character.toJson().toString());
         db.close();
     }
-
     public void levelUp() {
         level += 1;
-        int [] p = {5, 9, 13, 17,};
+        int [] p = {5, 9, 13, 17};
         for (int i: p) {
-            if (p[i] == level) { pBonus++; }
+            if (i == level) { pBonus -= 1; }
+        }
+    }
+    public void levelDown()
+    {
+        level -= 1;
+        int [] p = {4,8,12,16};
+        for (int i: p) {
+            if (i == level) {pBonus -= 1;}
         }
     }
 }

@@ -17,8 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +82,22 @@ public class ClassStatsFragment extends Fragment {
             });
             dialog.show();
         });
+
+        TextView name = rootView.findViewById(R.id.textView5);
+        name.setText(character.classArc.name);
+        TextView level = rootView.findViewById(R.id.textView6);
+        level.setText("Level " + character.level);
+
+        Button levelUp = rootView.findViewById(R.id.button);
+        levelUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                character.levelUp();
+                character.save(getContext(), character);
+                level.setText("Level " + character.level);
+            }
+        });
+
         return rootView;
     }
 }

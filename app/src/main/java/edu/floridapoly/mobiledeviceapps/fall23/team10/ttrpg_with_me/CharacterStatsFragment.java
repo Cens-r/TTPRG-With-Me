@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -24,15 +26,27 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.FragmentCharacterStatsBinding;
+import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.SavingThrowBlockBinding;
+import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.SkillBlockBinding;
+import edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.databinding.StatBlockBinding;
 
 public class CharacterStatsFragment extends Fragment {
-    static final List<String> statNameArr = Arrays.asList("STR", "CON", "DEX", "INT", "WIS", "CHA");
+    static final List<String> statArr = Arrays.asList("STR", "CON", "DEX", "INT", "WIS", "CHA");
+    static final List<String> skillArr = Collections.list(Character.profMap.keys());
+    static final HashMap<String, String> statMap = new HashMap<String, String>() {{
+        put("STR", "Strength"); put("CON", "Constitution"); put("DEX", "Dexterity");
+        put("INT", "Intelligence"); put("WIS", "Wisdom"); put("CHA", "Charisma");
+    }};
 
+    Hashtable<String, List<ViewDataBinding>> statBindings;
     DatabaseManager db;
 
     Character character;
@@ -53,6 +67,7 @@ public class CharacterStatsFragment extends Fragment {
         View view = binding.getRoot();
 
         db = new DatabaseManager(getContext());
+        Collections.sort(skillArr);
 
         Intent intent = getActivity().getIntent();
         int characterId = intent.getIntExtra("CharacterId", -1);
@@ -73,6 +88,7 @@ public class CharacterStatsFragment extends Fragment {
                 .placeholder(R.drawable.ic_loading_image)
                 .into(icon_view);
 
+        /*
         StatBlocks = new ArrayList<>();
         setupStatElements(StatBlocks, view.findViewById(R.id.statblocks_linear_1));
         setupStatElements(StatBlocks, view.findViewById(R.id.statblocks_linear_2));
@@ -91,15 +107,25 @@ public class CharacterStatsFragment extends Fragment {
             block.setOnClickListener(v -> promptValueChange(block, name));
             statIndex++;
         }
+         */
+        SetupStatBlock(binding.statblocksLinear1, 0);
+        SetupStatBlock(binding.statblocksLinear2, 3);
 
+        SetupSaveThrow(binding.savethrowsLinear1, 0);
+        SetupSaveThrow(binding.savethrowsLinear2, 2);
+        SetupSaveThrow(binding.savethrowsLinear3, 4);
+
+        SetupSkillBlock(binding.skillLinearContainer);
+
+        /*
         SaveThows = new ArrayList<>();
         setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_1));
         setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_2));
         setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_3));
 
-        statIndex = 0;
+        int statIndex = 0;
         for (View element: SaveThows) {
-            String name = statNameArr.get(statIndex);
+            String name = statArr.get(statIndex);
             ((TextView) element.findViewById(R.id.savethrow_text_name)).setText(name);
 
             Boolean saveBool = character.saveBools.get(name);
@@ -117,8 +143,9 @@ public class CharacterStatsFragment extends Fragment {
             });
             statIndex++;
         }
+         */
 
-        setupSkillSelects(view.findViewById(R.id.skill_linear_container));
+        //setupSkillSelects(view.findViewById(R.id.skill_linear_container));
 
         return view;
     }
@@ -188,6 +215,40 @@ public class CharacterStatsFragment extends Fragment {
                 TextView valueText = element.findViewById(R.id.skillblock_text_value);
                 valueText.setOnClickListener(view -> Toast.makeText(getContext(), "TODO: Popup dialog to edit stat!", Toast.LENGTH_SHORT).show());
             }
+        }
+    }
+
+    private void SetupStatBlock(LinearLayout container, int offset) {
+        final int elementCount = container.getChildCount();
+        for (int i = 0; i < elementCount; i++) {
+            View element = container.getChildAt(i);
+            if (!(element instanceof CardView)) { continue; }
+            StatBlockBinding blockBinding = DataBindingUtil.getBinding(element);
+            String name = statMap.get(statArr.get(i + offset));
+            blockBinding.setName(name);
+        }
+    }
+    private void SetupSaveThrow(LinearLayout container, int offset) {
+        final int elementCount = container.getChildCount();
+        for (int i = 0; i < elementCount; i++) {
+            View element = container.getChildAt(i);
+            if (!(element instanceof CardView)) { continue; }
+            SavingThrowBlockBinding blockBinding = DataBindingUtil.getBinding(element);
+            String name = statArr.get(i + offset);
+            blockBinding.setName(name);
+        }
+    }
+    private void SetupSkillBlock(LinearLayout container) {
+        final int elementCount = container.getChildCount();
+        int index = 0;
+        for (int i = 0; i < elementCount; i++) {
+            View element = container.getChildAt(i);
+            if (!(element instanceof CardView)) { continue; }
+            SkillBlockBinding blockBinding = DataBindingUtil.getBinding(element);
+            String name = skillArr.get(index);
+            blockBinding.setSkill(name);
+            blockBinding.setMod(Character.profMap.get(name));
+            index++;
         }
     }
 }

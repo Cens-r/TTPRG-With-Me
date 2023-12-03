@@ -2,6 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="mod"
+            type="String" />
+        <variable
+            name="skill"
+            type="String" />
+    </data>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/skillblock_card_container"
         android:layout_width="match_parent"
@@ -45,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:text="MOD"
+                android:text="@{mod, default=`MOD`}"
                 android:textColor="@color/dark_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/skillblock_radio_select2"
@@ -56,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="SKILL NAME"
+                android:text="@{skill, default=`SKILL NAME`}"
                 android:textColor="@color/dark_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/skillblock_text_value"
