@@ -48,6 +48,7 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
         holder.deleteButton.setOnClickListener(view -> {
             itemList.remove(item);
             db.delete(item.pk, "ITEMS");
+            notifyDataSetChanged();
         });
     }
 

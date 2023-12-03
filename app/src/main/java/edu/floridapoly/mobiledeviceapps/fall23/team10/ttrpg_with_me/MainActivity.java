@@ -68,8 +68,11 @@ public class MainActivity extends AppCompatActivity {
                         do {
                             int itemJsonIndex = itemCursor.getColumnIndex("JSON");
                             String itemJson = itemCursor.getString(itemJsonIndex);
+                            int ItemPKIndex = itemCursor.getColumnIndex("pk");
+                            long itemPK = itemCursor.getLong(ItemPKIndex);
 
                             Item item = ClassManager.fromJson(itemJson, Item.class);
+                            item.pk = itemPK;
                             character.Backpack.get(key).add(item);
                         } while(itemCursor.moveToNext());
                     }
@@ -80,8 +83,11 @@ public class MainActivity extends AppCompatActivity {
                     do {
                         int itemJsonIndex = noteCursor.getColumnIndex("JSON");
                         String itemJson = noteCursor.getString(itemJsonIndex);
+                        int ItemPKIndex = noteCursor.getColumnIndex("pk");
+                        long itemPK = noteCursor.getLong(ItemPKIndex);
 
                         Item item = ClassManager.fromJson(itemJson, Item.class);
+                        item.pk = itemPK;
                         character.Notes.add(item);
                     } while(noteCursor.moveToNext());
                 }
@@ -92,9 +98,11 @@ public class MainActivity extends AppCompatActivity {
                     do {
                         int itemJsonIndex = abilityCursor.getColumnIndex("JSON");
                         String itemJson = abilityCursor.getString(itemJsonIndex);
-                        Log.d("Character", "ItemJson: "+itemJson);
+                        int ItemPKIndex = abilityCursor.getColumnIndex("pk");
+                        long itemPK = abilityCursor.getLong(ItemPKIndex);
 
                         Item item = ClassManager.fromJson(itemJson, Item.class);
+                        item.pk = itemPK;
                         character.Abilities.add(item);
                     } while(abilityCursor.moveToNext());
                 }
