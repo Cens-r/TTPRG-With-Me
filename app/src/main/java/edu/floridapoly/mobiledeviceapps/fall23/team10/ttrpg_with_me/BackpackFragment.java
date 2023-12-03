@@ -79,7 +79,6 @@ public class BackpackFragment extends Fragment {
 
     public static class ItemContainer {
         boolean isExpanded;
-        List<View> itemList;
 
         View container;
         TextView headerText;
@@ -88,14 +87,10 @@ public class BackpackFragment extends Fragment {
 
         public ItemContainer(View container, String name) {
             isExpanded = true;
-            itemList = new ArrayList<>();
 
             this.container = container;
 
-            for (Item item : Objects.requireNonNull(character.Backpack.get(name))) {
-                View itemView = createItem(item);
-                itemList.add(itemView);
-            }
+            for (Item item : Objects.requireNonNull(character.Backpack.get(name))) { createItem(item); }
 
             headerText = container.findViewById(R.id.item_text_header);
             generateButton = container.findViewById(R.id.item_button_generate);
@@ -108,9 +103,8 @@ public class BackpackFragment extends Fragment {
                     handler.post(() -> {
                         if (item != null) {
                             db.setItem(character.pk, item.toJson(), name);
-                            View itemView = this.createItem(item);
-                            itemList.add(itemView);
-                            db.update(character.id, "CHARACTERS", character.toJson());
+                            character.Backpack.get(name).add(item);
+                            createItem(item);
                         } else {
                             Toast.makeText(this.container.getContext(), "Couldn't create item!", Toast.LENGTH_SHORT).show();
                         }
@@ -142,8 +136,10 @@ public class BackpackFragment extends Fragment {
                     EditText body = dialog.findViewById(R.id.createdialog_edittext_body);
 
                     Item item = new Item(header.getText().toString(), body.getText().toString());
+                    db.setItem(character.pk, item.toJson(), name);
                     character.Backpack.get(name).add(item);
-                    db.update(character.id, "CHARACTERS", character.toJson());
+                    createItem(item);
+
                     dialog.dismiss();
                 });
                 dialog.show();
