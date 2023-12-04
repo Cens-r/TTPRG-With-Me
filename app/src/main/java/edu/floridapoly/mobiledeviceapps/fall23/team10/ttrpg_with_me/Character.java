@@ -54,19 +54,19 @@ public class Character extends ClassManager {
         image_url = url;
     }
 
-    int hp;
     int hitDice;
+    int currentHp = 8;
+    int maxHp = 8;
     int pBonus = 2;
-    int exp;
     int level = 1;
+    int speed = 30;
+    int initiative = 0;
+    int armorClass = 0;
 
 
     public transient List<Item> Abilities;
     public transient List<Item> Notes;
     public transient Hashtable<String, List<Item>> Backpack;
-
-    int currentHp;
-    int totalHp;
 
     static final Hashtable<String, String> profMap = new Hashtable<String, String>(){{
         put("Athletics", "STR");

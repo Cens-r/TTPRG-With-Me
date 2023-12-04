@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
@@ -89,29 +88,6 @@ public class CharacterStatsFragment extends Fragment {
                 .placeholder(R.drawable.ic_loading_image)
                 .into(icon_view);
 
-        /*
-        StatBlocks = new ArrayList<>();
-        setupStatElements(StatBlocks, view.findViewById(R.id.statblocks_linear_1));
-        setupStatElements(StatBlocks, view.findViewById(R.id.statblocks_linear_2));
-
-        int statIndex = 0;
-        for (View block : StatBlocks) {
-            String name = statNameArr.get(statIndex);
-            ((TextView) block.findViewById(R.id.statblock_text_name)).setText(name);
-            TextView statText = block.findViewById(R.id.statblock_text_stat);
-            TextView bonusText = block.findViewById(R.id.statblock_text_bonus);
-
-            int value = character.stats.get(name);
-            statText.setText(String.valueOf(value));
-            bonusText.setText(String.valueOf((value - 10) / 2));
-
-            block.setOnClickListener(v -> promptValueChange(block, name));
-            statIndex++;
-        }
-         */
-
-
-
         SetupStatBlock(binding.statblocksLinear1, 0);
         SetupStatBlock(binding.statblocksLinear2, 3);
 
@@ -121,51 +97,95 @@ public class CharacterStatsFragment extends Fragment {
 
         SetupSkillBlock(binding.skillLinearContainer);
 
+        binding.valueProfBonus.statvalueTextName.setText("Prof. Bonus");
+        binding.valueProfBonus.statvalueTextStat.setText(SetIntPrefix(character.pBonus));
 
+        binding.valueSpeed.statvalueTextName.setText("Speed");
+        binding.valueSpeed.statvalueTextStat.setText(character.speed + " FT");
+        binding.valueSpeed.statvalueFrameContainer.setOnClickListener(v -> {
+            Dialog dialog = CreateDialog();
+            TextView dialogName = dialog.findViewById(R.id.valuedialog_text_name);
+            dialogName.setText("Set Speed Value");
 
-        /*
-        SaveThows = new ArrayList<>();
-        setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_1));
-        setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_2));
-        setupStatElements(SaveThows, view.findViewById(R.id.savethrows_linear_3));
-
-        int statIndex = 0;
-        for (View element: SaveThows) {
-            String name = statArr.get(statIndex);
-            ((TextView) element.findViewById(R.id.savethrow_text_name)).setText(name);
-
-            Boolean saveBool = character.saveBools.get(name);
-            UpdateSaveThrow(element, name, saveBool);
-
-            RadioButton radiobutton = element.findViewById(R.id.savethrow_radio_button);
-
-            AtomicBoolean isChecked = new AtomicBoolean(false);
-            radiobutton.setOnClickListener(v -> {
-                isChecked.set(!isChecked.get());
-                radiobutton.setChecked(isChecked.get());
-                UpdateSaveThrow(element, name, isChecked.get());
-                character.saveBools.put(name, isChecked.get());
-                db.update(character.id, "CHARACTERS", character.toJson());
+            dialog.findViewById(R.id.valuedialog_button_save).setOnClickListener(n -> {
+                EditText valueText = dialog.findViewById(R.id.valuedialog_edittext_value);
+                String value = valueText.getText().toString();
+                character.speed = Integer.valueOf(value);
+                binding.valueProfBonus.statvalueTextStat.setText(character.speed + " FT");
+                dialog.dismiss();
             });
-            statIndex++;
-        }
-         */
+            dialog.show();
+        });
 
-        //setupSkillSelects(view.findViewById(R.id.skill_linear_container));
+        binding.valueCurrentHp.statvalueTextName.setText("Current HP");
+        binding.valueCurrentHp.statvalueTextStat.setText(String.valueOf(character.currentHp));
+        binding.valueCurrentHp.statvalueFrameContainer.setOnClickListener(v -> {
+            Dialog dialog = CreateDialog();
+            TextView dialogName = dialog.findViewById(R.id.valuedialog_text_name);
+            dialogName.setText("Set Current HP");
+
+            dialog.findViewById(R.id.valuedialog_button_save).setOnClickListener(n -> {
+                EditText valueText = dialog.findViewById(R.id.valuedialog_edittext_value);
+                String value = valueText.getText().toString();
+                character.currentHp = Integer.valueOf(value);
+                binding.valueCurrentHp.statvalueTextStat.setText(String.valueOf(character.currentHp));
+                dialog.dismiss();
+            });
+            dialog.show();
+        });
+
+        binding.valueMaxHp.statvalueTextName.setText("Max HP");
+        binding.valueMaxHp.statvalueTextStat.setText(String.valueOf(character.maxHp));
+        binding.valueMaxHp.statvalueFrameContainer.setOnClickListener(v -> {
+            Dialog dialog = CreateDialog();
+            TextView dialogName = dialog.findViewById(R.id.valuedialog_text_name);
+            dialogName.setText("Set Max HP");
+
+            dialog.findViewById(R.id.valuedialog_button_save).setOnClickListener(n -> {
+                EditText valueText = dialog.findViewById(R.id.valuedialog_edittext_value);
+                String value = valueText.getText().toString();
+                character.maxHp = Integer.valueOf(value);
+                binding.valueMaxHp.statvalueTextStat.setText(String.valueOf(character.maxHp));
+                dialog.dismiss();
+            });
+            dialog.show();
+        });
+
+        binding.valueInitiative.statvalueTextName.setText("Initiative");
+        binding.valueInitiative.statvalueTextStat.setText(SetIntPrefix(character.initiative));
+        binding.valueInitiative.statvalueFrameContainer.setOnClickListener(v -> {
+            Dialog dialog = CreateDialog();
+            TextView dialogName = dialog.findViewById(R.id.valuedialog_text_name);
+            dialogName.setText("Set Initiative");
+
+            dialog.findViewById(R.id.valuedialog_button_save).setOnClickListener(n -> {
+                EditText valueText = dialog.findViewById(R.id.valuedialog_edittext_value);
+                String value = valueText.getText().toString();
+                character.initiative = Integer.valueOf(value);
+                binding.valueInitiative.statvalueTextStat.setText(SetIntPrefix(character.initiative));
+                dialog.dismiss();
+            });
+            dialog.show();
+        });
+
+        binding.valueArmorClass.statvalueTextName.setText("Armor Class");
+        binding.valueArmorClass.statvalueTextStat.setText(String.valueOf(character.armorClass));
+        binding.valueArmorClass.statvalueFrameContainer.setOnClickListener(v -> {
+            Dialog dialog = CreateDialog();
+            TextView dialogName = dialog.findViewById(R.id.valuedialog_text_name);
+            dialogName.setText("Set Armor Class");
+
+            dialog.findViewById(R.id.valuedialog_button_save).setOnClickListener(n -> {
+                EditText valueText = dialog.findViewById(R.id.valuedialog_edittext_value);
+                String value = valueText.getText().toString();
+                character.armorClass = Integer.valueOf(value);
+                binding.valueArmorClass.statvalueTextStat.setText(String.valueOf(character.armorClass));
+                dialog.dismiss();
+            });
+            dialog.show();
+        });
 
         return view;
-    }
-
-    private void UpdateSaveThrow(View element, String throwName, Boolean hasProf) {
-        int pBonus = character.pBonus;
-        int stat = character.stats.get(throwName);
-
-        int incr = hasProf ? pBonus : 0;
-        int value = ((stat - 10) / 2) + incr;
-        //character.savethrow.put(throwName, value);
-
-        TextView valueText = element.findViewById(R.id.savethrow_text_value);
-        //valueText.setText(String.valueOf(value));
     }
 
     private void promptValueChange(StatBlockBinding blockBinding, String valueName) {
@@ -197,34 +217,6 @@ public class CharacterStatsFragment extends Fragment {
         dialog.setContentView(R.layout.dialog_value_change);
         Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         return dialog;
-    }
-
-    private void setupStatElements(List<View> list, LinearLayout row) {
-        final int elementCount = row.getChildCount();
-        for (int i = 0; i < elementCount; i++) {
-            View element = row.getChildAt(i);
-            if (element instanceof CardView) {
-                list.add(element);
-            }
-        }
-    }
-
-    private void setupSkillSelects(LinearLayout container) {
-        final int elementCount = container.getChildCount();
-        for (int i = 0; i < elementCount; i++) {
-            View element = container.getChildAt(i);
-            if (element instanceof CardView) {
-                RadioButton radio = element.findViewById(R.id.skillblock_radio_select2);
-                AtomicBoolean isChecked = new AtomicBoolean(false);
-                radio.setOnClickListener(view -> {
-                    isChecked.set(!isChecked.get());
-                    radio.setChecked(isChecked.get());
-                });
-
-                TextView valueText = element.findViewById(R.id.skillblock_text_value);
-                valueText.setOnClickListener(view -> Toast.makeText(getContext(), "TODO: Popup dialog to edit stat!", Toast.LENGTH_SHORT).show());
-            }
-        }
     }
 
     private void SetupStatBlock(LinearLayout container, int offset) {
@@ -287,6 +279,7 @@ public class CharacterStatsFragment extends Fragment {
             index++;
         }
     }
+
     private void SetRadioSelect(ViewDataBinding vbinding, RadioButton radio, String profName, Boolean initValue) {
         AtomicBoolean isEnabled = new AtomicBoolean(initValue);
         radio.setChecked(initValue);
@@ -299,5 +292,9 @@ public class CharacterStatsFragment extends Fragment {
             character.setProf(ctx, profName, character.proficiency.get(profName) + (isEnabled.get() ? 1 : -1));
             vbinding.setVariable(BR.character, character);
         });
+    }
+
+    private String SetIntPrefix(int num) {
+        return (num >= 0) ? "+ "+num : "- "+num;
     }
 }
