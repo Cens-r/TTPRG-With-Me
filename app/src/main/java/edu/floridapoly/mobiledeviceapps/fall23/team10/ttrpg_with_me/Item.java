@@ -1,12 +1,6 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
-
-import androidx.databinding.ObservableField;
-
-import com.google.gson.annotations.Expose;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +16,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -34,7 +27,7 @@ public class Item extends ClassManager {
 
     // Format Variables: Item Type, Level, Race, Class, Item Type, Item Memory
     private final static String ITEM_PROMPT =
-            "Create and explain a DnD %s for a level %d %s %s, the %s should not already exist, and may or may not be magical using the JSON format.\\n" +
+            "Create and explain a DnD %s for a character that is a level %d %s who is a %s, the %s should not already exist, and may or may not be magical using the JSON format.\n" +
             "It should only have a name and description key. Do not generate any of these item: %s";
 
     long pk;
@@ -77,7 +70,7 @@ public class Item extends ClassManager {
         Item item = null;
         try {
             connection = GetConnection();
-            String formattedPrompt = String.format(ITEM_PROMPT, type, 5, character.race, character.classArc.name, type, items);
+            String formattedPrompt = String.format(ITEM_PROMPT, type, character.level, character.race, character.classArc.name, type, items);
 
             JSONObject requestJson = new JSONObject();
             JSONObject promptJson = new JSONObject();
