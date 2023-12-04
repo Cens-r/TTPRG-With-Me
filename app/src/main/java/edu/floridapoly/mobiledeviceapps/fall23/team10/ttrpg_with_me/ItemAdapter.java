@@ -1,16 +1,22 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder> {
     List<Item> itemList;
@@ -53,6 +59,37 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
             db.delete(item.pk, "ITEMS");
             notifyDataSetChanged();
         });
+        holder.editButton.setOnClickListener(view -> {
+
+            DatabaseManager db = new DatabaseManager(context);
+            Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog_create_item);
+            Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+            Window window = dialog.getWindow();
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            AppCompatButton saveButton = dialog.findViewById(R.id.createdialog_button_save);
+
+            EditText headerEdit = dialog.findViewById(R.id.createdialog_editText_header);
+            EditText bodyEdit = dialog.findViewById(R.id.createdialog_edittext_body);
+            headerEdit.setText(item.name);
+            bodyEdit.setText(item.description);
+
+            dialog.show();
+
+            saveButton.setOnClickListener(v ->{
+
+                item.description = bodyEdit.getText().toString();
+                item.name = headerEdit.getText().toString();
+                holder.headerView.setText(item.name);
+                holder.bodyView.setText(item.description);
+                db.update(item.pk, "ITEMS", item.toJson());
+                dialog.dismiss();
+            });
+
+
+        });
     }
 
     @Override
@@ -63,6 +100,7 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
         TextView bodyView;
         ImageButton favoriteButton;
         ImageButton deleteButton;
+        ImageButton editButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +108,8 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
             bodyView = itemView.findViewById(R.id.display_text_body);
             favoriteButton = itemView.findViewById(R.id.display_button_favorite);
             deleteButton = itemView.findViewById(R.id.display_button_delete);
+            editButton = itemView.findViewById(R.id.display_button_edit);
+
         }
     }
 }

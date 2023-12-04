@@ -52,13 +52,14 @@
                     android:id="@+id/display_button_delete"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="56dp"
                     android:background="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_delete"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/display_button_favorite"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/display_text_header"
@@ -81,7 +82,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:src="@{favorited ? @drawable/ic_star_fill : @drawable/ic_star_outline, default=@drawable/ic_star_outline}" />
-    
+
+                <ImageButton
+                    android:id="@+id/display_button_edit"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/display_button_favorite"
+                    app:layout_constraintStart_toEndOf="@+id/display_button_delete"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_edit" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
     
