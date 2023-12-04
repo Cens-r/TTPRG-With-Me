@@ -46,14 +46,10 @@ public class CharacterStatsFragment extends Fragment {
         put("INT", "Intelligence"); put("WIS", "Wisdom"); put("CHA", "Charisma");
     }};
 
-    Hashtable<String, List<ViewDataBinding>> statBindings;
     DatabaseManager db;
-
-    Character character;
     FragmentCharacterStatsBinding binding;
-
-    List<View> StatBlocks;
-    List<View> SaveThows;
+    Character character;
+    Hashtable<String, List<ViewDataBinding>> StatDependentViews;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +72,11 @@ public class CharacterStatsFragment extends Fragment {
         }
         Log.d("Character", "Intent: " + characterId);
         character = (Character) Character.getObject(Character.class, characterId);
+
+        StatDependentViews = new Hashtable<String, List<ViewDataBinding>>() {{
+            put("STR", new ArrayList<>()); put("CON", new ArrayList<>()); put("DEX", new ArrayList<>());
+            put("INT", new ArrayList<>()); put("WIS", new ArrayList<>()); put("CHA", new ArrayList<>());
+        }};
 
         TextView name_view = view.findViewById(R.id.charstats_text_name);
         name_view.setText(character.name);
@@ -156,7 +157,7 @@ public class CharacterStatsFragment extends Fragment {
 
         int incr = hasProf ? pBonus : 0;
         int value = ((stat - 10) / 2) + incr;
-        character.savethrow.put(throwName, value);
+        //character.savethrow.put(throwName, value);
 
         TextView valueText = element.findViewById(R.id.savethrow_text_value);
         valueText.setText(String.valueOf(value));
@@ -224,8 +225,13 @@ public class CharacterStatsFragment extends Fragment {
             View element = container.getChildAt(i);
             if (!(element instanceof CardView)) { continue; }
             StatBlockBinding blockBinding = DataBindingUtil.getBinding(element);
-            String name = statMap.get(statArr.get(i + offset));
-            blockBinding.setName(name);
+            String name = statArr.get(i + offset);
+            blockBinding.setName(statMap.get(name));
+
+            List<ViewDataBinding> dependentViews = StatDependentViews.get(name);
+            for (ViewDataBinding vBind : dependentViews) {
+                vBind.notifyPropertyChanged();
+            }
         }
     }
     private void SetupSaveThrow(LinearLayout container, int offset) {
@@ -235,7 +241,20 @@ public class CharacterStatsFragment extends Fragment {
             if (!(element instanceof CardView)) { continue; }
             SavingThrowBlockBinding blockBinding = DataBindingUtil.getBinding(element);
             String name = statArr.get(i + offset);
-            blockBinding.setName(name);
+
+            StatDependentViews.get(name).add(blockBinding);
+            blockBinding.setCharacter(character);
+
+            int buttonState = character.proficiency.get(name);
+            AtomicBoolean isChecked = new AtomicBoolean(buttonState == 1);
+            blockBinding.savethrowRadioButton.setChecked(isChecked.get());
+
+            blockBinding.savethrowRadioButton.setOnClickListener(v -> {
+                isChecked.set(!isChecked.get());
+                blockBinding.savethrowRadioButton.setChecked(isChecked.get());
+                character.setProf(blockBinding.getRoot().getContext(), name, isChecked.get() ? 1 : 0);
+                blockBinding.notifyChange();
+            });
         }
     }
     private void SetupSkillBlock(LinearLayout container) {

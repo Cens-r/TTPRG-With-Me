@@ -4,7 +4,10 @@
 
     <data>
         <variable
-            name="name"
+            name="character"
+            type="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.Character" />
+        <variable
+            name="stat"
             type="String" />
     </data>
 
@@ -42,7 +45,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{name, default=`THROW NAME`}"
+                android:text="@{stat, default=`THROW NAME`}"
                 android:textColor="@color/dark_text"
                 android:textSize="13sp" />
 
@@ -54,7 +57,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="VALUE"
+                android:text="@{(character.calcSaveThrow(stat) >= 0) ? `+`+character.calcSaveThrow(stat) : `-`+character.calcSaveThrow(stat), default=`VALUE`}"
                 android:textColor="@color/dark_text"
                 android:textSize="15sp" />
         </LinearLayout>
