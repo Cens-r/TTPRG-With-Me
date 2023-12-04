@@ -1,17 +1,11 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.databinding.ObservableField;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +16,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.databinding.ObservableField;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +165,35 @@ public class BackpackFragment extends Fragment {
                 ((ViewGroup) layout).removeView(view);
                 character.Backpack.get(name).remove(itemObject);
                 db.delete(itemObject.pk, "ITEMS");
+            });
+            itemBinding.displayButtonEdit.setOnClickListener(v -> {
+                Context ctx = itemBinding.getRoot().getContext();
+                DatabaseManager db = new DatabaseManager(ctx);
+                Dialog dialog = new Dialog(ctx);
+                dialog.setContentView(R.layout.dialog_create_item);
+                Objects.requireNonNull(dialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+
+                Window window = dialog.getWindow();
+                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                AppCompatButton saveButton = dialog.findViewById(R.id.createdialog_button_save);
+
+                EditText headerEdit = dialog.findViewById(R.id.createdialog_editText_header);
+                EditText bodyEdit = dialog.findViewById(R.id.createdialog_edittext_body);
+                headerEdit.setText(itemObject.name);
+                bodyEdit.setText(itemObject.description);
+
+                dialog.show();
+
+                saveButton.setOnClickListener(vb ->{
+
+                    itemObject.description = bodyEdit.getText().toString();
+                    itemObject.name = headerEdit.getText().toString();
+                    itemBinding.displayTextHeader.setText(itemObject.name);
+                    itemBinding.displayTextBody.setText(itemObject.description);
+                    db.update(itemObject.pk, "ITEMS", itemObject.toJson());
+                    dialog.dismiss();
+                });
             });
 
             if (!isExpanded) {
