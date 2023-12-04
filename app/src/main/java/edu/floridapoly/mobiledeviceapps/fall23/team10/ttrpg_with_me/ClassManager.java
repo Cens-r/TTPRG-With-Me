@@ -1,7 +1,5 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
