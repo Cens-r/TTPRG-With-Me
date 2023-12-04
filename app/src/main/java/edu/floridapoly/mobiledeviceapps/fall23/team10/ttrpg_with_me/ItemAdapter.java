@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,7 +54,14 @@ public class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder>
             int imageId = (Boolean.TRUE.equals(item.favorited)) ? R.drawable.ic_star_outline : R.drawable.ic_star_fill;
             holder.favoriteButton.setImageResource(imageId);
             item.favorited(Boolean.FALSE.equals(item.favorited));
+            Collections.sort(itemList, new Comparator<Item>() {
+                @Override
+                public int compare(Item o1, Item o2) {
+                    return (o1.favorited && !o2.favorited) ? -1 : (!o1.favorited && o2.favorited) ? 1 : 0;
+                }
+            });
             db.update(item.pk, "ITEMS", item.toJson());
+            notifyDataSetChanged();
         });
         holder.deleteButton.setOnClickListener(view -> {
             itemList.remove(item);
