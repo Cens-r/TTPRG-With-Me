@@ -1,6 +1,7 @@
 package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -255,15 +256,7 @@ public class CharacterStatsFragment extends Fragment {
             blockBinding.setCharacter(character);
 
             int buttonState = character.proficiency.get(name);
-            AtomicBoolean isChecked = new AtomicBoolean(buttonState == 1);
-            blockBinding.savethrowRadioButton.setChecked(isChecked.get());
-
-            blockBinding.savethrowRadioButton.setOnClickListener(v -> {
-                isChecked.set(!isChecked.get());
-                blockBinding.savethrowRadioButton.setChecked(isChecked.get());
-                character.setProf(blockBinding.getRoot().getContext(), name, isChecked.get() ? 1 : 0);
-                blockBinding.notifyChange();
-            });
+            SetRadioSelect(blockBinding, blockBinding.savethrowRadioButton, name, buttonState == 1);
         }
     }
     private void SetupSkillBlock(LinearLayout container) {
@@ -273,11 +266,38 @@ public class CharacterStatsFragment extends Fragment {
             View element = container.getChildAt(i);
             if (!(element instanceof CardView)) { continue; }
             SkillBlockBinding blockBinding = DataBindingUtil.getBinding(element);
-            String name = skillArr.get(index);
-            blockBinding.setSkill(name);
-            blockBinding.setMod(Character.profMap.get(name));
+            String skillName = skillArr.get(index);
+            String name = Character.profMap.get(skillName);
+
+            StatDependentViews.get(name).add(blockBinding);
+
+            blockBinding.setSkill(skillName);
+            blockBinding.setMod(name);
             blockBinding.setCharacter(character);
+
+            boolean select1Init = false;
+            boolean select2Init = false;
+            int profValue = character.proficiency.get(skillName);
+            if (profValue > 0) { select1Init = true; profValue--; }
+            if (profValue > 0) { select2Init = true; }
+
+            SetRadioSelect(blockBinding, blockBinding.skillblockRadioSelect1, skillName, select1Init);
+            SetRadioSelect(blockBinding, blockBinding.skillblockRadioSelect2, skillName, select2Init);
+
             index++;
         }
+    }
+    private void SetRadioSelect(ViewDataBinding vbinding, RadioButton radio, String profName, Boolean initValue) {
+        AtomicBoolean isEnabled = new AtomicBoolean(initValue);
+        radio.setChecked(initValue);
+
+        radio.setOnClickListener(v -> {
+            Context ctx = vbinding.getRoot().getContext();
+
+            isEnabled.set(!isEnabled.get());
+            radio.setChecked(isEnabled.get());
+            character.setProf(ctx, profName, character.proficiency.get(profName) + (isEnabled.get() ? 1 : -1));
+            vbinding.setVariable(BR.character, character);
+        });
     }
 }

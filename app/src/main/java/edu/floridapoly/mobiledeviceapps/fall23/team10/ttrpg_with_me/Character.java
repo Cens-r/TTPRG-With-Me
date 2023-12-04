@@ -101,7 +101,7 @@ public class Character extends ClassManager {
         level += 1;
         int [] p = {5, 9, 13, 17};
         for (int i: p) {
-            if (i == level) { pBonus -= 1; }
+            if (i == level) { pBonus += 1; }
         }
     }
     public void levelDown()
@@ -130,6 +130,10 @@ public class Character extends ClassManager {
 
     public int calcProfBonus(String stat) {
         int profBonus = proficiency.get(stat) * pBonus;
+        return calcStatBonus(stat) + profBonus;
+    }
+    public int calcProfBonus(String skill, String stat) {
+        int profBonus = proficiency.get(skill) * pBonus;
         return calcStatBonus(stat) + profBonus;
     }
 
