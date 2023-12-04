@@ -101,7 +101,7 @@ public class Character extends ClassManager {
         level += 1;
         int [] p = {5, 9, 13, 17};
         for (int i: p) {
-            if (i == level) { pBonus -= 1; }
+            if (i == level) { pBonus += 1; }
         }
     }
     public void levelDown()
