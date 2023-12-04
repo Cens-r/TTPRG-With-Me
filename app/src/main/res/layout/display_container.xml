@@ -84,7 +84,7 @@
                     android:src="@{favorited ? @drawable/ic_star_fill : @drawable/ic_star_outline, default=@drawable/ic_star_outline}" />
 
                 <ImageButton
-                    android:id="@+id/imageButtonEdit"
+                    android:id="@+id/display_button_edit"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@null"
