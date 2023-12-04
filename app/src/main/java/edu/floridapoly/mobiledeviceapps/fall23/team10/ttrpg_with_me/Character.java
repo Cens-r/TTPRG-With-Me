@@ -127,10 +127,14 @@ public class Character extends ClassManager {
         }
     }
 
-    public int calcSaveThrow(String stat) {
+    public int calcStatBonus(String stat) {
         int statValue = stats.get(stat);
+        return (statValue - 10) / 2;
+    }
+
+    public int calcSaveThrow(String stat) {
         int profBonus = proficiency.get(stat) * pBonus;
-        return ((statValue - 10) / 2) + profBonus;
+        return calcStatBonus(stat) + profBonus;
     }
 
     public void setProf(Context ctx, String name, Integer value) {

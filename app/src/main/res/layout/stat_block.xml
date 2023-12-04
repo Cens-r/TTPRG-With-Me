@@ -6,6 +6,12 @@
         <variable
             name="name"
             type="String" />
+        <variable
+            name="value"
+            type="Integer" />
+        <variable
+            name="bonus"
+            type="Integer" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -49,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="10dp"
-                android:text="STAT"
+                android:text="@{value, default=`STAT`}"
                 android:textColor="@color/dark_text"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -62,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="BONUS"
+                android:text="@{bonus, default=`BONUS`}"
                 android:textColor="@color/dark_text"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="@+id/statblock_text_name"

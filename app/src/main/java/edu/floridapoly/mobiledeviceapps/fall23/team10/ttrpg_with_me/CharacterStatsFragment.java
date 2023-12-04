@@ -163,21 +163,24 @@ public class CharacterStatsFragment extends Fragment {
         valueText.setText(String.valueOf(value));
     }
 
-    private void promptValueChange(View element, String valueName) {
+    private void promptValueChange(StatBlockBinding blockBinding, String valueName) {
         Dialog dialog = CreateDialog();
-
         EditText valueInput = dialog.findViewById(R.id.valuedialog_edittext_value);
         AppCompatButton saveButton = dialog.findViewById(R.id.valuedialog_button_save);
-        TextView statText = element.findViewById(R.id.statblock_text_stat);
-        TextView bonusText = element.findViewById(R.id.statblock_text_bonus);
 
         saveButton.setOnClickListener(v -> {
             int value = Integer.valueOf(valueInput.getText().toString());
-            statText.setText(String.valueOf(value));
-            bonusText.setText(String.valueOf((value - 10) / 2));
             character.stats.put(valueName, value);
+            blockBinding.setValue(value);
+            blockBinding.setValue(character.calcStatBonus(valueName));
 
+            character.stats.put(valueName, value);
             db.update(character.id, "CHARACTERS", character.toJson());
+
+            List<ViewDataBinding> dependentViews = StatDependentViews.get(valueName);
+            for (ViewDataBinding vBind : dependentViews) {
+                vBind.notifyChange();
+            }
             dialog.dismiss();
         });
 
@@ -228,10 +231,7 @@ public class CharacterStatsFragment extends Fragment {
             String name = statArr.get(i + offset);
             blockBinding.setName(statMap.get(name));
 
-            List<ViewDataBinding> dependentViews = StatDependentViews.get(name);
-            for (ViewDataBinding vBind : dependentViews) {
-                vBind.notifyPropertyChanged();
-            }
+            element.setOnClickListener(v -> promptValueChange(blockBinding, name));
         }
     }
     private void SetupSaveThrow(LinearLayout container, int offset) {
