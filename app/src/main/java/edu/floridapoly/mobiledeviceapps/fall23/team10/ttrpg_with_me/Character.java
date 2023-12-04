@@ -2,10 +2,6 @@ package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 
 import android.content.Context;
 
-import androidx.databinding.ObservableField;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -132,7 +128,7 @@ public class Character extends ClassManager {
         return (statValue - 10) / 2;
     }
 
-    public int calcSaveThrow(String stat) {
+    public int calcProfBonus(String stat) {
         int profBonus = proficiency.get(stat) * pBonus;
         return calcStatBonus(stat) + profBonus;
     }

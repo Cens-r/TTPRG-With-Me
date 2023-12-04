@@ -4,6 +4,9 @@
 
     <data>
         <variable
+            name="character"
+            type="edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me.Character" />
+        <variable
             name="mod"
             type="String" />
         <variable
@@ -79,7 +82,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="VALUE"
+                android:text="@{}"
                 android:textColor="@color/dark_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

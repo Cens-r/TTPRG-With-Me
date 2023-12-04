@@ -3,13 +3,6 @@ package edu.floridapoly.mobiledeviceapps.fall23.team10.ttrpg_with_me;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.cardview.widget.CardView;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
@@ -109,6 +108,9 @@ public class CharacterStatsFragment extends Fragment {
             statIndex++;
         }
          */
+
+
+
         SetupStatBlock(binding.statblocksLinear1, 0);
         SetupStatBlock(binding.statblocksLinear2, 3);
 
@@ -117,6 +119,8 @@ public class CharacterStatsFragment extends Fragment {
         SetupSaveThrow(binding.savethrowsLinear3, 4);
 
         SetupSkillBlock(binding.skillLinearContainer);
+
+
 
         /*
         SaveThows = new ArrayList<>();
@@ -160,7 +164,7 @@ public class CharacterStatsFragment extends Fragment {
         //character.savethrow.put(throwName, value);
 
         TextView valueText = element.findViewById(R.id.savethrow_text_value);
-        valueText.setText(String.valueOf(value));
+        //valueText.setText(String.valueOf(value));
     }
 
     private void promptValueChange(StatBlockBinding blockBinding, String valueName) {
@@ -172,14 +176,14 @@ public class CharacterStatsFragment extends Fragment {
             int value = Integer.valueOf(valueInput.getText().toString());
             character.stats.put(valueName, value);
             blockBinding.setValue(value);
-            blockBinding.setValue(character.calcStatBonus(valueName));
+            blockBinding.setBonus(character.calcStatBonus(valueName));
 
             character.stats.put(valueName, value);
-            db.update(character.id, "CHARACTERS", character.toJson());
+            Character.save(blockBinding.getRoot().getContext(), character);
 
             List<ViewDataBinding> dependentViews = StatDependentViews.get(valueName);
             for (ViewDataBinding vBind : dependentViews) {
-                vBind.notifyChange();
+                vBind.setVariable(BR.character, character);
             }
             dialog.dismiss();
         });
@@ -228,8 +232,12 @@ public class CharacterStatsFragment extends Fragment {
             View element = container.getChildAt(i);
             if (!(element instanceof CardView)) { continue; }
             StatBlockBinding blockBinding = DataBindingUtil.getBinding(element);
+
             String name = statArr.get(i + offset);
-            blockBinding.setName(statMap.get(name));
+            String properName = statMap.get(name);
+            blockBinding.setName(properName);
+            blockBinding.setValue(character.stats.get(name));
+            blockBinding.setBonus(character.calcStatBonus(name));
 
             element.setOnClickListener(v -> promptValueChange(blockBinding, name));
         }
@@ -243,6 +251,7 @@ public class CharacterStatsFragment extends Fragment {
             String name = statArr.get(i + offset);
 
             StatDependentViews.get(name).add(blockBinding);
+            blockBinding.setStat(name);
             blockBinding.setCharacter(character);
 
             int buttonState = character.proficiency.get(name);
@@ -267,6 +276,7 @@ public class CharacterStatsFragment extends Fragment {
             String name = skillArr.get(index);
             blockBinding.setSkill(name);
             blockBinding.setMod(Character.profMap.get(name));
+            blockBinding.setCharacter(character);
             index++;
         }
     }
