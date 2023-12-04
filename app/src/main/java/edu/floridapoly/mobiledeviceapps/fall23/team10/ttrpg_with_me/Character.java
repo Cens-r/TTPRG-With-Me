@@ -132,6 +132,10 @@ public class Character extends ClassManager {
         int profBonus = proficiency.get(stat) * pBonus;
         return calcStatBonus(stat) + profBonus;
     }
+    public int calcProfBonus(String skill, String stat) {
+        int profBonus = proficiency.get(skill) * pBonus;
+        return calcStatBonus(stat) + profBonus;
+    }
 
     public void setProf(Context ctx, String name, Integer value) {
         proficiency.put(name, value);
